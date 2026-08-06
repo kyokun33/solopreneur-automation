@@ -87,5 +87,29 @@
     "used_at": "2026-08-06 20:10:04",
     "title": "무인스마트 스토어",
     "category": "government"
+  },
+  "KM849201": {
+    "used": true,
+    "created_at": "2026-08-06 20:17:15",
+    "source": "Kmong Order ID Auto-Verification",
+    "used_at": "2026-08-06 20:17:15",
+    "title": "24시간 무인 스마트스토어 오토 풀필먼트",
+    "category": "government"
+  },
+  "KM849209": {
+    "used": true,
+    "created_at": "2026-08-06 20:17:24",
+    "source": "Kmong Order ID Auto-Verification",
+    "used_at": "2026-08-06 20:17:24",
+    "title": "24시간 무인 스마트스토어 오토 풀필먼트",
+    "category": "government"
+  },
+  "KMONG-REPORT-1001": {
+    "used": true,
+    "created_at": "2026-08-06 20:18:24",
+    "source": "Kmong Order ID Auto-Verification",
+    "used_at": "2026-08-06 20:18:24",
+    "title": "al 스마트 무인 스토어",
+    "category": "government"
   }
 }

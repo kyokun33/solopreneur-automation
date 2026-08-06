@@ -51,7 +51,7 @@ class NumberedCanvas(canvas.Canvas):
                 self.saveState()
                 self.setFont(MAIN_FONT, 8)
                 self.setFillColor(colors.HexColor("#64748b"))
-                self.drawRightString(200 * 2.83, 280 * 2.83, "K-Startup 중기부 합격 정밀 PSST 대용량 풀-스펙 사업계획서 (3분시리즈 1 v0.99d Beta)")
+                self.drawRightString(200 * 2.83, 280 * 2.83, "K-Startup 프로그램별 다이나믹 정밀 사업계획서 (3분시리즈 1 v0.99f Beta)")
                 self.setStrokeColor(colors.HexColor("#cbd5e1"))
                 self.setLineWidth(0.5)
                 self.line(15 * 2.83, 278 * 2.83, 200 * 2.83, 278 * 2.83)
@@ -75,19 +75,55 @@ def detect_domain(title: str, features: str) -> str:
     return "it_saas"
 
 PROGRAM_SPECS = {
-    "packages_15p": {"name": "예비창업패키지 / 초기창업패키지 규격", "target_pages": "15페이지 내외 정통 풀-스펙", "font_style": "10~11pt 개조식"},
-    "cheongsa_12p": {"name": "청년창업사관학교 집중 실행 규격", "target_pages": "10~15페이지 정밀 규격", "font_style": "10pt 실구현 중심"},
-    "rnd_25p": {"name": "중기부 / 산업부 R&D 기술개발 과제 규격", "target_pages": "20~30페이지 기술개발 정밀 규격", "font_style": "기술성/특허 중심"},
-    "export_8p": {"name": "수출바우처 및 마케팅 지원 규격", "target_pages": "5~10페이지 마케팅 규격", "font_style": "시장진입/GTM 중심"},
-    "local_5p": {"name": "지자체 소액 창업 지원 린 규격", "target_pages": "5페이지 이내 숏폼 규격", "font_style": "요약형 숏폼"}
+    "packages_15p": {"name": "예비창업패키지 / 초기창업패키지 규격", "target_pages": "15페이지 내외 정통 풀-스펙", "depth_level": "high"},
+    "cheongsa_12p": {"name": "청년창업사관학교 집중 실행 규격", "target_pages": "10~15페이지 정밀 규격", "depth_level": "medium_high"},
+    "rnd_25p": {"name": "중기부 / 산업부 R&D 기술개발 과제 규격", "target_pages": "20~30페이지 기술개발 초정밀 규격", "depth_level": "ultra_deep"},
+    "export_8p": {"name": "수출바우처 및 마케팅 지원 규격", "target_pages": "5~10페이지 마케팅 규격", "depth_level": "medium"},
+    "local_5p": {"name": "지자체 소액 창업 지원 린 규격", "target_pages": "5페이지 이내 숏폼 규격", "depth_level": "compact"}
 }
 
 def generate_business_report(req: ReportRequest) -> tuple[str, str]:
     prog_info = PROGRAM_SPECS.get(req.program_type, PROGRAM_SPECS["packages_15p"])
     prog_name = prog_info["name"]
     prog_pages = prog_info["target_pages"]
+    depth_level = prog_info["depth_level"]
     now_str = datetime.datetime.now().strftime("%Y년 %m월 %d일")
     domain = detect_domain(req.title, req.core_features)
+
+    # 1. R&D 20~30페이지 전용 기술성 / TRL / 12개월 마일스톤 모듈
+    rnd_extra_section = ""
+    if depth_level == "ultra_deep":
+        rnd_extra_section = f"""---
+
+## 🔬 [R&D 전용] 기술개발 상세 파이프라인 & TRL (기술성숙도) 진단
+
+### 1. 기술성숙도(TRL, Technology Readiness Level) 9단계 달성 목표
+| TRL 단계 | 단계별 정의 | 현재 수준 | 사업 종료 시 목표 수준 | 검증 방법 및 증빙 |
+| :--- | :--- | :--- | :--- | :--- |
+| **TRL 1~2단계** | 기초 연구 및 원천 아이디어 정립 | **달성 완료** | 달성 완료 | 선행 논문 및 특허 분석 보고서 |
+| **TRL 3~4단계** | 연구실 수준의 핵심 기능 검증 및 시제품 제작 | **진행 중** | **완료 목표 (3개월 차)** | 시험성적서 및 알파 테스트 결과 |
+| **TRL 5~6단계** | 실제 환경에서의 성능 검증 및 공인인증 | - | **완료 목표 (8개월 차)** | 공인시험기관(KTL/KTR) 성적서 |
+| **TRL 7~8단계** | 양산 전 정밀 제품 제작 및 사업화 시스템 검증 | - | **완료 목표 (12개월 차)** | 필드 테스트 및 초기 매출 계약서 |
+
+### 2. 소프트웨어 / 하드웨어 시스템 기술 명세서 (Architecture Specs)
+- **알고리즘 고도화**: {req.core_features} 처리 분당 요청 처리(RPS) 5,000회 이상 및 응답 속도 50ms 이내 유지
+- **데이터베이스 ERD 설계**: 사용자 액션 로그, 결제, 분산 데이터 파이프라인 100% 암호화 (AES-256 적용)
+- **보안 및 규제 준수**: ISO/IEC 27001 정보보안준수 및 개인정보보호법(PIPA) 기술적 보호조치 적용
+
+### 3. 12개월 차 월별 기술개발 상세 실행 계획표 (R&D Timeline)
+| 월 (Month) | 기술개발 세부 세부 과제 | 주요 마일스톤 및 딜리버러블 | 담당 인력 및 협력 기관 |
+| :--- | :--- | :--- | :--- |
+| **M1 ~ M2** | 핵심 아키텍처 및 알고리즘 모듈 설계 | 시스템 아키텍처 정의서 작성 | 대표자 및 메인 개발자 |
+| **M3 ~ M4** | 1차 알파 알파 시제품 개발 및 내부 테스트 | 알파 알파 버전 시제품 구동 성공 | 개발팀 및 3D/HW 협력사 |
+| **M5 ~ M6** | UI/UX 시스템 연동 및 사용자 인터페이스 최적화 | 웹/앱 베타 서비스 오픈 | 디자이너 및 프론트엔드 |
+| **M7 ~ M8** | 공인시험기관 기술 성능 검증 및 시험성적서 발급 | KTL/KTR 공인 시험성적서 획득 | 품질 검수팀 |
+| **M9 ~ M10** | 필드 실증 테스트 및 타겟 유저 100명 필드 테스트 | 실증 만족도 90% 이상 달성 | 마케팅 및 운영팀 |
+| **M11 ~ M12** | 정식 상용화 배포 및 특허 2건 정식 등록 | 상용화 런칭 및 특허 등록증 | 대표자 및 전담 변리사 |
+
+### 4. 연구개발비 세부 정산 및 기술 자금 집행 내역서
+- **연구 인력비 (인건비)**: 참여 연구원 3인 급여 (월 300만 원 x 12개월 = 36,000,000원)
+- **연구 장비 및 재료 사입비**: 개발 서버, 센서, 로봇팔/부품 모듈 사입 (44,000,000원)
+- **외부 기술 위탁 및 시험분석비**: KTL 시험성적서 및 특허 법률 출원비 (20,000,000원)"""
 
     if domain == "fnb":
         domain_name = "F&B / 무인 로봇 매장 & 오프라인 유통"
@@ -249,6 +285,8 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 
 ### 2.5 지식재산권(IP) 및 특허 확보 방안
 - 핵심 동작 알고리즘 및 비즈니스 모델(BM)에 관한 특허 2건 출원 예정
+
+{rnd_extra_section}
 
 ---
 
