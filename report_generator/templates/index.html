@@ -44,6 +44,17 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="program_type">📋 지원사업 프로그램 규격 (분량 및 서식 옵션)</label>
+                        <select id="program_type" class="form-control">
+                            <option value="packages_15p">🏛️ 예비창업패키지 / 초기창업패키지 (15페이지 표준 규격)</option>
+                            <option value="cheongsa_12p">🏫 청년창업사관학교 (10~15페이지 집중 실행 규격)</option>
+                            <option value="rnd_25p">🔬 중기부 / 산업부 R&D 과제 (20~30페이지 기술개발 정밀 규격)</option>
+                            <option value="export_8p">🚢 수출바우처 / 마케팅 지원 (5~10페이지 GTM 시장진입 규격)</option>
+                            <option value="local_5p">🏢 지자체 소액 창업 지원 (5페이지 이내 숏폼 린 규격)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label for="target_customer">주요 타겟 고객층</label>
                         <input type="text" id="target_customer" class="form-control" placeholder="예: 1인 기업가, 소상공인, 예비창업자" required>
                     </div>
@@ -141,6 +152,7 @@
             const payload = {
                 title: document.getElementById('title').value,
                 category: document.getElementById('category').value,
+                program_type: document.getElementById('program_type').value,
                 target_customer: document.getElementById('target_customer').value,
                 core_features: document.getElementById('core_features').value,
                 budget: document.getElementById('budget').value,
