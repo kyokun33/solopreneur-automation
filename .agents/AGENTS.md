@@ -9,3 +9,10 @@
 
 ## 3. 문서 및 PDF 생성 필수 규칙 (Text Wrapping Safety)
 - **자동 줄바꿈 및 여백 잘림 방지 필수 준수**: 모든 문서, 보고서, PDF, HTML, 프롬프트 생성 시 텍스트 및 프롬프트 박스가 우측 여백 밖으로 넘어가 잘리지 않도록 반드시 자동 줄바꿈(Paragraph, WordWrap, Table Cell Auto Wrapping)을 적용하여 100% 잘림 없는 고품질 출력을 보장한다.
+
+## 4. 1인 기업 브랜드 제품명 매핑 규칙
+- **3분시리즈 1** (또는 **3분시리즈 프로젝트 1**): 본 프로젝트 첫 정식 상품인 `[AI 사업계획서 & 시장분석 보고서 자동 생성기 SaaS (v1.00)]`을 지칭한다.
+  - 관련 소스 코드: `report_generator/` 및 루트 `main.py`
+  - 라이브 서비스 URL: `https://solopreneur-automation.onrender.com`
+  - 핵심 제어: 크몽 주문번호 1회성 무인 자동 검증 & 소멸 시스템
+
