@@ -77,8 +77,11 @@ async def handle_generate(req: ReportRequest):
             content={"success": False, "detail": "❌ 유효하지 않은 주문번호 형태입니다. 올바른 크몽 주문번호(예: KM849201)를 입력해 주세요."}
         )
 
-    # 이미 사용 완료된 주문번호/키인지 확인
-    if key_str in keys_db and keys_db[key_str].get("used", False):
+    # 💡 무제한 데모 테스트 키 목록 (소멸하지 않고 언제나 100% 무한 사용)
+    UNLIMITED_DEMO_KEYS = ["DEMO-FREE-2026", "KMONG-FREE-TEST", "FREE-DEMO-2026", "TEST-FREE-KEY"]
+
+    # 이미 사용 완료된 주문번호/키인지 확인 (무제한 데모 키는 예외)
+    if key_str not in UNLIMITED_DEMO_KEYS and key_str in keys_db and keys_db[key_str].get("used", False):
         used_time = keys_db[key_str].get("used_at", "최근")
         report_title = keys_db[key_str].get("title", "")
         return JSONResponse(
