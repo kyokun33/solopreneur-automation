@@ -5,7 +5,7 @@ from schemas import ReportRequest
 from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, HRFlowable, Table, TableStyle
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, HRFlowable, Table, TableStyle, PageBreak, KeepTogether
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
@@ -51,7 +51,7 @@ class NumberedCanvas(canvas.Canvas):
                 self.saveState()
                 self.setFont(MAIN_FONT, 8)
                 self.setFillColor(colors.HexColor("#64748b"))
-                self.drawRightString(190 * 2.83, 282 * 2.83, "K-Startup 중기부 표준 사업계획서 (3분시리즈 1 v1.10)")
+                self.drawRightString(190 * 2.83, 282 * 2.83, "K-Startup 중기부 표준 사업계획서 (고고플렉스 AI 연구소)")
                 self.setStrokeColor(colors.HexColor("#cbd5e1"))
                 self.setLineWidth(0.5)
                 self.line(20 * 2.83, 280 * 2.83, 190 * 2.83, 280 * 2.83)
@@ -94,7 +94,7 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
     if req.program_type == "rnd_25p":
         rnd_extra_section = f"""---
 
-## 🔬 [R&D 전용 25P 초정밀 모듈] 기술개발 상세 파이프라인 & TRL 진단
+## [R&D 전용 25P 초정밀 모듈] 기술개발 상세 파이프라인 & TRL 진단
 
 ### 1. 기술성숙도(TRL, Technology Readiness Level) 9단계 달성 목표
 | TRL 단계 | 단계별 정의 | 현재 수준 | 사업 종료 시 목표 수준 | 검증 방법 및 증빙 |
@@ -164,7 +164,7 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
     if req.program_type in ["packages_15p", "cheongsa_12p", "rnd_25p"]:
         packages_extra_section = f"""---
 
-## 📊 [시장분석 & GTM 15P 모듈] 타겟 유저 세분화 및 밸류체인 정밀 분석
+## [시장분석 & GTM 15P 모듈] 타겟 유저 세분화 및 밸류체인 정밀 분석
 
 ### 1. 고객 페인포인트 정밀 수치 설문 조사 데이터
 - 타겟 유저 300명 대상 정밀 설문 조사 결과: 기존 대안 서비스 만족도 28.5%에 불과
@@ -219,8 +219,8 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 | **인건비 비중** | 매출의 35% ~ 40% (고비용) | **인건비 70% 이상 획기적 절감** | **비용 70%↓ 절감** |
 | **운영 시간** | 10시간 ~ 12시간 한정 운영 | **24시간 365일 무인 자동 가동** | **가동률 200%↑** |
 | **품질/일관성** | 조리자 숙련도 따라 오차 발생 | **로봇 알고리즘으로 균일한 최상 품질** | **오류율 0% 달성** |
-| **고객 대기시간**| 평균 10분 ~ 15분 소요 | **3초 결제 ➔ 3분 이내 제조/서빙** | **대기시간 80%↓** |"""
-        service_struct = "[고객 키오스크/앱 주문 결제] ➔ [AI 로봇 음료 제조 & 자동 서빙] ➔ [고객 수령 및 AI 자동 청결 관리]"
+| **고객 대기시간**| 평균 10분 ~ 15분 소요 | **3초 결제 -> 3분 이내 제조/서빙** | **대기시간 80%↓** |"""
+        service_struct = "[고객 키오스크/앱 주문 결제] -> [AI 로봇 음료 제조 & 자동 서빙] -> [고객 수령 및 AI 자동 청결 관리]"
         mono_text = """* **24시간 무인 매장 제품 직접 판매 수익 (평균 마진율 65% 이상)**
 * **로봇 매장 패키지 프랜차이즈 가맹비 및 원두/원자재 공급 유통 마진**
 * **무인 스마트 매장 사이니지 디스플레이 타겟 광고 수익**
@@ -254,7 +254,7 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 | **마케팅 효율** | 높은 수동 키워드 광고비 | **AI 타겟팅으로 광고 ROI 300% 향상** | **광고효율 300%↑** |
 | **물류 소요** | 직접 포장 및 택배 발송 | **100% 무인 물류 자동 발송** | **소요시간 0시간** |
 | **마진율** | 사입 마진 15~20% 내외 | **직접 위탁 유통 마진 35%~50%** | **마진율 2배↑** |"""
-        service_struct = "[고객 주문 결제] ➔ [AI 주문 자동 접수 & 무인 사입] ➔ [풀필먼트 자동 택배 배송]"
+        service_struct = "[고객 주문 결제] -> [AI 주문 자동 접수 & 무인 사입] -> [풀필먼트 자동 택배 배송]"
         mono_text = """* **상품 판매 유통 마진 수익 (사입가 대비 30~50% 마진 확보)**
 * **타겟 유저 대상 월간 정기 구독 배송 서비스 수익**
 * **소상공인 셀러 대상 B2B 도매 유통 공급 수수료**"""
@@ -287,7 +287,7 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 | **처리 속도** | 수일 ~ 수주 소요 | **3초 이내 즉시 완성 및 렌더링** | **속도 99%↑ 향상** |
 | **접근성** | 방문 대면 상담 필요 | **100% 무인 웹 자동 접속** | **접근성 100%** |
 | **사용 편의성** | 전문 지식 필수 | **1버튼 원터치 자동 완성** | **생산성 10배↑** |"""
-        service_struct = "[사용자 정보 입력] ➔ [AI 스마트 렌더링 엔진] ➔ [전문 리포트 PDF/MD 즉시 완성]"
+        service_struct = "[사용자 정보 입력] -> [AI 스마트 렌더링 엔진] -> [전문 리포트 PDF/MD 즉시 완성]"
         mono_text = """* **단건 이용권 결제 수익 (1회성 건당 9,900원~29,900원)**
 * **월간 정기 구독(SaaS) 수익 (월 29,900원 무제한 렌더링)**
 * **B2B 기업 맞춤형 API 연동 마진**"""
@@ -303,7 +303,7 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 | **2년 차 (2027년)** | 구독 유저 5,000명 | **25,000,000** | **300,000,000** | **55%** |
 | **3년 차 (2028년)** | 기업 유저 20,000명 | **80,000,000** | **960,000,000** | **65%** |"""
 
-    md_content = f"""# 📄 [K-Startup 정밀 수치 검증 사업계획서] {req.title}
+    md_content = f"""# [K-Startup 정밀 수치 검증 사업계획서] {req.title}
 
 * **사업 지원 규격**: {prog_name} ({prog_pages})
 * **감지된 감수 업종**: **{domain_name}**
@@ -313,7 +313,7 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 
 ---
 
-## ⚡ [1페이지 심사위원 핵심 요약서] (Executive Summary One-Pager)
+## [1페이지 심사위원 핵심 요약서] (Executive Summary One-Pager)
 
 | 항목 | 핵심 내용 요약 (심사 5분 핵심 체크 포인트) |
 | :--- | :--- |
@@ -324,13 +324,13 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 
 ---
 
-## 🎯 [{domain_name}] 업종 특화 핵심 평가 강조 포인트
+## [{domain_name}] 업종 특화 핵심 평가 강조 포인트
 
 {focus_points}
 
 ---
 
-## 1. 🎯 [문제 인식] (Problem) - 통계 및 페인포인트 수치화
+## 1. [문제 인식] (Problem) - 통계 및 페인포인트 수치화
 
 ### 1.1 창업아이템의 개발 동기 및 배경
 - 본 창업아이템 **{req.title}** 프로젝트는 기존 시장에 존재하는 비효율을 혁신하고, **{req.target_customer}** 고객층에게 초고속 무인 자동화 가치를 제공하기 위해 추진됩니다.
@@ -344,7 +344,7 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 
 ---
 
-## 2. 💡 [해결 방안] (Solution) - 정밀 스펙 & 수치적 차별성
+## 2. [해결 방안] (Solution) - 정밀 스펙 & 수치적 차별성
 
 ### 2.1 개발 및 구현 방안 (핵심 기술 및 서비스)
 {sol_text}
@@ -369,7 +369,7 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 
 ---
 
-## 3. 🚀 [실행 전략] (Scale-up) - 자금소요/시장진입 구체화
+## 3. [실행 전략] (Scale-up) - 자금소요/시장진입 구체화
 
 ### 3.1 비즈니스 모델(BM) 및 수익화 매커니즘
 {mono_text}
@@ -381,8 +381,8 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 
 ### 3.3 3단계 시장 진입 전략 (GTM 로드맵)
 * **Phase 1 (1~3개월 차)**: MVP 시제품 완성 및 초기 유저 100명 유치 (전환율 5% 목표)
-* **Phase 2 (6개월 차)**: 정식 서비스 유료 전환 및 마케팅 집행 ➔ 월 매출 목표 달성
-* **Phase 3 (1년 차)**: B2B 파트너십 확장 및 가맹/전국 인프라 구축 ➔ 연 매출 돌파
+* **Phase 2 (6개월 차)**: 정식 서비스 유료 전환 및 마케팅 집행 -> 월 매출 목표 달성
+* **Phase 3 (1년 차)**: B2B 파트너십 확장 및 가맹/전국 인프라 구축 -> 연 매출 돌파
 
 ### 3.4 마케팅/고객 유치 채널 및 CAC/ROI 전환율 계획
 * **온라인 타겟 마케팅**: SEO 검색 노출 최적화 블로그 및 숏폼 마케팅
@@ -393,7 +393,7 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 
 ---
 
-## 4. 📈 [성과 창출 & 팀 역량] (Performance & Team) - 추정 재무 수치
+## 4. [성과 창출 & 팀 역량] (Performance & Team) - 추정 재무 수치
 
 ### 4.1 연차별 예상 매출 및 성과 추정표
 {perf_table}
@@ -411,22 +411,16 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 
 ---
 
-## 🚫 [정부지원사업 지원 제외 / 제한 업종 사전 확인 주의사항]
+## [부록] K-Startup 제출 전 필수 검수 체크리스트 & 지원 제한 업종 사전 확인
 
-> [!CAUTION]
-> **지원 자격 필독**: 아래 업종에 해당될 경우 정부지원사업 서류 심사에서 **자동 지원 제외(탈락)** 처리될 수 있으므로 사전에 업종코드(KSIC)를 반드시 확인하시기 바랍니다.
+> **실무 제출 안내**: 본 부록은 K-Startup 지원사업 서류 제출 전, 감점 및 자동 탈락을 방지하기 위한 통합 검수 가이드입니다. 정부기관에 제출하시는 실제 사업계획서 본문(1.문제인식~4.팀역량)과 구분하여 1페이지로 독립 기입 제공됩니다.
 
-1. **원칙적 제외 업종**: 유흥·사행성 업종(단란주점, 도박, 게임장 등), 부동산 임대업, 금융/보험업
-2. **지원 제한 업종 (R&D 및 특정 지원사업 제한)**: 단순 도소매 및 단순 유통업 (혁신성이 낮다고 판단되는 기술 R&D 지원사업에서는 제외 대상이 될 수 있으므로 제조/IT 기술 결합 요소 필수 작성)
-3. **대부분 지원 가능 공모**: K-Startup 계열 (예비창업패키지, 초기창업패키지)은 제조, IT, 서비스, F&B, 콘텐츠 등 대부분 제한 없이 지원 가능합니다.
+### 1. 정부지원사업 지원 제외 / 제한 업종 사전 확인
+- **원칙적 제외 업종**: 유흥·사행성 업종(단란주점, 도박, 게임장 등), 부동산 임대업, 금융/보험업 (사전 제외 대상)
+- **기술 지원 제한 업종**: 단순 도소매 및 단순 유통업 (혁신성이 낮다고 판단되는 기술 R&D 지원사업에서는 제외 대상이 될 수 있으므로 제조/IT 기술 결합 요소 필수 작성)
+- **대부분 지원 가능 공모**: K-Startup 계열 (예비창업패키지, 초기창업패키지)은 대부분 제한 없이 지원 가능합니다.
 
----
-
-## 📋 [필수 제출 7대 증빙서류 준비 체크리스트 및 수치 정합성 검증]
-
-> [!IMPORTANT]
-> **실무 필수 지침**: 서류 제출 마감일 발급 지연 방지를 위해 사전 발급이 필수입니다. 특히 **사업계획서 상의 매출/예산 수치와 부가가치세 과세표준증명원(재무제표) 수치가 100% 일치해야 감점을 방지**할 수 있습니다.
-
+### 2. 필수 제출 7대 증빙서류 준비 체크리스트
 | 번호 | 필수 증빙 서류명 | 발급처 | 실무 점검 및 정합성 체크 포인트 |
 | :--- | :--- | :--- | :--- |
 | **1** | **사업자등록증 (또는 법인등기부등본)** | 홈택스 / 등기소 | **업종코드**가 본 지원사업 대상 업종과 사전 매칭되는지 필수 확인 |
@@ -561,16 +555,16 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
                         ('LEFTPADDING', (0,0), (-1,-1), 8),
                         ('RIGHTPADDING', (0,0), (-1,-1), 8),
                     ]))
-                    story.append(t)
+                    # 표가 페이지 중간에 잘리지 않도록 KeepTogether 보호 처리 (표 잘림 100% 영구 방지)
+                    story.append(KeepTogether([t]))
                     story.append(Spacer(1, spacer_height))
             table_lines = []
 
         if stripped.startswith("# "):
             story.append(Paragraph(stripped[2:], h1_style))
         elif stripped.startswith("## "):
-            # 부록 섹션 시작 시 독립된 한 장으로 페이지 분리 (PageBreak)
+            # 부록 섹션 시작 시 독립된 마지막 한 장으로 페이지 분리 (PageBreak)
             if "부록" in stripped or "지원 제외" in stripped:
-                from reportlab.platypus import PageBreak
                 story.append(PageBreak())
             story.append(Paragraph(stripped[3:], h2_style))
         elif stripped.startswith("### "):
