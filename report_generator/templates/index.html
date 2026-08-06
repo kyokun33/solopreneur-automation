@@ -34,25 +34,9 @@
                         <input type="text" id="title" class="form-control" placeholder="예: AI 기반 커스텀 렌더링 리포트 생성기" required>
                     </div>
 
-                    <div class="form-group">
-                        <label for="category">리포트 목적 / 분류</label>
-                        <select id="category" class="form-control">
-                            <option value="government">🏛️ 중소벤처기업부/K-Startup PSST 공식 표준 사업계획서</option>
-                            <option value="ir">📈 VC/엔젤투자 유치(IR) 제안서</option>
-                            <option value="market">📊 시장 분석 & TAM-SAM-SOM 수익성 검증서</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="program_type">📋 지원사업 프로그램 규격 (분량 및 서식 옵션)</label>
-                        <select id="program_type" class="form-control">
-                            <option value="packages_15p">🏛️ 예비창업패키지 / 초기창업패키지 (15페이지 표준 규격)</option>
-                            <option value="cheongsa_12p">🏫 청년창업사관학교 (10~15페이지 집중 실행 규격)</option>
-                            <option value="rnd_25p">🔬 중기부 / 산업부 R&D 과제 (20~30페이지 기술개발 정밀 규격)</option>
-                            <option value="export_8p">🚢 수출바우처 / 마케팅 지원 (5~10페이지 GTM 시장진입 규격)</option>
-                            <option value="local_5p">🏢 지자체 소액 창업 지원 (5페이지 이내 숏폼 린 규격)</option>
-                        </select>
-                    </div>
+                    <!-- 백엔드 자동 호환 숨김 파라미터 (중기부 K-Startup 100% 정통 합격 규격 자동 감지) -->
+                    <input type="hidden" id="category" value="government">
+                    <input type="hidden" id="program_type" value="packages_15p">
 
                     <div class="form-group">
                         <label for="target_customer">주요 타겟 고객층</label>
@@ -92,6 +76,15 @@
                         <label for="access_key" style="color:#818cf8; font-weight:700;">🔑 1회용 구매 인증 코드 (Access Key)</label>
                         <input type="text" id="access_key" class="form-control" placeholder="예: 크몽 주문번호 (무료체험: DEMO-FREE-2026)" required style="border-color:#6366f1;">
                         <p style="font-size:0.78rem; color:var(--text-muted); margin-top:6px;">* 크몽 구매 시 발급된 주문번호 8자리 또는 시리얼 코드를 입력하세요 (1회 생성 시 소멸).</p>
+                    </div>
+
+                    <!-- 💡 사업계획서 추가 편집 완성 가이드 안내 카드 -->
+                    <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(165, 180, 252, 0.25); border-radius: 12px; padding: 12px 14px; margin-bottom: 16px; display: flex; align-items: flex-start; gap: 10px;">
+                        <span style="font-size: 1.1rem; margin-top: 2px;">💡</span>
+                        <div style="font-size: 0.8rem; color: #cbd5e1; line-height: 1.5;">
+                            <strong style="color: #a5b4fc;">[사업계획서 활용 안심 안내]</strong><br>
+                            본 서비스는 중소벤처기업부 K-Startup 공식 표준 양식에 맞춘 <strong>전문 초안 및 정량 프레임워크</strong>를 자동 제공합니다. 정부 지원사업 제출 전 대표자님의 세부 구체적인 사업 정보에 맞춰 <strong>추가 편집하여 완벽하게 완성</strong>하시길 바랍니다.
+                        </div>
                     </div>
 
                     <button type="submit" class="btn-generate" id="btnSubmit">
