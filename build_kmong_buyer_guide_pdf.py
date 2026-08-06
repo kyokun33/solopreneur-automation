@@ -78,11 +78,12 @@ def build_kmong_buyer_pdf():
         Paragraph("<b>https://solopreneur-automation.onrender.com</b>", code_style),
         Spacer(1, 10),
 
-        Paragraph("⚡ 2. 3초 완결 보고서 생성 단계", h2_style),
-        Paragraph("<b>STEP 1:</b> 보고서 유형 선택 (정부지원사업용 / IR 투자유치용 / 시장분석용)", body_style),
-        Paragraph("<b>STEP 2:</b> 사업 프로젝트명, 타겟 고객, 예산 및 핵심 기능 입력", body_style),
-        Paragraph("<b>STEP 3:</b> [🚀 AI 보고서 3초 자동 생성하기] 버튼 클릭", body_style),
-        Paragraph("<b>STEP 4:</b> 완성된 마크다운(.md) 보고서 1초 다운로드 및 클립보드 복사", body_style),
+        Paragraph("⚡ 2. 3초 완결 보고서 생성 및 인증 방법", h2_style),
+        Paragraph("<b>STEP 1:</b> 라이브 웹사이트 접속 후 🔑 <b>1회용 인증 코드 입력란에 [크몽 주문번호]</b> 입력", body_style),
+        Paragraph("<b>STEP 2:</b> 보고서 유형 선택 (정부지원사업용 / IR 투자유치용 / 시장분석용)", body_style),
+        Paragraph("<b>STEP 3:</b> 사업 프로젝트명, 타겟 고객, 예산 및 핵심 기능 입력", body_style),
+        Paragraph("<b>STEP 4:</b> [🚀 AI 보고서 3초 자동 생성하기] 버튼 클릭 (1회 생성 시 주문번호 자동 소멸)", body_style),
+        Paragraph("<b>STEP 5:</b> 완성된 마크다운(.md) 보고서 1초 다운로드 및 클립보드 복사", body_style),
         Spacer(1, 10),
 
         Paragraph("💡 3. 고객 지원 및 유의 사항", h2_style),

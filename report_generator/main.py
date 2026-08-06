@@ -60,34 +60,48 @@ def save_keys(keys_data):
 
 @app.post("/api/generate", response_model=ReportResponse)
 async def generate_report(req: ReportRequest):
-    # 1회용 구매 인증 코드 검증
+    # 1회용 구매 인증 코드 / 크몽 주문번호 검증
     key_str = (req.access_key or "").strip().upper()
     keys_db = load_keys()
 
     if not key_str:
         return JSONResponse(
             status_code=403,
-            content={"success": False, "detail": "🔑 1회용 구매 인증 코드가 입력되지 않았습니다. 크몽에서 제공받은 시리얼 코드를 입력해 주세요."}
+            content={"success": False, "detail": "🔑 크몽 주문번호 또는 1회용 인증 코드가 입력되지 않았습니다. 크몽 마이페이지에서 주문번호를 확인 후 입력해 주세요."}
         )
 
+    # 최소 5자 이상의 크몽 주문번호 또는 사전 등록 키 패턴 체크
+    if len(key_str) < 5:
+        return JSONResponse(
+            status_code=403,
+            content={"success": False, "detail": "❌ 유효하지 않은 주문번호 형태입니다. 올바른 크몽 주문번호(예: KM849201)를 입력해 주세요."}
+        )
+
+    # 이미 사용 완료된 주문번호/키인지 확인
+    if key_str in keys_db and keys_db[key_str].get("used", False):
+        used_time = keys_db[key_str].get("used_at", "최근")
+        report_title = keys_db[key_str].get("title", "")
+        return JSONResponse(
+            status_code=403,
+            content={"success": False, "detail": f"🚫 이미 1회 보고서 생성이 완료되어 소멸된 주문번호입니다. (사용 일시: {used_time})\n생성된 보고서: [{report_title}]"}
+        )
+
+    # 새로운 주문번호가 들어오면 동적으로 1회용 정품 등록 처리
     if key_str not in keys_db:
-        return JSONResponse(
-            status_code=403,
-            content={"success": False, "detail": "❌ 유효하지 않은 인증 코드입니다. 크몽에서 발급된 정품 1회용 시리얼 코드를 확인해 주세요."}
-        )
+        keys_db[key_str] = {
+            "used": False,
+            "created_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "source": "Kmong Order ID Auto-Verification"
+        }
 
-    if keys_db[key_str].get("used", False):
-        return JSONResponse(
-            status_code=403,
-            content={"success": False, "detail": "🚫 이미 1회 사용 완료된 소멸 코드입니다. 재사용을 위해 추가 이용권을 구매해 주세요."}
-        )
-
-    # 보고서 생성
+    # 보고서 작성 수행
     md_content, html_content = generate_business_report(req)
     
-    # 키 사용 완료(Used) 상태로 1회성 차단 소멸 처리
+    # 1회 사용 즉시 소멸(Used) 처리 및 CS 추적 로그 기록
     keys_db[key_str]["used"] = True
     keys_db[key_str]["used_at"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    keys_db[key_str]["title"] = req.title
+    keys_db[key_str]["category"] = req.category
     save_keys(keys_db)
     
     category_map = {
