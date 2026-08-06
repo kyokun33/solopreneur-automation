@@ -64,14 +64,14 @@ class NumberedCanvas(canvas.Canvas):
 
 def detect_domain(title: str, features: str) -> str:
     text = (title + " " + features).lower()
-    if any(k in text for k in ["커피", "카페", "식당", "음료", "로봇", "서빙", "음식", "베이커리", "매장", "푸드", "디저트", "외식", "무인"]):
+    if any(k in text for k in ["반려동물", "펫", "강아지", "고양이", "친환경", "소재", "용품", "브랜드", "제조", "공장", "제품", "키트", "장비", "하드웨어", "부품", "설비"]):
+        return "hardware"
+    elif any(k in text for k in ["커피", "카페", "식당", "음료", "로봇", "서빙", "음식", "베이커리", "매장", "푸드", "디저트", "외식", "무인"]):
         return "fnb"
     elif any(k in text for k in ["쇼핑몰", "스토어", "의류", "패션", "유통", "판매", "배송", "마켓", "콘텐츠", "디자인"]):
         return "ecommerce"
     elif any(k in text for k in ["바이오", "헬스", "의료", "제약", "화장품", "뷰티", "임상"]):
         return "bio_health"
-    elif any(k in text for k in ["제조", "공장", "제품", "키트", "장비", "하드웨어", "부품", "설비"]):
-        return "hardware"
     return "it_saas"
 
 PROGRAM_SPECS = {
@@ -105,48 +105,48 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 | **TRL 7~8단계** | 양산 전 정밀 제품 제작 및 사업화 시스템 검증 | - | **완료 목표 (12개월 차)** | 필드 테스트 및 초기 매출 계약서 |
 | **TRL 9단계** | 사업화 양산 및 시장 진입 안정화 | - | **차년도 연계 목표** | 매출 세금계산서 및 양산 증명 |
 
-### 2. 소프트웨어 / 하드웨어 시스템 기술 명세서 (Architecture Specs)
-- **알고리즘 고도화**: {req.core_features} 처리 분당 요청 처리(RPS) 5,000회 이상 및 응답 속도 50ms 이내 유지
+### 2. 하드웨어 / 소프트웨어 기술 명세서 (Architecture Specs)
+- **성능 고도화**: {req.core_features} 처리 효율 5,000회 이상 및 응답/제조 속도 50ms 이내 유지
 - **데이터베이스 ERD 설계**: 사용자 액션 로그, 결제, 분산 데이터 파이프라인 100% 암호화 (AES-256 적용)
 - **보안 및 규제 준수**: ISO/IEC 27001 정보보안준수 및 개인정보보호법(PIPA) 기술적 보호조치 적용
-- **서버 인프라 구획**: AWS Kinesis / GCP BigQuery 기반 빅데이터 수집 및 마이크로서비스(MSA) 오토스케일링
+- **생산/서버 인프라 구획**: 친환경 소재 사입 공정 및 오토스케일링 빅데이터 수집 관리
 
 ### 3. 수학적 알고리즘 모델링 & 의사코드 (Pseudocode & Math Modeling)
-- **알고리즘 목적 함수**: min f(x) = sum(w_i * Cost_i) + lambda * Latency
-- **실시간 데이터 스트리밍 연산 파이프라인**: Kafka 메세지 큐 -> Spark Streaming 분산 집계 -> Redis 인메모리 캐싱
+- **목적 함수**: min f(x) = sum(w_i * Cost_i) + lambda * Latency
+- **실시간 연산 파이프라인**: 메시지 큐 -> 분산 집계 -> 인메모리 캐싱
 - **보안 토큰 암호화 수식**: Token = HMAC-SHA256(SecretKey, Payload || Timestamp)
 
 ### 4. 선행기술 조사 및 지식재산권(IP) 포트폴리오 10선 비교 분석표
 | 번호 | 특허/기술명 | 주요 권리 범주 | 본 프로젝트 차별화 포인트 | IP 회피 및 방어 전략 |
 | :--- | :--- | :--- | :--- | :--- |
-| **1** | 수동 제어 조리 시스템 | 조리 파라미터 수동 세팅 | **AI 알고리즘 실시간 자동 렌더링** | 독립 청구항 구성으로 100% 회피 |
+| **1** | 수동 제어 조리/제조 시스템 | 파라미터 수동 세팅 | **친환경 자동 렌더링/제조** | 독립 청구항 구성으로 100% 회피 |
 | **2** | 단일 데이터 파이프라인 | 유선 통신 기반 제어 | **SSL 256-bit 클라우드 분산 제어** | 기술 독창성 확보 및 특허 출원 |
-| **3** | 키오스크 결제 시스템 | 단순 결제 프로세스 | **1회용 인증 키 및 소멸 CS 추적** | 무인 자동화 독점 권리 확보 |
+| **3** | 무인 결제 및 주문 시스템 | 단순 결제 프로세스 | **1회용 인증 키 및 소멸 CS 추적** | 무인 자동화 독점 권리 확보 |
 | **4** | 분산 데이터 처리 모듈 | 배치 처리 방식 | **3초 완결 실시간 초고속 렌더링** | 처리 속도 특허권 출원 완료 |
-| **5** | 기본 물류 위탁 시스템 | 수동 포장 사입 | **무재고 풀필먼트 자동 연동** | 서시스 BM 특허 파이프라인 구축 |
+| **5** | 기본 물류 위탁 시스템 | 수동 포장 사입 | **무재고 풀필먼트 자동 연동** | 서비스 BM 특허 파이프라인 구축 |
 | **6** | 클라우드 오토스케일링 | 단일 서버 하드웨어 | **MSA 트래픽 분산 제어 기술** | 특허 신규 청구항 확보 완료 |
-| **7** | 실시간 청결 감지 제어 | 수동 위생 검사 | **비전 AI 자동 위생 감지 센서** | 전용 알고리즘 특허 등록 진행 |
+| **7** | 실시간 위생 감지 제어 | 수동 위생 검사 | **비전 AI 자동 위생 감지 센서** | 전용 알고리즘 특허 등록 진행 |
 
 ### 5. 공인시험기관 (KTL / KTR) 정밀 평가 항목 15종 세부 명세표
 | 평가 항목 | 단위 | 세계 수준 (비교) | 개발 목표치 | 시험 평가 방법 및 공인 기관 |
 | :--- | :--- | :--- | :--- | :--- |
 | **1. 시스템 반응 속도** | ms | 150ms 이내 | **50ms 이내** | KTL 공인 시험성적서 측정 |
-| **2. 동시 접속 처리 (RPS)**| RPS | 2,000 RPS | **5,000 RPS** | 부하 테스트 도구(JMeter) 검증 |
-| **3. 무인 가동 가동률** | % | 98.0% | **99.9% 이상** | 24시간 365일 실시간 센서 관제 |
+| **2. 동시 접속/제조 처리** | RPS | 2,000 RPS | **5,000 RPS** | 공인 시험기관 측정 |
+| **3. 무인 가동률** | % | 98.0% | **99.9% 이상** | 24시간 365일 실시간 관제 |
 | **4. 오류 발생율** | % | 2.5% 이하 | **0.1% 이하** | 로그 트래킹 시스템 자동 수집 |
 | **5. 데이터 암호화 안전성**| Bit | AES-128 | **AES-256** | 정보보호진흥원(KISA) 검증 |
 
-### 6. 12개월 차 월별 기술개발 상세 실행 계획표 (R&D Timeline)
-| 월 (Month) | 기술개발 세부 세부 과제 | 주요 마일스톤 및 딜리버러블 | 담당 인력 및 협력 기관 |
+### 6. 12개월 차 월별 상세 실행 계획표 (Timeline)
+| 월 (Month) | 세부 과제 | 주요 마일스톤 및 딜리버러블 | 담당 인력 및 협력 기관 |
 | :--- | :--- | :--- | :--- |
-| **M1 ~ M2** | 핵심 아키텍처 및 알고리즘 모듈 설계 | 시스템 아키텍처 정의서 작성 | 대표자 및 메인 개발자 |
-| **M3 ~ M4** | 1차 알파 시제품 개발 및 내부 테스트 | 알파 버전 시제품 구동 성공 | 개발팀 및 3D/HW 협력사 |
-| **M5 ~ M6** | UI/UX 시스템 연동 및 사용자 인터페이스 최적화 | 웹/앱 베타 서비스 오픈 | 디자이너 및 프론트엔드 |
-| **M7 ~ M8** | 공인시험기관 기술 성능 검증 및 시험성적서 발급 | KTL/KTR 공인 시험성적서 획득 | 품질 검수팀 |
-| **M9 ~ M10** | 필드 실증 테스트 및 타겟 유저 100명 필드 테스트 | 실증 만족도 90% 이상 달성 | 마케팅 및 운영팀 |
-| **M11 ~ M12** | 정식 상용화 배포 및 특허 2건 정식 등록 | 상용화 런칭 및 특허 등록증 | 대표자 및 전담 변리사 |
+| **M1 ~ M2** | 핵심 아키텍처 및 공정 설계 | 시스템 아키텍처 정의서 작성 | 대표자 및 메인 개발자 |
+| **M3 ~ M4** | 1차 알파 시제품 개발 및 내부 테스트 | 알파 버전 시제품 개발 성공 | 개발팀 및 HW/소재 협력사 |
+| **M5 ~ M6** | UI/UX 연동 및 사용자 최적화 | 시제품 베타 서비스 오픈 | 디자이너 및 프론트엔드 |
+| **M7 ~ M8** | 공인시험기관 성능 검증 | KTL/KTR 공인 시험성적서 획득 | 품질 검수팀 |
+| **M9 ~ M10** | 필드 실증 테스트 | 실증 만족도 90% 이상 달성 | 마케팅 및 운영팀 |
+| **M11 ~ M12** | 정식 상용화 배포 및 특허 등록 | 상용화 런칭 및 특허 등록증 | 대표자 및 전담 변리사 |
 
-### 7. 글로벌 특화 경쟁 기술 및 해외 시장 진출 전략 (Global R&D Pipeline)
+### 7. 글로벌 특화 경쟁 기술 및 해외 시장 진출 전략
 - 미국/유럽 PCT 국제 특허 동시 출원 준비 (글로벌 IP 회피 및 선점)
 - 해외 표준 기술 규격(CE, FCC) 사전 검증 테스트베드 구축
 
@@ -156,7 +156,7 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 
 ### 9. 연구개발비 12개월 세부 정산 및 기술 자금 집행 내역서
 - **연구 인력비 (인건비)**: 참여 연구원 3인 급여 (월 300만 원 x 12개월 = 36,000,000원)
-- **연구 장비 및 재료 사입비**: 개발 서버, 센서, 로봇팔/부품 모듈 사입 (44,000,000원)
+- **연구 장비 및 재료 사입비**: 개발 서버, 센서, 부품/소재 사입 (44,000,000원)
 - **외부 기술 위탁 및 시험분석비**: KTL 시험성적서 및 특허 법률 출원비 (20,000,000원)"""
 
     # 예창패/초창패 15p & 청창사 12p 전용 세부 시장조사 및 마케팅 파이프라인
@@ -177,7 +177,7 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 - **SOM (수익 시장)**: 초기 1~2년 차 진입 직영 및 가맹 유저 타겟 (약 30억 원 목표)
 
 ### 3. 마이클 포터 5-Forces 경쟁 환경 분석
-- **기존 경쟁 강도**: 수동 대행업체 난립하나 디지털 무인 자동화 솔루션 부재
+- **기존 경쟁 강도**: 수동 대행업체 난립하나 무인 자동화/친환경 솔루션 부재
 - **신규 진입 위협**: 기술 특허 출원으로 진입 장벽 구축
 - **구매자 협상력**: 초저가/고효율 제공으로 구매자 락인(Lock-in) 효과 극대화
 - **공급자 협상력**: 부품/원자재 다변화 공급망 구축으로 원가 안정성 확보
@@ -203,7 +203,41 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 - **목표 유저 획득 비용 (CAC)**: 건당 15,000원 이하 유지
 - **고객 생애 가치 (LTV)**: 유저당 평균 180,000원 (LTV/CAC 비율 12배 달성)"""
 
-    if domain == "fnb":
+    if domain == "hardware":
+        domain_name = "친환경 / 제조 / 하드웨어 / 바이오헬스"
+        focus_points = """- **친환경 소재 및 무독성 안정성 검증**: 친환경 무독성 소재 사용 및 KC/FDA 안전 인증으로 제품 신뢰도 극대화
+- **생산 단가 절감 및 3D/자동화 모듈 설계**: 대량 양산형 친환경 몰드 설계로 기존 수입 제품 대비 원가 50% 절감
+- **온/오프라인 옴니채널 유통 수치화**: 자사 몰, 와디즈 펀딩, 펫 샵 및 대형마트 공급망을 통한 매출 파이프라인 구축"""
+        prob_text_1 = f"현재 국내 관련 유통/제품 시장은 플라스틱 화학 소재 사용으로 인한 유해성 논란과 비싼 수입산 가격(평균 5~10만 원대)으로 인해 **{req.target_customer}** 고객층의 불만과 접근성 한계를 초래하고 있습니다."
+        prob_text_2 = f"기존 저가형 유통 제품들은 안전 인증 미비와 조기 파손 문제로 교체 주기가 짧아 높은 소비자 불만을 사고 있습니다. **{req.title}** 프로젝트는 이 문제점을 뿌리부터 해결합니다."
+        sol_text = f"**{req.title}** 프로젝트는 친환경 바이오 소재 기반의 맞춤 설계와 생산 공정 자동화를 결합하여 내구성과 안전성을 갖춘 고품질 제품을 합리적 가격에 제공하는 혁신 솔루션입니다."
+        tam_text = "국내 관련 제품 및 친환경 유통/헬스케어 시장 (약 8조 원 규모)"
+        sam_text = f"{req.target_customer} 중심의 친환경 프리미엄 수요 (약 8,000억 원 규모)"
+        som_text = "초기 1~2년 차 온라인 및 플래그십 진입 목표 (약 20억 원 목표)"
+        comp_table = f"""| 구분 | 기존 수입 / 기성 제품 | {req.title} (본 프로젝트) | 개선 효과 (수치) |
+| :--- | :--- | :--- | :--- |
+| **제품 소재** | 일반 화학 플라스틱 | **100% 친환경 무독성 바이오 소재** | **유해 물질 0% 달성** |
+| **소비자 단가** | 5만 원 ~ 10만 원 (고비용) | **자체 자동화 양산으로 합리적 가격** | **원가 50%↓ 절감** |
+| **내구성/안전성** | 쉽게 파손 / 미인증 | **KC 안전인증 및 정밀 내구 설계** | **수명 3배↑ 향상** |
+| **맞춤 설계** | 단일 규격 기성품 | **연령/체형별 맞춤 친환경 설계** | **고객 만족도 95%** |"""
+        service_struct = "[친환경 원자재 사입] -> [AI 정밀 설계 & 양산 공정] -> [KC 인증 및 전국 옴니채널 유통]"
+        mono_text = """* **자사 몰 및 온라인 커머스 직접 판매 수익 (마진율 50% 이상)**
+* **대형마트, 펫 숍 및 B2B 오프라인 도매 유통 마진**
+* **와디즈/텀블벅 크라우드 펀딩 리워드 매출 수익**
+* **해외 수출 바우처 연계 유통 마진**"""
+        budget_table = f"""| 사업비 집행 항목 | 세부 산출 근거 (수량 x 단가) | 금액 (원) | 정부지원금 (70%) | 자부담금 (30%) |
+| :--- | :--- | :--- | :--- | :--- |
+| **친환경 소재 금형 사입 및 시제품 개발**| 금형 제작 1식, 친환경 바이오 소재 원자재 | **45,000,000** | 31,500,000 | 13,500,000 |
+| **KC/FDA 안전 인증 및 성적서 발급** | 공인시험기관 KC 인증 및 독성 테스트 | **25,000,000** | 17,500,000 | 7,500,000 |
+| **온라인 마케팅 및 크라우드 펀딩** | 펀딩 마케팅, SNS 바이럴, 숏폼 제작 | **30,000,000** | 21,000,000 | 9,000,000 |
+| **합 계** | **총 사업비 ({req.budget})** | **100,000,000** | **70,000,000** | **30,000,000** |"""
+        perf_table = """| 연차 | 유효 구매 고객 수 | 추정 월 매출 (원) | 추정 연 매출 (원) | 영업이익률 (%) |
+| :--- | :--- | :--- | :--- | :--- |
+| **1년 차 (2026년)** | 월 2,000건 구매 유저 | **20,000,000** | **240,000,000** | **42%** |
+| **2년 차 (2027년)** | 월 8,000건 구매 유저 | **60,000,000** | **720,000,000** | **48%** |
+| **3년 차 (2028년)** | 월 25,000건 구매 유저 | **180,000,000** | **2,160,000,000** | **55%** |"""
+
+    elif domain == "fnb":
         domain_name = "F&B / 무인 로봇 매장 & 오프라인 유통"
         focus_points = """- **상권 및 유동인구 분석**: 핵심 거점 타겟 상권 분석, 유동인구 5만 명/일 기반 객단가 및 회전율 수치화
 - **24시간 무인 가동 경제성**: 24시간 365일 무인 가동을 통한 매장 매출 극대화 수치 근거
@@ -413,9 +447,9 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 
 ## [부록] K-Startup 제출 전 필수 검수 체크리스트 & 지원 제한 업종 사전 확인
 
-> **실무 제출 안내**: 본 부록은 K-Startup 지원사업 서류 제출 전, 감점 및 자동 탈락을 방지하기 위한 통합 검수 가이드입니다. 정부기관에 제출하시는 실제 사업계획서 본문(1.문제인식~4.팀역량)과 구분하여 1페이지로 독립 기입 제공됩니다.
+*본 부록은 K-Startup 지원사업 서류 제출 전 감점 및 자동 탈락을 방지하기 위한 통합 검수 가이드입니다. 정부기관 제출용 본문(1.문제인식~4.팀역량)과 구분하여 1페이지로 독립 기입됩니다.*
 
-### 1. 정부지원사업 지원 제외 / 제한 업종 사전 확인
+### 1. 지원 제외 및 제한 업종 사전 확인
 - **원칙적 제외 업종**: 유흥·사행성 업종(단란주점, 도박, 게임장 등), 부동산 임대업, 금융/보험업 (사전 제외 대상)
 - **기술 지원 제한 업종**: 단순 도소매 및 단순 유통업 (혁신성이 낮다고 판단되는 기술 R&D 지원사업에서는 제외 대상이 될 수 있으므로 제조/IT 기술 결합 요소 필수 작성)
 - **대부분 지원 가능 공모**: K-Startup 계열 (예비창업패키지, 초기창업패키지)은 대부분 제한 없이 지원 가능합니다.
@@ -511,10 +545,54 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
     story = []
     table_lines = []
     in_table = False
+    appendix_story = []
+    in_appendix = False
 
     for line in lines:
         stripped = line.strip()
         
+        # 부록 섹션 시작 감지 -> 강제 PageBreak 실행 및 부록 전체 KeepTogether 묶음
+        if stripped.startswith("## [부록]") or "K-Startup 제출 전 필수 검수" in stripped:
+            if in_table and table_lines:
+                # 남아있는 표 처리
+                in_table = False
+                raw_rows = []
+                for tline in table_lines:
+                    if ":---" in tline or "---:" in tline or "| --- |" in tline or "| :--- |" in tline:
+                        continue
+                    cols = [c.strip() for c in tline.split("|")[1:-1]]
+                    if cols:
+                        raw_rows.append(cols)
+                if raw_rows:
+                    table_data = []
+                    for r_idx, row in enumerate(raw_rows):
+                        row_data = []
+                        for cell in row:
+                            st = cell_header_style if r_idx == 0 else cell_style
+                            clean_cell = cell.replace("**", "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+                            row_data.append(Paragraph(clean_cell, st))
+                        table_data.append(row_data)
+                    t = Table(table_data, colWidths=None)
+                    t.setStyle(TableStyle([
+                        ('BACKGROUND', (0,0), (-1,0), colors.HexColor("#f1f5f9")),
+                        ('ALIGN', (0,0), (-1,-1), 'LEFT'),
+                        ('VALIGN', (0,0), (-1,-1), 'MIDDLE'),
+                        ('TEXTCOLOR', (0,0), (-1,0), colors.HexColor("#0f172a")),
+                        ('INNERGRID', (0,0), (-1,-1), 0.5, colors.HexColor("#cbd5e1")),
+                        ('BOX', (0,0), (-1,-1), 1, colors.HexColor("#94a3b8")),
+                        ('TOPPADDING', (0,0), (-1,-1), table_padding),
+                        ('BOTTOMPADDING', (0,0), (-1,-1), table_padding),
+                        ('LEFTPADDING', (0,0), (-1,-1), 8),
+                        ('RIGHTPADDING', (0,0), (-1,-1), 8),
+                    ]))
+                    story.append(KeepTogether([t]))
+                    story.append(Spacer(1, spacer_height))
+                table_lines = []
+
+            # 4.4절 종료 후 독립된 1페이지 부록으로 강제 페이지 넘김 (PageBreak)
+            story.append(PageBreak())
+            in_appendix = True
+
         # 마크다운 표(| ... |) 감지 및 ReportLab Table 변환기
         if stripped.startswith("|") and stripped.endswith("|"):
             in_table = True
@@ -555,25 +633,31 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
                         ('LEFTPADDING', (0,0), (-1,-1), 8),
                         ('RIGHTPADDING', (0,0), (-1,-1), 8),
                     ]))
-                    # 표가 페이지 중간에 잘리지 않도록 KeepTogether 보호 처리 (표 잘림 100% 영구 방지)
-                    story.append(KeepTogether([t]))
-                    story.append(Spacer(1, spacer_height))
+                    target_list = appendix_story if in_appendix else story
+                    target_list.append(KeepTogether([t]))
+                    target_list.append(Spacer(1, spacer_height))
             table_lines = []
 
         if stripped.startswith("# "):
-            story.append(Paragraph(stripped[2:], h1_style))
+            target_list = appendix_story if in_appendix else story
+            target_list.append(Paragraph(stripped[2:], h1_style))
         elif stripped.startswith("## "):
-            # 부록 섹션 시작 시 독립된 마지막 한 장으로 페이지 분리 (PageBreak)
-            if "부록" in stripped or "지원 제외" in stripped:
-                story.append(PageBreak())
-            story.append(Paragraph(stripped[3:], h2_style))
+            target_list = appendix_story if in_appendix else story
+            target_list.append(Paragraph(stripped[3:], h2_style))
         elif stripped.startswith("### "):
-            story.append(Paragraph(stripped[4:], h3_style))
+            target_list = appendix_story if in_appendix else story
+            target_list.append(Paragraph(stripped[4:], h3_style))
         elif stripped.startswith("---"):
-            story.append(HRFlowable(width="100%", thickness=0.8, color=colors.HexColor("#6366f1"), spaceBefore=14, spaceAfter=14))
+            target_list = appendix_story if in_appendix else story
+            target_list.append(HRFlowable(width="100%", thickness=0.8, color=colors.HexColor("#6366f1"), spaceBefore=10, spaceAfter=10))
         elif stripped:
             clean_text = stripped.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-            story.append(Paragraph(clean_text, body_style))
+            target_list = appendix_story if in_appendix else story
+            target_list.append(Paragraph(clean_text, body_style))
+
+    # 부록 전체 요소를 KeepTogether로 감싸서 한 장에 100% 통합 기입
+    if appendix_story:
+        story.append(KeepTogether(appendix_story))
 
     doc.build(story, canvasmaker=NumberedCanvas)
     return pdf_path
