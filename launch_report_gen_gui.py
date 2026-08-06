@@ -1,18 +1,10 @@
-import webview
+import subprocess
+import time
+import os
 
-def main():
-    url = "http://localhost:8000"
-    print(f"Launching Native Desktop Window for AI Report Generator SaaS: {url}")
-    
-    window = webview.create_window(
-        title="🚀 [마이크로 SaaS] AI 사업계획서 & 보고서 자동 생성기 (report_generator)",
-        url=url,
-        width=1150,
-        height=880,
-        resizable=True,
-        on_top=True
-    )
-    webview.start()
+url = "http://127.0.0.1:8090"
+print(f"Launching AI Report Generator App UI at {url}...")
 
-if __name__ == "__main__":
-    main()
+# 윈도우 전면 브라우저 창 띄우기
+cmd = f'start chrome --new-window "{url}"'
+subprocess.run(cmd, shell=True)

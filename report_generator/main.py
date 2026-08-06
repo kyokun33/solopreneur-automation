@@ -32,9 +32,63 @@ templates = Jinja2Templates(directory=template_dir)
 async def read_root(request: Request):
     return templates.TemplateResponse(request=request, name="index.html")
 
+KEYS_FILE = os.path.join(BASE_DIR, "keys.json")
+
+def load_keys():
+    if not os.path.exists(KEYS_FILE):
+        default_keys = {
+            "DEMO-FREE-2026": {"used": False, "created_at": "2026-08-06"},
+            "KMONG-REPORT-1001": {"used": False, "created_at": "2026-08-06"},
+            "KMONG-REPORT-1002": {"used": False, "created_at": "2026-08-06"},
+            "KMONG-REPORT-1003": {"used": False, "created_at": "2026-08-06"}
+        }
+        with open(KEYS_FILE, "w", encoding="utf-8") as f:
+            import json
+            json.dump(default_keys, f, ensure_ascii=False, indent=2)
+        return default_keys
+    try:
+        import json
+        with open(KEYS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+def save_keys(keys_data):
+    import json
+    with open(KEYS_FILE, "w", encoding="utf-8") as f:
+        json.dump(keys_data, f, ensure_ascii=False, indent=2)
+
 @app.post("/api/generate", response_model=ReportResponse)
 async def generate_report(req: ReportRequest):
+    # 1회용 구매 인증 코드 검증
+    key_str = (req.access_key or "").strip().upper()
+    keys_db = load_keys()
+
+    if not key_str:
+        return JSONResponse(
+            status_code=403,
+            content={"success": False, "detail": "🔑 1회용 구매 인증 코드가 입력되지 않았습니다. 크몽에서 제공받은 시리얼 코드를 입력해 주세요."}
+        )
+
+    if key_str not in keys_db:
+        return JSONResponse(
+            status_code=403,
+            content={"success": False, "detail": "❌ 유효하지 않은 인증 코드입니다. 크몽에서 발급된 정품 1회용 시리얼 코드를 확인해 주세요."}
+        )
+
+    if keys_db[key_str].get("used", False):
+        return JSONResponse(
+            status_code=403,
+            content={"success": False, "detail": "🚫 이미 1회 사용 완료된 소멸 코드입니다. 재사용을 위해 추가 이용권을 구매해 주세요."}
+        )
+
+    # 보고서 생성
     md_content, html_content = generate_business_report(req)
+    
+    # 키 사용 완료(Used) 상태로 1회성 차단 소멸 처리
+    keys_db[key_str]["used"] = True
+    keys_db[key_str]["used_at"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    save_keys(keys_db)
     
     category_map = {
         "government": "정부지원사업용",
