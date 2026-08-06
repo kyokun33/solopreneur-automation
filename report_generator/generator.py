@@ -226,6 +226,7 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 | **2년 차 (2027년)** | 가맹 15개점 확장 | **50,000,000** | **600,000,000** | **48%** |
 | **3년 차 (2028년)** | 전국 가맹 50개점 돌파 | **150,000,000** | **1,800,000,000** | **55%** |"""
 
+    # 100% 마크다운 순수 서식 (HTML 태그 및 불필요한 div 전면 제거로 마크다운 파싱 깨짐 완전 소탕)
     md_content = f"""# [K-Startup 정밀 수치 검증 사업계획서] {req.title}
 
 * **사업 지원 규격**: {prog_name} ({prog_pages})
@@ -334,14 +335,9 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 
 ---
 
-<div class="appendix-page" style="page-break-before: always; break-before: page; margin-top: 40px;">
-
 ## [정부지원사업 지원 제외 / 제한 업종 사전 확인 주의사항]
 
-<div style="border: 1px solid #ef4444; background: #fff5f5; border-radius: 6px; padding: 10px 14px; margin: 10px 0;">
-    <strong style="color: #dc2626; font-size: 0.9rem;">⚠️ 지원 자격 필독</strong><br>
-    <span style="font-size: 0.8rem; color: #475569;">아래 업종에 해당될 경우 정부지원사업 서류 심사에서 자동 지원 제외(탈락) 처리될 수 있으므로 사전에 업종코드(KSIC)를 반드시 확인하시기 바랍니다.</span>
-</div>
+> **지원 자격 필독**: 아래 업종에 해당될 경우 정부지원사업 서류 심사에서 자동 지원 제외(탈락) 처리될 수 있으므로 사전에 업종코드(KSIC)를 반드시 확인하시기 바랍니다.
 
 - **원칙적 제외 업종**: 유흥·사행성 업종(단란주점, 도박, 게임장 등), 부동산 임대업, 금융/보험업
 - **지원 제한 업종 (R&D 및 특정 지원사업 제한)**: 단순 도소매 및 단순 유통업 (혁신성이 낮다고 판단되는 기술 R&D 지원사업에서는 제외 대상이 될 수 있으므로 제조/IT 기술 결합 요소 필수 작성)
@@ -349,12 +345,9 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 
 ---
 
-## 📋 [필수 제출 7대 증빙서류 준비 체크리스트 및 수치 정합성 검증]
+## [필수 제출 7대 증빙서류 준비 체크리스트 및 수치 정합성 검증]
 
-<div style="border: 1px solid #f59e0b; background: #fffbeb; border-radius: 6px; padding: 10px 14px; margin: 10px 0;">
-    <strong style="color: #d97706; font-size: 0.9rem;">🔑 실무 필수 지침</strong><br>
-    <span style="font-size: 0.8rem; color: #475569;">서류 제출 마감일 발급 지연 방지를 위해 사전 발급이 필수입니다. 특히 사업계획서 상의 매출/예산 수치와 부가가치세 과세표준증명원(재무제표) 수치가 100% 일치해야 감점을 방지할 수 있습니다.</span>
-</div>
+> **실무 필수 지침**: 서류 제출 마감일 발급 지연 방지를 위해 사전 발급이 필수입니다. 특히 사업계획서 상의 매출/예산 수치와 부가가치세 과세표준증명원(재무제표) 수치가 100% 일치해야 감점을 방지할 수 있습니다.
 
 | 번호 | 필수 증빙 서류명 | 발급처 | 실무 점검 및 정합성 체크 포인트 |
 | :--- | :--- | :--- | :--- |
@@ -368,11 +361,34 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 
 ---
 *본 정밀 사업계획서는 중소벤처기업부 K-Startup PSST 공식 수치 검증 및 7대 서류 정합성 기준에 따라 "고고플렉스 AI 연구소"에서 정식 발급되었습니다.*
-
-</div>
 """
 
+    # HTML 변환 시 부록 구역을 인쇄/미리보기 전용 고급 카드 및 테두리 서식으로 변환
     html_content = markdown.markdown(md_content, extensions=['tables', 'fenced_code'])
+    
+    # 웹 미리보기 시 부록 구역을 sample PDF 100% 서식 카드로 감싸기
+    if "<h2>[정부지원사업 지원 제외" in html_content:
+        parts = html_content.split("<h2>[정부지원사업 지원 제외")
+        main_html = parts[0]
+        app_html = "<h2>[정부지원사업 지원 제외" + parts[1]
+        
+        # 아름다운 붉은 박스 및 주황 박스 카드로 정교 치환
+        app_html = app_html.replace(
+            "<blockquote>\n<p><strong>지원 자격 필독</strong>:",
+            '<div style="border: 1px solid #ef4444; background: #fff5f5; border-radius: 6px; padding: 10px 14px; margin: 10px 0;"><strong style="color: #dc2626; font-size: 0.9rem;">⚠️ 지원 자격 필독</strong><br><span style="font-size: 0.85rem; color: #475569;">'
+        ).replace(
+            "확인하시기 바랍니다.</p>\n</blockquote>",
+            '확인하시기 바랍니다.</span></div>'
+        ).replace(
+            "<blockquote>\n<p><strong>실무 필수 지침</strong>:",
+            '<div style="border: 1px solid #f59e0b; background: #fffbeb; border-radius: 6px; padding: 10px 14px; margin: 10px 0;"><strong style="color: #d97706; font-size: 0.9rem;">🔑 실무 필수 지침</strong><br><span style="font-size: 0.85rem; color: #475569;">'
+        ).replace(
+            "방지할 수 있습니다.</p>\n</blockquote>",
+            '방지할 수 있습니다.</span></div>'
+        )
+
+        html_content = main_html + '<div class="appendix-page">' + app_html + '</div>'
+
     return md_content, html_content
 
 def build_pdf_file(req: ReportRequest, pdf_path: str):
@@ -391,32 +407,32 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
 
     prog_type = req.program_type
     
-    body_size = 10.0
-    body_lead = 15.5
+    body_size = 9.5
+    body_lead = 14.5
     cell_size = 8.0
     cell_lead = 11.5
 
     if prog_type == "rnd_25p":
-        h1_size, h1_lead, h1_before, h1_after = 18, 24, 28, 16
-        h2_size, h2_lead, h2_before, h2_after = 14, 19, 22, 12
-        h3_size, h3_lead, h3_before, h3_after = 12, 16, 16, 8
-        body_after = 12
-        spacer_height = 16
-        table_padding = 7
-    elif prog_type in ["packages_15p", "cheongsa_12p"]:
-        h1_size, h1_lead, h1_before, h1_after = 17, 23, 20, 10
-        h2_size, h2_lead, h2_before, h2_after = 13, 17, 16, 8
-        h3_size, h3_lead, h3_before, h3_after = 11, 15, 12, 5
+        h1_size, h1_lead, h1_before, h1_after = 18, 24, 26, 14
+        h2_size, h2_lead, h2_before, h2_after = 14, 19, 20, 10
+        h3_size, h3_lead, h3_before, h3_after = 12, 16, 14, 6
         body_after = 10
-        spacer_height = 10
+        spacer_height = 14
         table_padding = 6
-    else:
-        h1_size, h1_lead, h1_before, h1_after = 16, 22, 16, 8
-        h2_size, h2_lead, h2_before, h2_after = 12, 16, 12, 6
-        h3_size, h3_lead, h3_before, h3_after = 10, 14, 8, 4
+    elif prog_type in ["packages_15p", "cheongsa_12p"]:
+        h1_size, h1_lead, h1_before, h1_after = 17, 23, 18, 8
+        h2_size, h2_lead, h2_before, h2_after = 13, 17, 14, 6
+        h3_size, h3_lead, h3_before, h3_after = 11, 15, 10, 4
         body_after = 8
         spacer_height = 8
         table_padding = 5
+    else:
+        h1_size, h1_lead, h1_before, h1_after = 16, 22, 14, 6
+        h2_size, h2_lead, h2_before, h2_after = 12, 16, 10, 4
+        h3_size, h3_lead, h3_before, h3_after = 10, 14, 6, 3
+        body_after = 6
+        spacer_height = 6
+        table_padding = 4
 
     h1_style = ParagraphStyle(
         'H1_PDF', fontName=BOLD_FONT, fontSize=h1_size, leading=h1_lead,
@@ -433,14 +449,6 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
     body_style = ParagraphStyle(
         'Body_PDF', fontName=MAIN_FONT, fontSize=body_size, leading=body_lead,
         textColor=colors.HexColor("#1e293b"), spaceAfter=body_after
-    )
-    cell_style = ParagraphStyle(
-        'Cell_PDF', fontName=MAIN_FONT, fontSize=cell_size, leading=cell_lead,
-        textColor=colors.HexColor("#1e293b")
-    )
-    cell_header_style = ParagraphStyle(
-        'Cell_Header_PDF', fontName=BOLD_FONT, fontSize=cell_size, leading=cell_lead,
-        textColor=colors.HexColor("#ffffff")
     )
 
     story = []
@@ -468,9 +476,13 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
                     for r_idx, row in enumerate(raw_rows):
                         row_data = []
                         for cell in row:
-                            st = cell_header_style if r_idx == 0 else cell_style
+                            st_cell = ParagraphStyle(
+                                'Cell_PDF_Normal', fontName=MAIN_FONT if r_idx > 0 else BOLD_FONT, 
+                                fontSize=cell_size, leading=cell_lead,
+                                textColor=colors.HexColor("#ffffff" if r_idx == 0 else "#1e293b")
+                            )
                             clean_cell = cell.replace("**", "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-                            row_data.append(Paragraph(clean_cell, st))
+                            row_data.append(Paragraph(clean_cell, st_cell))
                         table_data.append(row_data)
                     t = Table(table_data, colWidths=None)
                     t.setStyle(TableStyle([
@@ -482,8 +494,8 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
                         ('BOX', (0,0), (-1,-1), 1, colors.HexColor("#94a3b8")),
                         ('TOPPADDING', (0,0), (-1,-1), table_padding),
                         ('BOTTOMPADDING', (0,0), (-1,-1), table_padding),
-                        ('LEFTPADDING', (0,0), (-1,-1), 5),
-                        ('RIGHTPADDING', (0,0), (-1,-1), 5),
+                        ('LEFTPADDING', (0,0), (-1,-1), 4),
+                        ('RIGHTPADDING', (0,0), (-1,-1), 4),
                     ]))
                     story.append(KeepTogether([t]))
                     story.append(Spacer(1, spacer_height))
@@ -495,12 +507,12 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
 
         # 부록 전용 폰트 및 간격 최적화
         if in_appendix:
-            curr_body_size = 8.5
-            curr_body_lead = 12.0
-            curr_padding = 3.0
+            curr_body_size = 8.0
+            curr_body_lead = 11.5
+            curr_padding = 2.5
             app_body_style = ParagraphStyle(
                 'Body_PDF_App', fontName=MAIN_FONT, fontSize=curr_body_size, leading=curr_body_lead,
-                textColor=colors.HexColor("#1e293b"), spaceAfter=4
+                textColor=colors.HexColor("#1e293b"), spaceAfter=3
             )
         else:
             curr_padding = table_padding
@@ -528,8 +540,8 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
                         for cell in row:
                             st_cell = ParagraphStyle(
                                 'Cell_PDF_App_R', fontName=MAIN_FONT if r_idx > 0 else BOLD_FONT, 
-                                fontSize=7.5 if in_appendix else cell_size, 
-                                leading=10.5 if in_appendix else cell_lead,
+                                fontSize=7.0 if in_appendix else cell_size, 
+                                leading=9.5 if in_appendix else cell_lead,
                                 textColor=colors.HexColor("#ffffff" if r_idx == 0 else "#1e293b")
                             )
                             clean_cell = cell.replace("**", "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
@@ -546,12 +558,12 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
                         ('BOX', (0,0), (-1,-1), 1, colors.HexColor("#94a3b8")),
                         ('TOPPADDING', (0,0), (-1,-1), curr_padding),
                         ('BOTTOMPADDING', (0,0), (-1,-1), curr_padding),
-                        ('LEFTPADDING', (0,0), (-1,-1), 4),
-                        ('RIGHTPADDING', (0,0), (-1,-1), 4),
+                        ('LEFTPADDING', (0,0), (-1,-1), 3),
+                        ('RIGHTPADDING', (0,0), (-1,-1), 3),
                     ]))
                     target_list = appendix_story if in_appendix else story
                     target_list.append(KeepTogether([t]))
-                    target_list.append(Spacer(1, 3 if in_appendix else spacer_height))
+                    target_list.append(Spacer(1, 2 if in_appendix else spacer_height))
             table_lines = []
 
         if stripped.startswith("# "):
@@ -565,7 +577,7 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
             target_list.append(Paragraph(stripped[4:], h3_style))
         elif stripped.startswith("---"):
             target_list = appendix_story if in_appendix else story
-            target_list.append(HRFlowable(width="100%", thickness=0.8, color=colors.HexColor("#6366f1"), spaceBefore=4 if in_appendix else 8, spaceAfter=4 if in_appendix else 8))
+            target_list.append(HRFlowable(width="100%", thickness=0.8, color=colors.HexColor("#6366f1"), spaceBefore=3 if in_appendix else 6, spaceAfter=3 if in_appendix else 6))
         elif stripped:
             clean_text = stripped.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
             target_list = appendix_story if in_appendix else story
