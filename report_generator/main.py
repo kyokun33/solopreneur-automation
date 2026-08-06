@@ -130,11 +130,10 @@ async def generate_report_direct(req: ReportRequest):
 @app.post("/api/download-md")
 async def download_markdown_api(title: str = Form(default="사업계획서"), content: str = Form(default="")):
     safe_title = urllib.parse.quote(title.replace(' ', '_'))
-    filename = f"{safe_title}_사업계획서.md"
     return Response(
         content=content.encode("utf-8"),
         media_type="text/markdown; charset=utf-8",
-        headers={"Content-Disposition": f"attachment; filename*=UTF-8''{filename}"}
+        headers={"Content-Disposition": f"attachment; filename=\"report.md\"; filename*=UTF-8''{safe_title}.md"}
     )
 
 @app.post("/download-md")
