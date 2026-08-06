@@ -111,5 +111,21 @@
     "used_at": "2026-08-06 20:18:24",
     "title": "al 스마트 무인 스토어",
     "category": "government"
+  },
+  "KM849202": {
+    "used": true,
+    "created_at": "2026-08-06 20:26:17",
+    "source": "Kmong Order ID Auto-Verification",
+    "used_at": "2026-08-06 20:26:17",
+    "title": "ai 무인스마트 스토어",
+    "category": "government"
+  },
+  "KMONG-REPORT-1002": {
+    "used": true,
+    "created_at": "2026-08-06 20:29:20",
+    "source": "Kmong Order ID Auto-Verification",
+    "used_at": "2026-08-06 20:29:20",
+    "title": "ai 기반 산업공장",
+    "category": "government"
   }
 }
