@@ -16,8 +16,8 @@ from generator import generate_business_report
 
 app = FastAPI(
     title="AI Business Report Generator SaaS",
-    description="3분 만에 완성되는 K-Startup 대한민국 HWP/Word 공식 서식 동기화 사업계획서 자동 생성기 (3분시리즈 1 v1.20 정식버전)",
-    version="1.2.0"
+    description="3분 만에 완성되는 K-Startup 대한민국 HWP/Word 공식 서식 동기화 사업계획서 자동 생성기 (3분시리즈 1 v1.30 정식버전)",
+    version="1.3.0"
 )
 
 static_dir = os.path.join(BASE_DIR, "static")
@@ -133,15 +133,23 @@ async def generate_report_direct(req: ReportRequest):
 @app.post("/api/download-md")
 async def download_markdown_api(title: str = Form(default="사업계획서"), content: str = Form(default="")):
     safe_title = urllib.parse.quote(title.replace(' ', '_'))
+    # UTF-8 BOM (b'\xef\xbb\xbf') 추가로 HWP / MS Word 한글 깨짐 100% 영구 방지
+    bom_content = b'\xef\xbb\xbf' + content.encode("utf-8")
     return Response(
-        content=content.encode("utf-8"),
+        content=bom_content,
         media_type="text/markdown; charset=utf-8",
         headers={"Content-Disposition": f"attachment; filename=\"report.md\"; filename*=UTF-8''{safe_title}.md"}
     )
 
 @app.post("/download-md")
 async def download_markdown_direct(title: str = Form(default="사업계획서"), content: str = Form(default="")):
-    return await download_markdown_api(title, content)
+    safe_title = urllib.parse.quote(title.replace(' ', '_'))
+    bom_content = b'\xef\xbb\xbf' + content.encode("utf-8")
+    return Response(
+        content=bom_content,
+        media_type="text/markdown; charset=utf-8",
+        headers={"Content-Disposition": f"attachment; filename=\"report.md\"; filename*=UTF-8''{safe_title}.md"}
+    )
 
 @app.get("/health")
 async def health_check():

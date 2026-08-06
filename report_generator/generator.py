@@ -568,6 +568,10 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
         if stripped.startswith("# "):
             story.append(Paragraph(stripped[2:], h1_style))
         elif stripped.startswith("## "):
+            # 부록 섹션 시작 시 독립된 한 장으로 페이지 분리 (PageBreak)
+            if "부록" in stripped or "지원 제외" in stripped:
+                from reportlab.platypus import PageBreak
+                story.append(PageBreak())
             story.append(Paragraph(stripped[3:], h2_style))
         elif stripped.startswith("### "):
             story.append(Paragraph(stripped[4:], h3_style))

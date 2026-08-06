@@ -268,7 +268,8 @@
                 return;
             }
             const titleVal = (currentReportData.title || '사업계획서').replace(/[\/\\:*?"<>|]/g, '_');
-            const blob = new Blob([currentReportData.markdown_content], { type: 'text/markdown;charset=utf-8;' });
+            // '\uFEFF' (UTF-8 BOM) 헤더 추가로 한글(HWP) 및 MS Word에서 오픈 시 한글 글자 깨짐 100% 영구 방지
+            const blob = new Blob(['\uFEFF' + currentReportData.markdown_content], { type: 'text/markdown;charset=utf-8;' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = `${titleVal}_KStartup_PSST_사업계획서.md`;
