@@ -1,6 +1,7 @@
 import os
 import sys
 import datetime
+import urllib.parse
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 if BASE_DIR not in sys.path:
@@ -15,8 +16,8 @@ from generator import generate_business_report
 
 app = FastAPI(
     title="AI Business Report Generator SaaS",
-    description="3분 만에 완성되는 K-Startup 5대 업종 특화 합격 PSST 사업계획서 자동 생성기 (3분시리즈 1 v0.99c Beta)",
-    version="0.9.9c-beta"
+    description="3분 만에 완성되는 K-Startup 5대 업종 특화 합격 PSST 사업계획서 자동 생성기 (3분시리즈 1 v0.99d Beta)",
+    version="0.9.9d-beta"
 )
 
 static_dir = os.path.join(BASE_DIR, "static")
@@ -58,8 +59,7 @@ def save_keys(keys_data):
     with open(KEYS_FILE, "w", encoding="utf-8") as f:
         json.dump(keys_data, f, ensure_ascii=False, indent=2)
 
-@app.post("/api/generate", response_model=ReportResponse)
-async def generate_report(req: ReportRequest):
+async def handle_generate(req: ReportRequest):
     # 1회용 구매 인증 코드 / 크몽 주문번호 검증
     key_str = (req.access_key or "").strip().upper()
     keys_db = load_keys()
@@ -119,14 +119,27 @@ async def generate_report(req: ReportRequest):
         generated_at=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     )
 
+@app.post("/api/generate", response_model=ReportResponse)
+async def generate_report_api(req: ReportRequest):
+    return await handle_generate(req)
+
+@app.post("/generate-report", response_model=ReportResponse)
+async def generate_report_direct(req: ReportRequest):
+    return await handle_generate(req)
+
 @app.post("/api/download-md")
-async def download_markdown(title: str = Form(...), content: str = Form(...)):
-    filename = f"{title.replace(' ', '_')}_사업계획서.md"
+async def download_markdown_api(title: str = Form(default="사업계획서"), content: str = Form(default="")):
+    safe_title = urllib.parse.quote(title.replace(' ', '_'))
+    filename = f"{safe_title}_사업계획서.md"
     return Response(
         content=content.encode("utf-8"),
         media_type="text/markdown; charset=utf-8",
         headers={"Content-Disposition": f"attachment; filename*=UTF-8''{filename}"}
     )
+
+@app.post("/download-md")
+async def download_markdown_direct(title: str = Form(default="사업계획서"), content: str = Form(default="")):
+    return await download_markdown_api(title, content)
 
 @app.get("/health")
 async def health_check():
@@ -134,4 +147,4 @@ async def health_check():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8090, reload=True)
