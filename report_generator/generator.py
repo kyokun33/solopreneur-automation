@@ -74,7 +74,86 @@ def detect_domain(title: str, features: str) -> str:
         return "hardware"
     return "it_saas"
 
+EXPERT_SYSTEM_PROMPT = """당신은 15년 차 대한민국 정부지원사업(예창패/초창패/TIPS) 전문 심사위원이자 100억 대 VC 벤처캐피털 투자 심사역입니다.
+사용자가 입력한 [사업 아이템명], [타겟 고객], [핵심 경쟁력], [예산] 정보를 바탕으로 해당 업종에 100% 밀착된 무결점 수석 컨설턴트 수준의 전문 사업계획서를 작성하세요.
+
+반드시 마크다운(Markdown) 표와 세부 항목을 포함하여 아래 목차대로 정교하게 작성하세요:
+# 📄 [사업계획서] {title}
+* **분류**: {category}
+* **작성일자**: {now_str}
+* **타겟 고객**: {target_customer}
+* **예산 및 목표**: {budget}
+
+---
+
+## 1. 사업 개요 및 배경 (Executive Summary)
+### 1.1 추진 배경 및 문제 정의
+### 1.2 비전 및 핵심 가치
+
+## 2. 타겟 시장 분석 및 경쟁 우위 (Market & Competitor Analysis)
+### 2.1 목표 시장(TAM-SAM-SOM) 분석
+### 2.2 경쟁 우위 요소 (표 형식)
+
+## 3. 핵심 기술 및 서비스 스펙 (Product Specification)
+### 3.1 솔루션 핵심 기능
+### 3.2 서비스 구조
+
+## 4. 마케팅 전략 및 수익 모델 (GTM & Monetization)
+### 4.1 고투마켓(Go-To-Market) 마케팅 전략
+### 4.2 수익 모델 (Business Model)
+
+## 5. 재무 추정 및 실행 타임라인 (Financial & Roadmap)
+### 5.1 로드맵 (Phase 1, 2, 3)
+### 5.2 예산 집행 계획 (퍼센트 비중 포함)
+
+---
+*본 보고서는 "고고플렉스AI 연구소" AI 사업계획서 자동 생성 플랫폼에 의해 정식 발급되었습니다.*"""
+
+def call_openai_gpt(req: ReportRequest, api_key: str) -> str:
+    import json
+    import urllib.request
+    
+    url = "https://api.openai.com/v1/chat/completions"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}"
+    }
+    
+    user_prompt = f"""[사업 아이템명]: {req.title}
+[보고서 목적]: {req.category}
+[타겟 고객]: {req.target_customer}
+[핵심 기능/경쟁력]: {req.core_features}
+[예산 및 목표]: {req.budget}
+
+위 사업 조건에 100% 완벽히 밀착된 전문 컨설팅 사업계획서를 마크다운으로 작성해 주세요."""
+
+    data = {
+        "model": "gpt-4o-mini",
+        "messages": [
+            {"role": "system", "content": EXPERT_SYSTEM_PROMPT.format(
+                title=req.title, category=req.category, now_str=datetime.datetime.now().strftime("%Y년 %m월 %d일"),
+                target_customer=req.target_customer, budget=req.budget
+            )},
+            {"role": "user", "content": user_prompt}
+        ],
+        "temperature": 0.7
+    }
+    
+    req_obj = urllib.request.Request(url, data=json.dumps(data).encode("utf-8"), headers=headers)
+    with urllib.request.urlopen(req_obj, timeout=30) as resp:
+        res_json = json.loads(resp.read().decode("utf-8"))
+        return res_json["choices"][0]["message"]["content"]
+
 def generate_business_report(req: ReportRequest) -> tuple[str, str]:
+    api_key = req.openai_api_key or os.environ.get("OPENAI_API_KEY")
+    if api_key:
+        try:
+            md_content = call_openai_gpt(req, api_key)
+            html_content = markdown.markdown(md_content, extensions=['tables', 'fenced_code'])
+            return md_content, html_content
+        except Exception as e:
+            print(f"[WARN] OpenAI GPT Call failed: {e}, falling back to Smart Domain Classifier")
+
     category_titles = {
         "government": "정부지원사업 제출용 사업계획서",
         "ir": "투자 유치(IR) 제안서",

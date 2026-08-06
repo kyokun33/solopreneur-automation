@@ -58,6 +58,11 @@
                         <input type="text" id="budget" class="form-control" value="초기 예산 1,000만 원 / 월 목표 매출 500만 원" required>
                     </div>
 
+                    <div class="form-group">
+                        <label for="openai_api_key">🤖 OpenAI API Key <span style="font-size:0.75rem; color:#a5b4fc;">(선택사항 - 입력 시 100% 초고화질 LLM AI 자동생성)</span></label>
+                        <input type="password" id="openai_api_key" class="form-control" placeholder="sk-... (미입력 시 내장 전문가 스마트 엔진 가동)">
+                    </div>
+
                     <div class="form-group" style="background:rgba(99,102,241,0.08); padding:16px; border-radius:12px; border:1px dashed #6366f1;">
                         <label for="access_key" style="color:#818cf8; font-weight:700;">🔑 1회용 구매 인증 코드 (Access Key)</label>
                         <input type="text" id="access_key" class="form-control" placeholder="예: 크몽 주문번호 (무료체험: DEMO-FREE-2026)" required style="border-color:#6366f1;">
@@ -139,6 +144,7 @@
                 target_customer: document.getElementById('target_customer').value,
                 core_features: document.getElementById('core_features').value,
                 budget: document.getElementById('budget').value,
+                openai_api_key: document.getElementById('openai_api_key').value,
                 access_key: document.getElementById('access_key').value
             };
 
