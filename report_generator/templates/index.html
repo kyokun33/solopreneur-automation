@@ -70,8 +70,22 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="openai_api_key">🤖 OpenAI API Key <span style="font-size:0.75rem; color:#a5b4fc;">(선택사항 - 입력 시 100% 초고화질 LLM AI 자동생성)</span></label>
-                        <input type="password" id="openai_api_key" class="form-control" placeholder="sk-... (미입력 시 내장 전문가 스마트 엔진 가동)">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                            <label for="openai_api_key" style="margin-bottom:0;">🤖 OpenAI API Key <span style="font-size:0.75rem; color:#a5b4fc;">(선택사항)</span></label>
+                            <button type="button" onclick="openKeyHelpModal()" style="background:none; border:none; color:#818cf8; font-size:0.8rem; cursor:pointer; font-weight:600; text-decoration:underline;">
+                                ❓ 발급방법 & 100% 보안 안내
+                            </button>
+                        </div>
+                        <input type="password" id="openai_api_key" class="form-control" placeholder="sk-... (미입력 시 내장 전문가 스마트 엔진으로 가동)">
+                        
+                        <!-- 🔒 Security Assurance Card -->
+                        <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 10px 12px; margin-top: 8px; display: flex; align-items: flex-start; gap: 8px;">
+                            <span style="font-size: 1rem;">🛡️</span>
+                            <div style="font-size: 0.78rem; color: #a7f3d0; line-height: 1.4;">
+                                <strong>[보안 100% 보장 안심 문구]</strong><br>
+                                입력하신 API Key는 DB나 서버에 <strong>절대 저장되지 않으며</strong>, 사업계획서 렌더링 즉시 메모리에서 영구 소멸됩니다. (SSL 256-bit 암호화 직접 전송)
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group" style="background:rgba(99,102,241,0.08); padding:16px; border-radius:12px; border:1px dashed #6366f1;">
@@ -134,12 +148,57 @@
         </div>
     </div>
 
+    <!-- 🤖 OpenAI API Key Guide & Security Modal -->
+    <div id="keyHelpModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.85); backdrop-filter:blur(6px); z-index:9999; justify-content:center; align-items:center;">
+        <div style="background:#1e293b; border:1px solid #475569; border-radius:16px; width:90%; max-width:540px; padding:24px; color:#f8fafc; box-shadow:0 20px 25px -5px rgba(0,0,0,0.5);">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:12px; margin-bottom:16px;">
+                <h3 style="margin:0; font-size:1.2rem; color:#818cf8;">🤖 OpenAI API Key 발급방법 & 100% 보안 안내</h3>
+                <button onclick="closeKeyHelpModal()" style="background:none; border:none; color:#94a3b8; font-size:1.4rem; cursor:pointer;">&times;</button>
+            </div>
+            
+            <div style="font-size:0.9rem; line-height:1.6; color:#cbd5e1;">
+                <h4 style="color:#38bdf8; margin-top:0;">📌 어디서 API Key를 발급받나요?</h4>
+                <p style="margin-bottom:10px;">OpenAI 공식 개발자 센터에서 1분 만에 발급받으실 수 있습니다:</p>
+                <a href="https://platform.openai.com/api-keys" target="_blank" style="display:inline-block; background:#4338ca; color:#fff; padding:8px 16px; border-radius:8px; text-decoration:none; font-weight:600; font-size:0.85rem; margin-bottom:16px;">
+                    🔗 OpenAI 공식 API Keys 페이지 이동 ➔
+                </a>
+
+                <h4 style="color:#38bdf8; margin-top:10px;">📋 발급 3단계 순서</h4>
+                <ol style="padding-left:20px; margin-bottom:16px;">
+                    <li>위 버튼을 눌러 OpenAI 개발자 센터 로그인</li>
+                    <li><strong>[+ Create new secret key]</strong> 버튼 클릭</li>
+                    <li>생성된 <code>sk-...</code> 키를 복사하여 본 웹사이트 입력창에 붙여넣기</li>
+                </ol>
+
+                <div style="background:rgba(16,185,129,0.12); border:1px solid #10b981; border-radius:10px; padding:12px; margin-top:12px;">
+                    <h4 style="color:#34d399; margin:0 0 6px 0; font-size:0.95rem;">🛡️ 유출 걱정 ZERO (100% 보안 약속)</h4>
+                    <ul style="margin:0; padding-left:18px; font-size:0.82rem; color:#a7f3d0;">
+                        <li><strong>저장 0%</strong>: 입력하신 Key는 DB나 파일에 절대 기록 및 저장되지 않습니다.</li>
+                        <li><strong>즉시 소멸</strong>: 보고서 생성이 완료되는 순간 메모리 세션에서 영구 파기됩니다.</li>
+                        <li><strong>암호화 전송</strong>: HTTPS SSL 256-bit 통신을 통해 OpenAI 공식 서버로만 전달됩니다.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="text-align:right; margin-top:20px;">
+                <button onclick="closeKeyHelpModal()" style="background:#475569; border:none; color:#fff; padding:8px 20px; border-radius:8px; cursor:pointer; font-weight:600;">닫기</button>
+            </div>
+        </div>
+    </div>
+
     <form id="downloadForm" action="/api/download-md" method="POST" style="display:none;">
         <input type="hidden" name="title" id="dlTitle">
         <input type="hidden" name="content" id="dlContent">
     </form>
 
     <script>
+        function openKeyHelpModal() {
+            document.getElementById('keyHelpModal').style.display = 'flex';
+        }
+        function closeKeyHelpModal() {
+            document.getElementById('keyHelpModal').style.display = 'none';
+        }
+
         let currentReportData = null;
 
         document.getElementById('reportForm').addEventListener('submit', async function(e) {
