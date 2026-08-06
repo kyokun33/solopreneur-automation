@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Business Report Generator | 3분 완료 사업계획서 자동 생성</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            ⚡ 고고플렉스AI 연구소 <span style="font-size:0.75rem; background:rgba(99,102,241,0.2); color:#a5b4fc; padding:2px 8px; border-radius:12px; border:1px solid rgba(99,102,241,0.4);">SaaS PRO</span>
+        </div>
+        <div class="nav-links">
+            <button class="btn-pricing" onclick="openModal()">💎 요금제 / 무제한 구독</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="hero">
+            <h1>🚀 3분 만에 완성되는 AI 사업계획서 & 보고서</h1>
+            <p>아이템 정보만 입력하면 정부지원사업 제출용 및 IR 투자유치용 비즈니스 리포트를 자동 생성합니다.</p>
+        </div>
+
+        <div class="app-grid">
+            <!-- Left Input Form -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>📝 프로젝트 정보 입력</h2>
+                </div>
+                <form id="reportForm">
+                    <div class="form-group">
+                        <label for="title">사업 아이템 / 프로젝트명</label>
+                        <input type="text" id="title" class="form-control" placeholder="예: AI 기반 커스텀 렌더링 리포트 생성기" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">리포트 목적 / 분류</label>
+                        <select id="category" class="form-control">
+                            <option value="government">🏛️ 정부지원사업 제출용 사업계획서</option>
+                            <option value="ir">📈 IR 투자 유치 제안서</option>
+                            <option value="market">📊 시장 분석 & 수익성 검증 리포트</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="target_customer">주요 타겟 고객층</label>
+                        <input type="text" id="target_customer" class="form-control" placeholder="예: 1인 기업가, 소상공인, 예비창업자" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="core_features">핵심 기능 및 경쟁력</label>
+                        <textarea id="core_features" class="form-control" placeholder="예: 3초 만에 사업계획서 PDF 렌더링, 100% 무인 자동화" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="budget">목표 매출 및 예산</label>
+                        <input type="text" id="budget" class="form-control" value="초기 예산 1,000만 원 / 월 목표 매출 500만 원">
+                    </div>
+
+                    <button type="submit" class="btn-generate" id="btnSubmit">
+                        ✨ 사업계획서 자동 생성하기 (3초)
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right Preview & Download Output -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>📄 사업계획서 실시간 결과</h2>
+                    <div class="output-actions" id="actionBtns" style="display: none;">
+                        <button class="btn-sm" onclick="printReport()">🖨️ PDF / 인쇄</button>
+                        <button class="btn-sm" onclick="downloadMD()">📥 .MD 다운로드</button>
+                    </div>
+                </div>
+
+                <div id="outputArea">
+                    <div class="placeholder-box">
+                        <div style="font-size: 3rem; margin-bottom: 16px;">📝</div>
+                        <p>왼쪽 폼에 정보를 입력하신 후<br><strong>[사업계획서 자동 생성하기]</strong>를 클릭해주세요.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for Pricing -->
+    <div class="modal-overlay" id="pricingModal">
+        <div class="modal-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h2 style="font-size:1.5rem;">💎 요금 안내 및 구독 플랜</h2>
+                <button onclick="closeModal()" style="background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">✕</button>
+            </div>
+            <p style="color:var(--text-muted);">무인 1인 기업 가치를 실현하는 합리적인 가격 정책입니다.</p>
+            
+            <div class="pricing-cards">
+                <div class="price-card">
+                    <h3 style="color:#a5b4fc;">1회 생성이용권</h3>
+                    <div class="price-amount">9,900원</div>
+                    <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">단건 사업계획서 즉시 렌더링</p>
+                    <button class="btn-generate" style="font-size:0.9rem;" onclick="alert('토스페이먼츠/아임포트 결제창이 연동되는 위치입니다.')">구매하기</button>
+                </div>
+
+                <div class="price-card popular">
+                    <div style="font-size:0.75rem; background:var(--primary); color:#fff; padding:2px 8px; border-radius:10px; display:inline-block;">POPULAR</div>
+                    <h3 style="color:#ec4899; margin-top:6px;">PRO 월 무제한 구독</h3>
+                    <div class="price-amount">29,900원<span style="font-size:0.9rem; font-weight:normal;"> /월</span></div>
+                    <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:16px;">모든 템플릿 무제한 생성 + PDF 정식 발급</p>
+                    <button class="btn-generate" style="background:linear-gradient(135deg, var(--accent), var(--primary)); font-size:0.9rem;" onclick="alert('구독 결제 시스템이 연동되는 위치입니다.')">무제한 시작하기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form id="downloadForm" action="/api/download-md" method="POST" style="display:none;">
+        <input type="hidden" name="title" id="dlTitle">
+        <input type="hidden" name="content" id="dlContent">
+    </form>
+
+    <script>
+        let currentReportData = null;
+
+        document.getElementById('reportForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('btnSubmit');
+            btn.innerHTML = "⏳ 생성 중... (AI 엔진 가동 중)";
+            btn.disabled = true;
+
+            const payload = {
+                title: document.getElementById('title').value,
+                category: document.getElementById('category').value,
+                target_customer: document.getElementById('target_customer').value,
+                core_features: document.getElementById('core_features').value,
+                budget: document.getElementById('budget').value
+            };
+
+            try {
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const data = await response.json();
+                currentReportData = data;
+
+                if(data.success) {
+                    document.getElementById('outputArea').innerHTML = `
+                        <div class="report-content" id="printableReport">
+                            ${data.html_content}
+                        </div>
+                    `;
+                    document.getElementById('actionBtns').style.display = "flex";
+                }
+            } catch (err) {
+                alert("생성 중 오류가 발생했습니다. 다시 시도해주세요.");
+            } finally {
+                btn.innerHTML = "✨ 사업계획서 자동 생성하기 (3초)";
+                btn.disabled = false;
+            }
+        });
+
+        function printReport() {
+            const printContent = document.getElementById('printableReport').innerHTML;
+            const win = window.open('', '', 'height=700,width=900');
+            win.document.write('<html><head><title>사업계획서_인쇄</title>');
+            win.document.write('<style>body{font-family:sans-serif; padding:40px; line-height:1.6;} table{width:100%; border-collapse:collapse;} th,td{border:1px solid #ccc; padding:8px;}</style>');
+            win.document.write('</head><body>');
+            win.document.write(printContent);
+            win.document.write('</body></html>');
+            win.document.close();
+            win.print();
+        }
+
+        function downloadMD() {
+            if(!currentReportData) return;
+            document.getElementById('dlTitle').value = currentReportData.title;
+            document.getElementById('dlContent').value = currentReportData.markdown_content;
+            document.getElementById('downloadForm').submit();
+        }
+
+        function openModal() { document.getElementById('pricingModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('pricingModal').style.display = 'none'; }
+    </script>
+</body>
+</html>

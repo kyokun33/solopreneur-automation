@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💡 [비밀 치트키] 1인 기업 AI 업무 자동화 프롬프트 100선 가이드북 (100% 완장판)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-page: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #0f172a;
+            --text-sub: #475569;
+            --text-muted: #64748b;
+            --primary: #4f46e5;
+            --primary-light: #e0e7ff;
+            --primary-dark: #3730a3;
+            --accent-green: #059669;
+            --accent-amber: #d97706;
+            --border-subtle: #e2e8f0;
+            --card-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.03);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.75;
+            padding-bottom: 100px;
+        }
+
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #eef2ff 0%, #fae8ff 50%, #f0fdf4 100%);
+            padding: 45px 24px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: 35px;
+        }
+
+        .hero-cover-img {
+            max-width: 100%;
+            width: 440px;
+            height: auto;
+            border-radius: 18px;
+            box-shadow: 0 20px 30px -10px rgba(79, 70, 229, 0.2);
+            margin-bottom: 20px;
+            border: 4px solid #ffffff;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: #ffffff;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.88rem;
+            padding: 6px 18px;
+            border-radius: 30px;
+            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.12);
+            margin-bottom: 14px;
+        }
+
+        .hero-title {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            line-height: 1.35;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-sub);
+            max-width: 700px;
+            margin: 0 auto 20px auto;
+            word-break: keep-all;
+        }
+
+        .curiosity-box {
+            background: #ffffff;
+            border-left: 5px solid var(--primary);
+            border-radius: 14px;
+            padding: 22px 26px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 35px;
+        }
+
+        .curiosity-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+
+        .curiosity-text {
+            color: var(--text-sub);
+            font-size: 0.98rem;
+            line-height: 1.65;
+        }
+
+        /* Vector Step Infographic Styles */
+        .step-pipeline-wrapper {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 32px 24px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 40px;
+            border: 1px solid #f1f5f9;
+        }
+
+        .step-pipeline-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .step-pipeline-tag {
+            color: var(--primary);
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .step-pipeline-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-top: 4px;
+        }
+
+        .step-pipeline-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            align-items: stretch;
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .step-pipeline-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .step-pipeline-card {
+            background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+            border: 1.5px solid #e0e7ff;
+            border-radius: 16px;
+            padding: 20px 16px;
+            text-align: center;
+            position: relative;
+            transition: all 0.25s ease;
+        }
+
+        .step-pipeline-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 12px 24px -6px rgba(79, 70, 229, 0.18);
+        }
+
+        .step-circle-badge {
+            width: 38px;
+            height: 38px;
+            background: var(--primary);
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 1.1rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px auto;
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+        }
+
+        .step-card-num {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .step-card-heading {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .step-card-text {
+            font-size: 0.88rem;
+            color: var(--text-sub);
+            line-height: 1.45;
+        }
+
+        /* 3D Icons Banner */
+        .step-icons-banner {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .step-icons-img {
+            max-width: 100%;
+            width: 620px;
+            height: auto;
+            border-radius: 12px;
+        }
+
+        /* Category Nav Tabs */
+        .category-nav {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid var(--border-subtle);
+        }
+
+        .cat-tab {
+            background: #ffffff;
+            border: 1px solid var(--border-subtle);
+            color: var(--text-sub);
+            padding: 10px 18px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .cat-tab.active {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+        }
+
+        .cat-section {
+            display: none;
+        }
+
+        .cat-section.active {
+            display: block;
+        }
+
+        .prompt-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 22px;
+            border: 1px solid #f1f5f9;
+        }
+
+        .prompt-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .part-badge {
+            background: #e0e7ff;
+            color: #3730a3;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 16px;
+            margin-bottom: 4px;
+            display: inline-block;
+        }
+
+        .prompt-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .btn-copy {
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .btn-copy:hover {
+            background: var(--primary-dark);
+        }
+
+        .prompt-code-box {
+            background: #0f172a;
+            color: #f1f5f9;
+            border-radius: 10px;
+            padding: 16px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.92rem;
+            line-height: 1.55;
+            white-space: pre-wrap;
+        }
+
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 9999;
+        }
+
+        #toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero-banner">
+        <span class="hero-badge">💡 100% 완장판 - 1인기업 필수 프롬프트 총 100선 포함</span>
+        <h1 class="hero-title">밤샘 일하던 1인 기업가가 하루 4시간만 일하고<br/>매출 2배 만든 AI 프롬프트 100선</h1>
+        <p class="hero-subtitle">더 이상 밤새우지 마세요! 기획부터 마케팅, B2B 영업, 문서 자동화, 이미지 숏폼까지 100가지 치트키가 들어있습니다.</p>
+        <img src="./static/ebook_cover.png" alt="전자책 커버" class="hero-cover-img">
+    </div>
+
+    <div class="container">
+
+        <div class="curiosity-box">
+            <h3 class="curiosity-title">😲 "100가지 프롬프트로 24시간 불평 없이 일하는 10명의 에이스 직원을 고용하세요"</h3>
+            <p class="curiosity-text">
+                원하는 주제 카테고리를 선택하고, 필요한 프롬프트의 **[1초 복사]** 버튼을 눌러 ChatGPT에 바로 붙여넣으세요!
+            </p>
+        </div>
+
+        <!-- Vector Step Infographic Pipeline -->
+        <div class="step-pipeline-wrapper">
+            <div class="step-pipeline-header">
+                <div class="step-pipeline-tag">HIGH-PRECISION STEP GUIDE</div>
+                <h2 class="step-pipeline-title">⚡ 10초 만에 따라하는 선명한 4단계 실행 가이드</h2>
+            </div>
+            
+            <div class="step-icons-banner">
+                <img src="./static/step_icons_3d.png" alt="3D Step Icons Graphic" class="step-icons-img">
+            </div>
+
+            <div class="step-pipeline-grid">
+                <div class="step-pipeline-card">
+                    <div class="step-circle-badge">1</div>
+                    <div class="step-card-num">STEP 01</div>
+                    <div class="step-card-heading">📋 1초 복사하기</div>
+                    <div class="step-card-text">원하는 프롬프트의 <b>[1초 복사]</b> 버튼을 클릭합니다.</div>
+                </div>
+
+                <div class="step-pipeline-card">
+                    <div class="step-circle-badge">2</div>
+                    <div class="step-card-num">STEP 02</div>
+                    <div class="step-card-heading">💬 대화창 붙여넣기</div>
+                    <div class="step-card-text">ChatGPT / Claude 화면에 <b>Ctrl+V</b>로 붙여넣습니다.</div>
+                </div>
+
+                <div class="step-pipeline-card">
+                    <div class="step-circle-badge">3</div>
+                    <div class="step-card-num">STEP 03</div>
+                    <div class="step-card-heading">📌 내 정보 입력</div>
+                    <div class="step-card-text"><b>[ ]</b> 괄호 자리에 내 상품 이름만 써 넣습니다.</div>
+                </div>
+
+                <div class="step-pipeline-card">
+                    <div class="step-circle-badge">4</div>
+                    <div class="step-card-num">STEP 04</div>
+                    <div class="step-card-heading">⚡ 3초 자동 완성</div>
+                    <div class="step-card-text">엔터를 치면 10년 차 전문가 원고가 <b>3초 만에 쏟아집니다!</b></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Nav Tabs -->
+        <div class="category-nav">
+            <button class="cat-tab active" onclick="switchCat('cat1')">PART 1. 비즈니스 기획 (001~020)</button>
+            <button class="cat-tab" onclick="switchCat('cat2')">PART 2. 마케팅 & 카피 (021~040)</button>
+            <button class="cat-tab" onclick="switchCat('cat3')">PART 3. B2B 영업 & CS (041~060)</button>
+            <button class="cat-tab" onclick="switchCat('cat4')">PART 4. 업무 자동화 (061~080)</button>
+            <button class="cat-tab" onclick="switchCat('cat5')">PART 5. 이미지 & 숏폼 (081~100)</button>
+        </div>
+<div id="cat1" class="cat-section active">
+<h2 style="font-size:1.4rem; font-weight:800; margin-bottom:20px; color:var(--primary);">PART 1. 비즈니스 기획 & 무자본 아이템 (001~020)</h2>
+
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 001</span>
+                    <h3 class="prompt-title">📌 [001] 무자본 1인기업 고수익 아이템 발굴기</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p1')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p1">[역할] 너는 월 순수익 1,000만 원 1인 기업 비즈니스 모델(BM) 수석 컨설턴트야.
+[상황] 내가 가진 기술/관심사는 [예: 블로그 글쓰기, 인스타 피드 디자인, 엑셀 정리]이야.
+[지시] 초기 자본 50만 원 이하, 100% 온라인 무자본으로 7일 내 첫 매출을 낼 수 있는 고수익 아이템 3가지를 추천해 줘.
+[출력포맷] 1. 아이템명 2. 타겟 고객 3. 수익 창출 구조 4. 7일 실행 로드맵</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 002</span>
+                    <h3 class="prompt-title">📌 [002] 경쟁업체 고객 불만(Pain Point) 파고들기</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p2')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p2">[역할] 너는 경쟁사 파헤치기 전문 마케팅 데이터 분석가야.
+[지시] [경쟁업체명/서비스명]을 이용하는 고객들이 네이버 리뷰/지식iN에서 가장 불만을 가지는 요소 5가지를 분석해 줘. 그리고 1인 기업인 내가 이 빈틈을 파고들어 고객을 유입시킬 차별화 필살기를 제시해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 003</span>
+                    <h3 class="prompt-title">📌 [003] 3초 만에 끝내는 시장 조사 보고서</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p3')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p3">[지시] [관심 시장, 예: 소상공인 AI 마케팅] 시장의 현재 규모, 전년 대비 성장률, 그리고 내 상품을 무조건 살 핵심 고객 2명의 구체적 페르소나(나이, 직업, 가려운 곳)를 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 004</span>
+                    <h3 class="prompt-title">📌 [004] 3일 완성 린 MVP 핵심 기능 정의기</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p4')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p4">[지시] [내 사업 아이디어]를 코딩이나 복잡한 개발 없이 3일 만에 출시하기 위한 최소 기능 제품(MVP) 핵심 기능 3가지만 정의해 줘. 더 줄일 수 있는 요소도 같이 알려줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 005</span>
+                    <h3 class="prompt-title">📌 [005] 1페이지 Lean Canvas 사업계획서 요약</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p5')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p5">[지시] 아래 사업 아이디어를 정부지원사업이나 투자를 유치할 수 있는 1페이지 마크다운 표(Lean Canvas)로 변환해 줘.
+[사업 아이디어 요약 텍스트 입력]</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 006</span>
+                    <h3 class="prompt-title">📌 [006] 고단가 가격 책정 및 패키징 전략</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p6')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p6">[지시] [내 서비스/상품]의 가격을 단순 저가 경쟁이 아닌 high-ticket 고단가(예: 30만 원~100만 원)로 책정하기 위한 3단계 프라이싱 패키징 전략을 짜줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 007</span>
+                    <h3 class="prompt-title">📌 [007] 타겟 고객 심층 인터뷰 질문지 10선</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p7')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p7">[지시] [타겟 고객층]이 진짜 돈을 주고 해결하고 싶어 하는 핵심 페인 포인트를 뽑아내기 위한 1:1 심층 인터뷰 질문지 10선을 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 008</span>
+                    <h3 class="prompt-title">📌 [008] 1인 기업 브랜드명 & 슬로건 10종 추출</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p8')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p8">[지시] [사업 분야/주제]에 어울리는 기억하기 쉽고 감성적인 1인 기업 브랜드 이름 5개와 1초 만에 각인되는 슬로건 5개를 추천해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 009</span>
+                    <h3 class="prompt-title">📌 [009] SWOT 분석 & 위기 극복 플랜 B 수립</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p9')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p9">[지시] 내 사업 [사업 내용]의 강점, 약점, 기회, 위기(SWOT)를 분석하고, 만약 첫 달 매출이 안 나왔을 때 즉시 전환할 플랜 B 극복안을 제시해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 010</span>
+                    <h3 class="prompt-title">📌 [010] 고객 니즈 매트릭스 맵 생성기</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p10')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p10">[지시] [타겟 고객]의 니즈를 '긴급도'와 '결제 의사' 2x2 마트릭스로 분류하여, 내가 가장 먼저 공략해야 할 1순위 타겟 그룹을 지정해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 011</span>
+                    <h3 class="prompt-title">📌 [011] 무자본 온라인 사업 제안서 초안 작성기</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p11')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p11">[지시] 무자본으로 프리랜서/1인기업 서비스를 제안할 때 고객의 신뢰를 200% 얻을 수 있는 1페이지 무자본 온라인 서비스 제안서 표준 양식을 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 012</span>
+                    <h3 class="prompt-title">📌 [012] 초기 얼리버드 고객 확보 전략 추출</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p12')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p12">[지시] 서비스 출시 첫 주에 얼리버드 베타 테스트 고객 20명을 돈 한 푼 안 들이고 모집할 수 있는 리드 유입 아이디어 3가지를 제안해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 013</span>
+                    <h3 class="prompt-title">📌 [013] 1인 기업 린 스타트업 7일 실행 로드맵</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p13')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p13">[지시] 1인 기업가가 아이디어 구상부터 첫 매출 결제창 연결까지 7일 만에 마치는 일자별(Day 1~Day 7) 린 스타트업 실행 체크리스트를 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 014</span>
+                    <h3 class="prompt-title">📌 [014] 서비스 차별화 독점 가치(USP) 도출기</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p14')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p14">[지시] 동종 업계 수많은 경쟁자들 사이에서 고객이 왜 하필 '나'에게 사야 하는지 명확히 설득하는 독점적 가치 제안(USP) 3문장을 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 015</span>
+                    <h3 class="prompt-title">📌 [015] 무인 자동화 사업 이익률 계산 모델링</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p15')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p15">[지시] [디지털 상품/전자책/컨설팅] 판매 시 예상 판매가, 플랫폼 수수료, 마케팅 비용을 반영하여 월 순수익 300만 원 달성에 필요한 판매 수량과 이익률을 시뮬레이션해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 016</span>
+                    <h3 class="prompt-title">📌 [016] 조기 마케팅 파이프라인 체계 구축</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p16')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p16">[지시] 블로그/인스타 유입부터 오픈채팅방 유입, 결제 페이지로 이어지는 무인 마케팅 자동 펀널 파이프라인의 4단계를 구성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 017</span>
+                    <h3 class="prompt-title">📌 [017] 고객 페르소나 3D 정밀 도출기</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p17')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p17">[지시] [내 상품명]을 가장 필요로 하는 35세 1인 자영업자 '김대표'의 하루 일과, 가장 스트레스받는 순간, 소비 패턴을 반영한 3D 페르소나 리포트를 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 018</span>
+                    <h3 class="prompt-title">📌 [018] 용역/서비스 제공 계약서 필수 항목 체크</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p18')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p18">[지시] 1인 기업이 용역/외주 계약 시 대금 떼임을 방지하고 분쟁을 예방하기 위해 계약서에 반드시 넣어야 할 핵심 독소 조항 방지 5가지를 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 019</span>
+                    <h3 class="prompt-title">📌 [019] 지식 창업 수익화 주제 템플릿 추출</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p19')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p19">[지시] 내가 가진 지식과 경험 [경험/노하우 입력]을 2.9만 원 전자책, 15만 원 VOD, 50만 원 1:1 코칭으로 확장하는 3단계 지식 창업 트랙을 짜줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 020</span>
+                    <h3 class="prompt-title">📌 [020] 1인 기업 무인 마이크로 SaaS 기획기</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p20')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p20">[지시] 노코드 툴(Make/Bubble/Zapier)을 활용하여 혼자서 운영할 수 있는 무인 마이크로 SaaS 사업 기획안을 작성해 줘.</div>
+        </div>
+        </div>
+<div id="cat2" class="cat-section">
+<h2 style="font-size:1.4rem; font-weight:800; margin-bottom:20px; color:var(--primary);">PART 2. 마케팅 & 카피라이팅 & 바이럴 (021~040)</h2>
+
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 021</span>
+                    <h3 class="prompt-title">📌 [021] 조회수 5배 솟구치는 블로그/유튜브 제목 10선</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p21')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p21">[지시] [키워드/주제, 예: 소상공인 마케팅] 관련 네이버 블로그/유튜브 클릭률을 5배 높이는 제목 10개를 써줘. (호기심 유발형 3개, 숫자 강조 3개, 위기 경고 4개)</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 022</span>
+                    <h3 class="prompt-title">📌 [022] 인스타그램 카드뉴스 5장 대본 자동 완성</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p22')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p22">[주제] [카드뉴스 주제 입력]
+[지시] 인스타그램 5장 카드뉴스 대본을 써줘. 1장: 1초 훅 헤드라인, 2~4장: 알짜 꿀팁 3가지, 5장: 저장&공유 유도 CTA.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 023</span>
+                    <h3 class="prompt-title">📌 [023] 스마트스토어/크몽 상세페이지 PAS 카피</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p23')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p23">[지시] [제품/서비스명]을 판매하기 위한 상세페이지 문구를 PAS(Problem 문제제기 - Agitate 문제자극 - Solution 해결책) 공식을 적용하여 지갑이 열리게 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 024</span>
+                    <h3 class="prompt-title">📌 [024] 10초 만에 끝내는 숏폼 바이럴 스크립트</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p24')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p24">[지시] 30초 숏폼(틱톡/릴스/쇼츠) 대본을 작성해 줘. 0~3초 시선 고정 훅, 3~20초 핵심 노하우 2개, 20~30초 댓글 참여 질문 포함.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 025</span>
+                    <h3 class="prompt-title">📌 [025] SEO 최적화 네이버 블로그 원고 작성기</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p25')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p25">[지시] 키워드 [메인 키워드]를 자연스럽게 5회 이상 포함하고, H2/H3 태그 구조를 갖춘 SEO 최적화 1,500자 네이버 블로그 포스팅 원고를 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 026</span>
+                    <h3 class="prompt-title">📌 [026] 오픈채팅방 유입용 3줄 바이럴 홍보 문구</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p26')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p26">[지시] 오픈채팅방/카카오톡 그룹채널에 1초 만에 복사해서 뿌릴 수 있는 3줄 요약 강력 유입 홍보 문구를 써줘. (혜택+링크 포함)</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 027</span>
+                    <h3 class="prompt-title">📌 [027] 네이버 카페 타깃 침투형 홍보글 생성</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p27')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p27">[지시] 타깃 고객이 모여있는 네이버 카페/커뮤니티에 광고티 안 나게 유용한 정보를 공유하면서 자연스럽게 내 서비스로 유입시키는 칼럼형 글을 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 028</span>
+                    <h3 class="prompt-title">📌 [028] SNS 스폰서드 광고 카피 5종 패키지</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p28')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p28">[지시] 페이스북/인스타그램 스폰서드 타겟 광고용 카피 5종(직설형, 후기형, 경고형, 혜택 강조형, 질문형)을 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 029</span>
+                    <h3 class="prompt-title">📌 [029] 틱톡/릴스 시청 지속률 극대화 훅 15선</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p29')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p29">[지시] 숏폼 영상 첫 3초에서 시청자가 이탈하지 못하도록 뇌에 박히는 위기 자극형 훅(Hook) 멘트 15선 모음을 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 030</span>
+                    <h3 class="prompt-title">📌 [030] 뉴스레터 구독률 2배 높이는 메일 카피</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p30')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p30">[지시] 이메일 뉴스레터 오픈율을 2배 높이는 메일 제목 5개와, 읽자마자 링크를 클릭하게 만드는 본문 스토리 카피를 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 031</span>
+                    <h3 class="prompt-title">📌 [031] 구매 후기 유도 및 리뷰 이벤트 문구</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p31')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p31">[지시] 고객이 상품 구매 후 솔직하고 정성스러운 블로그/스마트스토어 후기를 남기도록 유도하는 감사 메시지 및 리뷰 이벤트 혜택 문구를 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 032</span>
+                    <h3 class="prompt-title">📌 [032] 감성 브랜드 스토리텔링 소개 원고</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p32')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p32">[지시] 1인 기업가로서 내가 왜 이 사업을 시작하게 되었는지 고객의 공감을 이끌어내는 감성 브랜드 스토리텔링 자기소개 글을 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 033</span>
+                    <h3 class="prompt-title">📌 [033] 소상공인 인스타그램 피드 캡션 템플릿</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p33')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p33">[지시] 소상공인/자영업자가 인스타그램에 일상과 상품을 자연스럽게 섞어 올릴 수 있는 피드 캡션 템플릿 3종을 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 034</span>
+                    <h3 class="prompt-title">📌 [034] 지역 기반 마케팅 당근 소식지 카피</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p34')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p34">[지시] 지역 기반 고객을 끌어모으기 위한 당근마켓 동네생활/소식지에 올릴 정겨우면서도 전문적인 홍보 글을 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 035</span>
+                    <h3 class="prompt-title">📌 [035] 유튜브 인트로 이탈률 방지 대본</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p35')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p35">[지시] 유튜브 영상 인트로 1분 동안 시청 지속률을 80% 이상 유지시키는 스크립트 구성 공식을 적용해 본문을 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 036</span>
+                    <h3 class="prompt-title">📌 [036] 리드 마그넷 전자책 랜딩페이지 카피</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p36')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p36">[지시] 무료 전자책(리드 마그넷)을 다운로드받기 위해 고객이 이메일과 연락처를 남기게 만드는 랜딩페이지 헤드라인 및 혜택 요약문 3가지를 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 037</span>
+                    <h3 class="prompt-title">📌 [037] 할인 및 프로모션 특가 알림 카피</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p37')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p37">[지시] 오늘 하루 선착순 10명 마감 임박을 알리는 강력한 할인 프로모션 긴급 카카오톡 알림 문구를 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 038</span>
+                    <h3 class="prompt-title">📌 [038] 바이럴 챌린지 및 고객 참여형 이벤트</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p38')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p38">[지시] 인스타그램/틱톡에서 고객들이 스스로 참여하고 친구를 태그하게 만드는 7일 바이럴 챌린지 이벤트 기획안을 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 039</span>
+                    <h3 class="prompt-title">📌 [039] 지식iN 답변 마케팅 정중한 템플릿</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p39')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p39">[지시] 네이버 지식iN 질문글에 전문가로서 진정성 있게 답변하면서 자연스럽게 블로그/상품으로 연결하는 정중한 답변 템플릿을 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 040</span>
+                    <h3 class="prompt-title">📌 [040] 콜드메일 오픈율 60% 헤드라인 10선</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p40')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p40">[지시] 기업 담당자에게 보내는 B2B 콜드메일 오픈율을 60% 이상으로 올려주는 호기심 자극 메일 제목 10선과 첫 문장을 써줘.</div>
+        </div>
+        </div>
+<div id="cat3" class="cat-section">
+<h2 style="font-size:1.4rem; font-weight:800; margin-bottom:20px; color:var(--primary);">PART 3. B2B 영업 & 제안 & 고객응대 CS (041~060)</h2>
+
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 041</span>
+                    <h3 class="prompt-title">📌 [041] 거절 없는 B2B 영업 제안 이메일</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p41')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p41">[지시] [타겟 회사/대표]에게 [내 서비스명]을 제안하는 300자 이내의 정중하면서도 성과(시간/비용 절감)를 강조하는 제안 이메일을 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 042</span>
+                    <h3 class="prompt-title">📌 [042] 악성 리뷰 및 까다로운 불만 고객 대응</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p42')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p42">[고객 불만 텍스트 입력]
+[지시] 감정적으로 쏘아붙이는 악성 고객에 대해 공감하면서도 법적/규정적 기준을 정중하게 설명하고 대안을 제시하는 프로 CS 답변을 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 043</span>
+                    <h3 class="prompt-title">📌 [043] 비싸요 소리 들었을 때 바로 결제시키는 대화법</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p43')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p43">[상황] 고객이 "생각보다 가격이 너무 비싼데요?"라고 거절할 때, 가격을 깎아주지 않고 가치를 증명하여 결제로 연결하는 3단계 설득 대화 스크립트를 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 044</span>
+                    <h3 class="prompt-title">📌 [044] B2B 미팅 후 24시간 내 발송 웰컴 메일</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p44')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p44">[지시] B2B 영업 미팅이 끝난 후 24시간 내에 미팅 내용 정리, 핵심 과업, 다음 스케줄을 안내하는 깔끔한 웰컴 감사 이메일을 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 045</span>
+                    <h3 class="prompt-title">📌 [045] 1인 기업 서비스 소개서 1페이지 팩트시트</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p45')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p45">[지시] 내 1인 기업 서비스의 핵심 요약, 주요 실적, 서비스 범위, 단가를 한눈에 보여주는 1페이지 B2B 서비스 소개 팩트시트를 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 046</span>
+                    <h3 class="prompt-title">📌 [046] 수주율 높이는 제안서 과업 범위 작성</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p46')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p46">[지시] 외주/컨설팅 제안서 작성 시 고객이 과업 범위를 오해하지 않도록 정확한 작업 포함 항목과 제외 항목(Out of Scope)을 명시하는 문구를 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 047</span>
+                    <h3 class="prompt-title">📌 [047] 결제 지연 고객 정중한 대금 청구 안내</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p47')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p47">[지시] 결제 기한이 지난 고객에게 감정을 상하지 않게 하면서도 기한 내 입금을 정중하게 독촉하는 대금 청구 안내문 2종을 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 048</span>
+                    <h3 class="prompt-title">📌 [048] 재계약 및 장기 서비스 제안 매뉴얼</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p48')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p48">[지시] 기존 프로젝트가 종료되는 시점에 연장 계약 및 장기 파트너십을 제안하는 할인 혜택 포함 재계약 제안서를 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 049</span>
+                    <h3 class="prompt-title">📌 [049] 고객 환불 요청 시 원활한 합의 가이드</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p49')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p49">[지시] 서비스에 불만을 품고 환불을 요구하는 고객과 원만하게 합의하고 분쟁을 최소화하는 환불 처리 매뉴얼 및 안내 멘트를 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 050</span>
+                    <h3 class="prompt-title">📌 [050] VIP 단골 고객 관리 감사 메시지 5종</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p50')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p50">[지시] 내 상품을 재구매한 VIP 단골 고객에게 감사의 마음을 전하고 특별 비공개 혜택을 제공하는 VIP 전용 메시지 5종을 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 051</span>
+                    <h3 class="prompt-title">📌 [051] 제휴 및 콜라보 제안 메시지 템플릿</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p51')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p51">[지시] 관련 분야 인플루언서나 타 업체 대표에게 윈-윈(Win-Win) 할 수 있는 제휴/콜라보를 제안하는 인스타그램 DM 및 이메일 템플릿을 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 052</span>
+                    <h3 class="prompt-title">📌 [052] 견적서 표기용 상세 작업항목 설명기</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p52')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p52">[지시] 견적서를 전달할 때 단가 숫자만 달랑 보내지 않고, 작업에 들어가는 정성과 세부 항목을 가치 있게 설명하는 견적 안내문을 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 053</span>
+                    <h3 class="prompt-title">📌 [053] 영업 미팅 전 사전 질문 리스트 10선</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p53')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p53">[지시] B2B 미팅 전 고객의 진짜 니즈와 예산을 정확히 파악하기 위한 사전 파악 질문지 10선을 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 054</span>
+                    <h3 class="prompt-title">📌 [054] 계약 이행 지연 시 사전 양해 정중문</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p54')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p54">[지시] 사정이 생겨 납품 일정이 2일 지연될 때 고객의 양해를 구하고 신뢰를 잃지 않는 양해 이메일을 정중하게 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 055</span>
+                    <h3 class="prompt-title">📌 [055] 신규 고객 온보딩 안내 가이드 메일</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p55')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p55">[지시] 신규 구매 고객에게 서비스 이용 방법, 자주 묻는 질문(FAQ), 담당자 연락처를 친절하게 안내하는 온보딩 가이드 메일을 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 056</span>
+                    <h3 class="prompt-title">📌 [056] 서비스 만족도 조사 설문 문항 추출</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p56')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p56">[지시] 서비스 이용 직후 고객의 솔직한 평점과 개선점을 수집하기 위한 5문항의 짧은 만족도 설문지를 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 057</span>
+                    <h3 class="prompt-title">📌 [057] 이탈 고객 되찾아오는 리타게팅 웰컴 메시지</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p57')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p57">[지시] 한동안 구매가 없던 이탈 고객에게 신상품 출시 소식과 함께 돌아오도록 재방문 쿠폰을 선물하는 복귀 웰컴 메시지를 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 058</span>
+                    <h3 class="prompt-title">📌 [058] B2B 추천인 소개(Referral) 인센티브 제안</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p58')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p58">[지시] 기존 고객이 지인을 소개할 때 양쪽 모두에게 혜택을 주는 B2B 추천인 소개(Referral) 인센티브 프로그램 안내문을 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 059</span>
+                    <h3 class="prompt-title">📌 [059] 문의 고객 자동 응답 카카오 알림톡 문구</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p59')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p59">[지시] 퇴근 후나 주말에 들어온 문의 고객에게 1분 내에 자동 발송되는 카카오 알림톡/문자 상담 안내 문구를 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 060</span>
+                    <h3 class="prompt-title">📌 [060] 무단 예약 취소(노쇼) 예방 사전 안내</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p60')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p60">[지시] 노쇼(No-Show 무단 예약 취소)로 인한 손실을 막기 위해 예약 전날 자동 발송하는 매너 예약 확인 문자를 써줘.</div>
+        </div>
+        </div>
+<div id="cat4" class="cat-section">
+<h2 style="font-size:1.4rem; font-weight:800; margin-bottom:20px; color:var(--primary);">PART 4. 업무 자동화 & 문서 요약 & 데이터 (061~080)</h2>
+
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 061</span>
+                    <h3 class="prompt-title">📌 [061] 10페이지 보고서 1분 3줄 핵심 요약</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p61')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p61">[지시] 아래 10페이지 분량의 긴 보고서/칼럼을 읽고 1) 3줄 핵심 요약, 2) 주요 수치 및 데이터, 3) 향후 실행 액션 3가지를 정리해 줘.
+[긴 글 텍스트 입력]</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 062</span>
+                    <h3 class="prompt-title">📌 [062] 엑셀 중복 이메일 제거 파이썬 스크립트</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p62')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p62">[목표] 엑셀(.xlsx) 파일 안에서 중복된 이메일 주소를 자동으로 제거하고, 깔끔한 결과물 파일로 저장하는 파이썬(pandas) 코드를 주석과 함께 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 063</span>
+                    <h3 class="prompt-title">📌 [063] 엑셀 복잡한 VLOOKUP / XLOOKUP 자동 공식</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p63')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p63">[지시] [조건 설명: A열의 고객ID를 찾아 B열의 구매금액을 가져오는 상황]에 맞는 엑셀 VLOOKUP 및 XLOOKUP 공식 작성법과 사용법을 단계별로 알려줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 064</span>
+                    <h3 class="prompt-title">📌 [064] 회의록 음성 텍스트 메인 안건 요약</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p64')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p64">[지시] 아래 회의록 음성 변환 텍스트를 읽고 결정된 메인 안건, 담당자별 할 일(Task), 다음 미팅 일정을 마크다운 표로 정돈해 줘.
+[회의록 텍스트 입력]</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 065</span>
+                    <h3 class="prompt-title">📌 [065] CSV 데이터 정리 및 통계 인사이트 도출</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p65')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p65">[지시] 아래 CSV 데이터 텍스트를 분석하여 가장 매출이 높은 상위 3개 항목과 데이터가 시사하는 비즈니스 인사이트 3가지를 도출해 줘.
+[데이터 입력]</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 066</span>
+                    <h3 class="prompt-title">📌 [066] 매일 아침 업무 우선순위 Task 자동 배열</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p66')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p66">[지시] 오늘 내가 해야 할 일 리스트 [할 일 목록 입력]를 긴급도와 중요도(아이젠하워 마트릭스)에 따라 1순위부터 우선순위를 자동 배치해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 067</span>
+                    <h3 class="prompt-title">📌 [067] PDF 전문 요약 및 Q&A 핵심 추출</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p67')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p67">[지시] 아래 PDF 문서 텍스트에서 가장 중요한 핵심 개념 5가지를 정의하고, 독자가 자주 물어볼 법한 Q&A 3쌍을 만들어 줘.
+[문서 내용 입력]</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 068</span>
+                    <h3 class="prompt-title">📌 [068] 파이썬 크롤링 기반 블로그 데이터 수집</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p68')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p68">[목표] 특정 키워드의 네이버 블로그 최신 글 제목과 URL을 수집하는 기초 파이썬 BeautifulSoup 크롤링 코드를 작성하고 주석을 달아줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 069</span>
+                    <h3 class="prompt-title">📌 [069] 이메일 템플릿 자동 분류 및 태그 지정</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p69')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p69">[지시] 고객에게 들어온 이메일 문의 내용 [문의 내용]을 보고 '단가 문의/기술 지원/환불 요청/제휴 문의' 중 어디에 해당하는지 자동 태그 분류해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 070</span>
+                    <h3 class="prompt-title">📌 [070] 노션(Notion) 업무 관리 대시보드 체계</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p70')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p70">[지시] 1인 기업가가 노션(Notion)에 구축해야 할 프로젝트 관리, 고객 DB, 재무 정산 데이터베이스 구조 및 속성(Property) 설계를 구성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 071</span>
+                    <h3 class="prompt-title">📌 [071] 주간 업무 보고서 템플릿 자동 생성</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p71')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p71">[지시] 이번 주 진행한 업무 성과, 발생한 이슈, 다음 주 계획을 한눈에 보고할 수 있는 주간 업무 보고서 마크다운 템플릿을 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 072</span>
+                    <h3 class="prompt-title">📌 [072] 월간 가계부 및 사업 경비 자동 정산</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p72')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p72">[지시] 이번 달 발생한 사업 매출과 지출 내역 [내역 입력]을 바탕으로 총 매출, 총 비용, 순이익, 부가세 예치금을 자동 계산해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 073</span>
+                    <h3 class="prompt-title">📌 [073] 파이썬 자동 이메일 발송 스크립트</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p73')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p73">[목표] 파이썬 smtplib 모듈을 활용하여 엑셀 리스트에 있는 수신자들에게 이메일을 자동으로 분할 발송하는 코드 스크립트를 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 074</span>
+                    <h3 class="prompt-title">📌 [074] 텍스트 번역 및 자연스러운 문맥 다듬기</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p74')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p74">[지시] 아래 영문/외국어 아티클을 한국어로 번역하되, 어색한 직역을 피하고 1인 기업가가 읽기 편한 매끄러운 비즈니스 어조로 다듬어 줘.
+[원문 입력]</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 075</span>
+                    <h3 class="prompt-title">📌 [075] PPT 발표용 슬라이드 10장 구성 대본</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p75')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p75">[지시] [발표 주제]에 관한 10장 분량의 PPT 발표 슬라이드 목차 구성안과 각 슬라이드별 발표자 멘트 스크립트를 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 076</span>
+                    <h3 class="prompt-title">📌 [076] 아이디어 마인드맵 마크다운 트리 생성</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p76')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p76">[지시] [복잡한 아이디어/주제]를 한눈에 알아볼 수 있도록 단계별 트리 구조(Mindmap Markdown) 형태 아이콘과 함께 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 077</span>
+                    <h3 class="prompt-title">📌 [077] 법적 위험 요소 및 계약 약관 기본 체크</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p77')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p77">[지시] 외주 외주 계약서 원문 [계약서 조항]을 검토하고, 1인 기업가에게 불리하거나 법적 리스크가 있는 독소 조항 3가지를 피드백해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 078</span>
+                    <h3 class="prompt-title">📌 [078] 세금 및 과세 관련 기초 지식 요약기</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p78')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p78">[지시] 1인 사업자가 반드시 알아야 할 종합소득세, 부가가치세 신고 일정과 절세 팁 5가지를 초보자 눈높이에서 쉽게 설명해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 079</span>
+                    <h3 class="prompt-title">📌 [079] 파이썬 이미지 용량 자동 압축 스크립트</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p79')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p79">[목표] 파이썬 Pillow 라이브러리를 써서 지정한 폴더 내 모든 이미지를 화질 손실 없이 용량만 70% 압축하는 자동화 스크립트를 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 080</span>
+                    <h3 class="prompt-title">📌 [080] 업무 절차 표준화 매뉴얼(SOP) 작성</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p80')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p80">[지시] 내 반복 업무 [업무 내용, 예: 블로그 포스팅 발행 과정]를 다른 사람에게 외주 주거나 자동화할 수 있도록 표준 업무 절차서(SOP) 매뉴얼로 작성해 줘.</div>
+        </div>
+        </div>
+<div id="cat5" class="cat-section">
+<h2 style="font-size:1.4rem; font-weight:800; margin-bottom:20px; color:var(--primary);">PART 5. 이미지 & 숏폼 & 무인 수익화 (081~100)</h2>
+
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 081</span>
+                    <h3 class="prompt-title">📌 [081] 미드저니/DALL-E 고화질 로고 생성 프롬프트</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p81')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p81">Prompt: A sleek modern minimalist logo for an AI automation company, vector art, dark background, neon violet and cyan gradient, high quality, 8k --ar 1:1</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 082</span>
+                    <h3 class="prompt-title">📌 [082] 전자책 3D 입체 커버 메이킹 프롬프트</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p82')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p82">Prompt: 3D rendering of a glowing digital book cover floating in space, AI technology theme, sleek navy blue and gold aesthetic, ultra high definition --ar 3:4</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 083</span>
+                    <h3 class="prompt-title">📌 [083] 블로그/카드뉴스 대표 썸네일 그래픽</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p83')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p83">Prompt: A striking blog thumbnail illustration showing a person working comfortably with laptop, futuristic holographic charts floating, soft lighting, 8k --ar 16:9</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 084</span>
+                    <h3 class="prompt-title">📌 [084] 인스타그램 감성 3D 캐릭터 생성</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p84')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p84">Prompt: Cute 3D Pixar style character of a happy solopreneur holding a glowing smartphone, vibrant pastel background, highly detailed render --ar 1:1</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 085</span>
+                    <h3 class="prompt-title">📌 [085] 유튜브 썸네일 얼굴 합성용 B-Roll 배경</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p85')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p85">Prompt: Cinematic background of a high-tech modern office with warm aesthetic lighting, blurred background for youtube thumbnail overlay --ar 16:9</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 086</span>
+                    <h3 class="prompt-title">📌 [086] 숏폼 음성 팟캐스트 성우 대본 30초</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p86')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p86">[지시] 30초 숏폼 팟캐스트 성우 대본을 작성해 줘. 친근한 어조로 시작해서 핵심 정보 2개를 전달하고, 프로필 링크로 유도하는 마무리 멘트 포함.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 087</span>
+                    <h3 class="prompt-title">📌 [087] 무인 24시간 판매용 크몽/리틀리 상세설명</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p87')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p87">[지시] 크몽(Kmong)이나 리틀리(Littly)에 무인 전자책 상품을 등록할 때 매출을 폭발시키는 상세페이지 커버 카피 및 서비스 설명글을 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 088</span>
+                    <h3 class="prompt-title">📌 [088] 디지털 자산 패키징 안내서 PDF 레이아웃</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p88')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p88">[지시] 구매 고객에게 전달할 전자책 PDF 첫 페이지 표지 레이아웃 구성과 목차 디자인 가이드 텍스트를 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 089</span>
+                    <h3 class="prompt-title">📌 [089] 스마트스토어 메인 상단 배너 디자인</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p89')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p89">Prompt: Modern e-commerce store top banner design, promotional sale theme, sleek purple gradient, luxury aesthetic, clean space for text --ar 12:5</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 090</span>
+                    <h3 class="prompt-title">📌 [090] 네이버 블로그 타이틀 상단 이미지 생성</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p90')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p90">Prompt: Header image for Naver blog, professional digital marketing theme, clean minimalist style, soft indigo lighting --ar 3:1</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 091</span>
+                    <h3 class="prompt-title">📌 [091] 유튜브 채널아트 및 아트워크 프롬프트</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p91')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p91">Prompt: YouTube channel banner art, futuristic solopreneur workspace, ultra clean vector aesthetic, vibrant colors --ar 16:9</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 092</span>
+                    <h3 class="prompt-title">📌 [092] AI 아바타 스크립트 리얼리스틱 연출</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p92')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p92">[지시] AI 아바타(HeyGen/D-ID) 영상 제작 시 진짜 사람처럼 자연스럽게 억양과 제스처를 취하도록 지시문이 포함된 리얼리스틱 대본을 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 093</span>
+                    <h3 class="prompt-title">📌 [093] 상품 패키지 3D 렌더링 디자인</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p93')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p93">Prompt: 3D product package render of a sleek digital gift box floating with glowing ribbons, tech theme, soft studio lighting --ar 1:1</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 094</span>
+                    <h3 class="prompt-title">📌 [094] 숏폼 자막용 강조 그래픽 아이콘 생성</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p94')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p94">Prompt: Set of glowing 3D vector icons for video editing, checkmarks, arrows, and warning badges, transparent background --ar 16:9</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 095</span>
+                    <h3 class="prompt-title">📌 [095] 디스코드 봇 메시지 자동화 프롬프트</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p95')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p95">[지시] 디스코드 커뮤니티에 신규 회원이 입장했을 때 자동으로 발송되는 웰컴 안내 메시지와 규칙 요약 프롬프트를 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 096</span>
+                    <h3 class="prompt-title">📌 [096] 디지털 커뮤니티 공지사항 카피 문구</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p96')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p96">[지시] 1인 기업 디지털 커뮤니티 회원들에게 신규 강의 및 전자책 업데이트 소식을 알리는 공지사항 카피를 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 097</span>
+                    <h3 class="prompt-title">📌 [097] 1인 기업 무인 마케팅 스케줄표 생성기</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p97')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p97">[지시] 월요일부터 일요일까지 1인 기업 마케팅 콘텐츠(블로그, 숏폼, 뉴스레터)를 무인으로 발행할 수 있는 7일 스케줄표 가이드를 작성해 줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 098</span>
+                    <h3 class="prompt-title">📌 [098] 무인 자동 판매 펀널 설계 체크리스트</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p98')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p98">[지시] 고객 유입부터 자동 결제, 상품 자동 발송까지 100% 무인 자동 판매 펀널을 구축할 때 점검해야 할 10가지 필수 체크리스트를 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 099</span>
+                    <h3 class="prompt-title">📌 [099] 구매 고객 전용 비밀 혜택 웰컴 가이드</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p99')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p99">[지시] 전자책이나 지식 상품을 구매해 준 고객에게 감사를 전하고, 후기 작성 시 추가 비밀 프롬프트를 증정하는 비밀 웰컴 가이드를 써줘.</div>
+        </div>
+        
+        <div class="prompt-card">
+            <div class="prompt-card-header">
+                <div>
+                    <span class="part-badge">PROMPT 100</span>
+                    <h3 class="prompt-title">📌 [100] 무인 디지털 자산 무한 수익화 마무리기</h3>
+                </div>
+                <button class="btn-copy" onclick="copyPrompt('p100')">📋 1초 복사하기</button>
+            </div>
+            <div class="prompt-code-box" id="p100">[지시] 내가 만든 이 디지털 전자책 상품을 크몽, 스마트스토어, 리틀리, 텀블벅 4개 플랫폼에 무인 연금 수익화로 등록하는 마무리기 실행 가이드를 써줘.</div>
+        </div>
+        </div>
+
+    </div>
+
+    <div id="toast">📋 프롬프트가 복사되었습니다! ChatGPT 대화창에 Ctrl+V로 붙여넣으세요.</div>
+
+    <script>
+        function switchCat(catId) {
+            document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.cat-section').forEach(s => s.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(catId).classList.add('active');
+            window.scrollTo({ top: 500, behavior: 'smooth' });
+        }
+
+        function copyPrompt(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2500);
+            });
+        }
+    </script>
+</body>
+</html>
