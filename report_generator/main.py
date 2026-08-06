@@ -15,8 +15,8 @@ from generator import generate_business_report
 
 app = FastAPI(
     title="AI Business Report Generator SaaS",
-    description="3분 만에 완성되는 AI 사업계획서 및 시장분석 보고서 자동 생성기",
-    version="1.0.0"
+    description="3분 만에 완성되는 AI 사업계획서 및 시장분석 보고서 자동 생성기 (v1.00)",
+    version="1.00"
 )
 
 static_dir = os.path.join(BASE_DIR, "static")
