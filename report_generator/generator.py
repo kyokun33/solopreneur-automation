@@ -438,7 +438,7 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 | **7** | **사업계획서 원본 (HWP / PDF)** | K-Startup | **공고문 지정 서식 및 페이지 분량 제한({prog_pages}) 엄수** |
 
 ---
-*본 정밀 사업계획서는 중소벤처기업부 K-Startup PSST 공식 수치 검증 및 7대 서류 정합성 기준에 따라 "3분시리즈 1 AI 연구소"에서 정식 발급되었습니다.*
+*본 정밀 사업계획서는 중소벤처기업부 K-Startup PSST 공식 수치 검증 및 7대 서류 정합성 기준에 따라 "고고플렉스 AI 연구소"에서 정식 발급되었습니다.*
 """
 
     html_content = markdown.markdown(md_content, extensions=['tables', 'fenced_code'])
