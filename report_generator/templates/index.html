@@ -53,10 +53,15 @@
                         <textarea id="core_features" class="form-control" placeholder="예: 3초 만에 사업계획서 PDF 렌더링, 100% 무인 자동화" required></textarea>
                     </div>
 
+                    <div class="form-group">
+                        <label for="budget">목표 매출 및 예산</label>
+                        <input type="text" id="budget" class="form-control" value="초기 예산 1,000만 원 / 월 목표 매출 500만 원" required>
+                    </div>
+
                     <div class="form-group" style="background:rgba(99,102,241,0.08); padding:16px; border-radius:12px; border:1px dashed #6366f1;">
                         <label for="access_key" style="color:#818cf8; font-weight:700;">🔑 1회용 구매 인증 코드 (Access Key)</label>
-                        <input type="text" id="access_key" class="form-control" placeholder="예: KMONG-REPORT-1001 (무료체험: DEMO-FREE-2026)" required style="border-color:#6366f1;">
-                        <p style="font-size:0.78rem; color:var(--text-muted); margin-top:6px;">* 크몽 구매 시 발급된 1회용 시리얼 코드를 입력하세요 (1회 생성 시 소멸).</p>
+                        <input type="text" id="access_key" class="form-control" placeholder="예: 크몽 주문번호 (무료체험: DEMO-FREE-2026)" required style="border-color:#6366f1;">
+                        <p style="font-size:0.78rem; color:var(--text-muted); margin-top:6px;">* 크몽 구매 시 발급된 주문번호 8자리 또는 시리얼 코드를 입력하세요 (1회 생성 시 소멸).</p>
                     </div>
 
                     <button type="submit" class="btn-generate" id="btnSubmit">
