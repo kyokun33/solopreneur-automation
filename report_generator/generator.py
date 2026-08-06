@@ -275,9 +275,7 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 {sol_text}
 
 ### 2.2 서비스 프로세스 및 운영 알고리즘
-```
 {service_struct}
-```
 
 ### 2.3 핵심 경쟁력 및 독창적 기능 스펙
 - 핵심 경쟁력: {req.core_features}
@@ -568,6 +566,10 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
                     target_list.append(Spacer(1, 3 if in_appendix else spacer_height))
             table_lines = []
 
+        if stripped.startswith("```"):
+            continue
+
+        stripped = stripped.replace("```", "")
         if stripped.startswith("# "):
             target_list = appendix_story if in_appendix else story
             clean_title = stripped[2:].replace("**", "").replace("*", "")
