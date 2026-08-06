@@ -227,7 +227,6 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 | 2년 차 (2027년) | 가맹 15개점 확장 | 50,000,000 | 600,000,000 | 48% |
 | 3년 차 (2028년) | 전국 가맹 50개점 돌파 | 150,000,000 | 1,800,000,000 | 55% |"""
 
-    # 지저분한 마크다운 별표 기호(**, *) 완전히 제거한 100% 깔끔 고품격 마크다운
     md_content = f"""# [K-Startup 정밀 수치 검증 사업계획서] {req.title}
 
 - 사업 지원 규격: {prog_name} ({prog_pages})
@@ -362,16 +361,13 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 *본 정밀 사업계획서는 중소벤처기업부 K-Startup PSST 공식 수치 검증 및 7대 서류 정합성 기준에 따라 "고고플렉스 AI 연구소"에서 정식 발급되었습니다.*
 """
 
-    # HTML 변환 시 부록 구역을 인쇄/미리보기 전용 고급 카드 및 테두리 서식으로 변환
     html_content = markdown.markdown(md_content, extensions=['tables', 'fenced_code'])
     
-    # 웹 미리보기 시 부록 구역을 sample PDF 100% 서식 카드로 감싸기
     if "<h2>[정부지원사업 지원 제외" in html_content:
         parts = html_content.split("<h2>[정부지원사업 지원 제외")
         main_html = parts[0]
         app_html = "<h2>[정부지원사업 지원 제외" + parts[1]
         
-        # 아름다운 붉은 박스 및 주황 박스 카드로 정교 치환
         app_html = app_html.replace(
             "<blockquote>\n<p><strong>지원 자격 필독</strong>:",
             '<div style="border: 1px solid #ef4444; background: #fff5f5; border-radius: 6px; padding: 10px 14px; margin: 10px 0;"><strong style="color: #dc2626; font-size: 0.9rem;">⚠️ 지원 자격 필독</strong><br><span style="font-size: 0.85rem; color: #475569;">'
@@ -381,6 +377,9 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
         ).replace(
             "<blockquote>\n<p><strong>실무 필수 지침</strong>:",
             '<div style="border: 1px solid #f59e0b; background: #fffbeb; border-radius: 6px; padding: 10px 14px; margin: 10px 0;"><strong style="color: #d97706; font-size: 0.9rem;">🔑 실무 필수 지침</strong><br><span style="font-size: 0.85rem; color: #475569;">'
+        ).replace(
+            "방지할 수 있습니다.</p>\nQuote>",
+            '방지할 수 있습니다.</span></div>'
         ).replace(
             "방지할 수 있습니다.</p>\n</blockquote>",
             '방지할 수 있습니다.</span></div>'
@@ -394,7 +393,6 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
     md_content, _ = generate_business_report(req)
     lines = md_content.splitlines()
 
-    # HWP/Word 공식 A4 표준 여백 적용 (좌우 56.7pt = 20mm, 상하 42.5pt = 15mm)
     doc = SimpleDocTemplate(
         pdf_path,
         pagesize=A4,
@@ -406,7 +404,6 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
 
     prog_type = req.program_type
     
-    # 사장님 지침 100% 반영: 폰트 크기 10~11pt, 깔끔한 줄간격
     body_size = 10.5
     body_lead = 16.0
     cell_size = 8.5
@@ -505,7 +502,6 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
             story.append(PageBreak())
             in_appendix = True
 
-        # 부록 전용 폰트 및 간격 최적화 (마지막 장 여백 꽉 차게 100% 들어오도록 미세 조절)
         if in_appendix:
             curr_body_size = 8.5
             curr_body_lead = 12.0
@@ -516,6 +512,39 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
             )
         else:
             curr_padding = table_padding
+
+        # 🌟 사장님 지적 100% 동일 구현: 웹 실시간 미리보기의 붉은 경고 박스 / 주황 지침 박스를 PDF에도 100% 똑같이 박스 렌더링!
+        if in_appendix and "지원 자격 필독" in stripped:
+            box_text = "<font color='#dc2626'><b>⚠️ 지원 자격 필독</b></font><br/><font color='#475569' size='8'>아래 업종에 해당될 경우 정부지원사업 서류 심사에서 자동 지원 제외(탈락) 처리될 수 있으므로 사전에 업종코드(KSIC)를 반드시 확인하시기 바랍니다.</font>"
+            p_box = Paragraph(box_text, ParagraphStyle('RedBox', fontName=MAIN_FONT, fontSize=8.5, leading=12))
+            t_box = Table([[p_box]], colWidths=[175 * 2.83])
+            t_box.setStyle(TableStyle([
+                ('BACKGROUND', (0,0), (-1,-1), colors.HexColor("#fff5f5")),
+                ('BOX', (0,0), (-1,-1), 0.8, colors.HexColor("#ef4444")),
+                ('TOPPADDING', (0,0), (-1,-1), 6),
+                ('BOTTOMPADDING', (0,0), (-1,-1), 6),
+                ('LEFTPADDING', (0,0), (-1,-1), 8),
+                ('RIGHTPADDING', (0,0), (-1,-1), 8),
+            ]))
+            appendix_story.append(t_box)
+            appendix_story.append(Spacer(1, 4))
+            continue
+
+        if in_appendix and "실무 필수 지침" in stripped:
+            box_text = "<font color='#d97706'><b>🔑 실무 필수 지침</b></font><br/><font color='#475569' size='8'>서류 제출 마감일 발급 지연 방지를 위해 사전 발급이 필수입니다. 특히 사업계획서 상의 매출/예산 수치와 부가가치세 과세표준증명원(재무제표) 수치가 100% 일치해야 감점을 방지할 수 있습니다.</font>"
+            p_box = Paragraph(box_text, ParagraphStyle('OrangeBox', fontName=MAIN_FONT, fontSize=8.5, leading=12))
+            t_box = Table([[p_box]], colWidths=[175 * 2.83])
+            t_box.setStyle(TableStyle([
+                ('BACKGROUND', (0,0), (-1,-1), colors.HexColor("#fffbeb")),
+                ('BOX', (0,0), (-1,-1), 0.8, colors.HexColor("#f59e0b")),
+                ('TOPPADDING', (0,0), (-1,-1), 6),
+                ('BOTTOMPADDING', (0,0), (-1,-1), 6),
+                ('LEFTPADDING', (0,0), (-1,-1), 8),
+                ('RIGHTPADDING', (0,0), (-1,-1), 8),
+            ]))
+            appendix_story.append(t_box)
+            appendix_story.append(Spacer(1, 4))
+            continue
 
         # 마크다운 표(| ... |) 감지 및 변환
         if stripped.startswith("|") and stripped.endswith("|"):
@@ -587,7 +616,6 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
             target_list.append(HRFlowable(width="100%", thickness=0.8, color=colors.HexColor("#6366f1"), spaceBefore=3 if in_appendix else 6, spaceAfter=3 if in_appendix else 6))
         elif stripped:
             clean_text = stripped.replace("**", "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-            # 지저분한 마크다운 불릿 '* ' 제거 후 깔끔 불릿 '- ' 변환
             if clean_text.startswith("* "):
                 clean_text = "- " + clean_text[2:]
             target_list = appendix_story if in_appendix else story
