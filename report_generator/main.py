@@ -16,8 +16,8 @@ from generator import generate_business_report
 
 app = FastAPI(
     title="AI Business Report Generator SaaS",
-    description="3분 만에 완성되는 K-Startup 대한민국 HWP/Word 공식 서식 동기화 사업계획서 자동 생성기 (3분시리즈 1 v2.40 정식버전)",
-    version="2.4.0"
+    description="3분 만에 완성되는 K-Startup 대한민국 HWP/Word 공식 서식 동기화 사업계획서 자동 생성기 (3분시리즈 1 v2.50 정식버전)",
+    version="2.5.0"
 )
 
 static_dir = os.path.join(BASE_DIR, "static")
@@ -169,11 +169,10 @@ async def download_pdf_api(
     with open(temp_pdf, "rb") as f:
         pdf_bytes = f.read()
         
-    safe_title = urllib.parse.quote(title.replace(' ', '_'))
     return Response(
         content=pdf_bytes,
         media_type="application/pdf",
-        headers={"Content-Disposition": f"inline; filename=\"{safe_title}_KStartup_사업계획서.pdf\""}
+        headers={"Content-Disposition": "inline; filename=\"report.pdf\""}
     )
 
 @app.post("/download-md")

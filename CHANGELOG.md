@@ -1,13 +1,13 @@
 # 🚀 프로젝트 변경 이력 (CHANGELOG)
 
-## [v2.40 Major Release] - 2026-08-06 (인쇄 버튼 클릭 시 정품 PDF 파일 웹 브라우저 다이렉트 Inline 뷰어 / 인쇄 연동)
+## [v2.50 Major Release] - 2026-08-06 (PDF 다이렉트 Inline 뷰어 HTTP 500 오류 100% 완전 소탕 완결)
 
-### 🌟 PDF 파일 직통 웹 뷰어 / 인쇄 연동 내역
+### 🌟 PDF 뷰어 HTTP 500 오류 100% 소탕 내역
 
-1. **📄 `/api/download-pdf` 다이렉트 Inline PDF 렌더링 라우트 탑재**
-   - 웹 UI에서 **`🖨️ PDF / 인쇄`** 버튼 클릭 시 백엔드 ReportLab PDF 엔진에서 생성된 **정품 K-Startup 인쇄 전용 PDF 파일이 새 웹 브라우저 탭(PDF 뷰어/인쇄 창)으로 즉시 짠 하고 오픈**되어 바로 인쇄 및 저장 가능하도록 기능 탑재 완결!
+1. **🛠️ HTTP Response 헤더 인코딩 결함 완전 소탕**
+   - `/api/download-pdf` 호출 시 `Content-Disposition` 헤더의 한글 파라미터로 인해 발생하던 `UnicodeEncodeError: 'latin-1' codec` (HTTP 500 오류)를 아스키 표준 안전 규격(`inline; filename="report.pdf"`)으로 수정하여 **`200 OK` 정상 렌더링 및 100% PDF 파일 뷰어 오픈**으로 완벽 조치되었습니다!
 
 ---
 
-## [v2.30 Major Release] - 2026-08-06 (마크다운/HTML 부록 렌더링 파싱 오류 100% 소탕 & 마지막장 100% 단일 페이지 통합 수용 완결)
-- 마크다운/HTML 2중 렌더링 체계 구축 및 깨짐 소탕
+## [v2.40 Major Release] - 2026-08-06 (인쇄 버튼 클릭 시 정품 PDF 파일 웹 브라우저 다이렉트 Inline 뷰어 / 인쇄 연동)
+- 다이렉트 Inline PDF 렌더링 라우트 구축
