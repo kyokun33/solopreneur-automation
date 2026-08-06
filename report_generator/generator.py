@@ -10,15 +10,29 @@ from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
-# 폰트 등록
+# 폰트 등록 (리눅스/클라우드 환경 대응 예외 안전 처리)
 FONT_PATH = r"C:\Windows\Fonts\malgun.ttf"
 FONT_BOLD_PATH = r"C:\Windows\Fonts\malgunbd.ttf"
 
-pdfmetrics.registerFont(TTFont("Malgun", FONT_PATH))
+MAIN_FONT = "Helvetica"
+BOLD_FONT = "Helvetica-Bold"
+
+if os.path.exists(FONT_PATH):
+    try:
+        pdfmetrics.registerFont(TTFont("Malgun", FONT_PATH))
+        MAIN_FONT = "Malgun"
+    except Exception:
+        pass
+
 if os.path.exists(FONT_BOLD_PATH):
-    pdfmetrics.registerFont(TTFont("Malgun-Bold", FONT_BOLD_PATH))
+    try:
+        pdfmetrics.registerFont(TTFont("Malgun-Bold", FONT_BOLD_PATH))
+        BOLD_FONT = "Malgun-Bold"
+    except Exception:
+        BOLD_FONT = MAIN_FONT
 else:
-    pdfmetrics.registerFont(TTFont("Malgun-Bold", FONT_PATH))
+    if MAIN_FONT == "Malgun":
+        BOLD_FONT = "Malgun"
 
 class NumberedCanvas(canvas.Canvas):
     def __init__(self, *args, **kwargs):
@@ -35,7 +49,7 @@ class NumberedCanvas(canvas.Canvas):
             self.__dict__.update(state)
             if self._pageNumber > 1:
                 self.saveState()
-                self.setFont("Malgun", 8)
+                self.setFont(MAIN_FONT, 8)
                 self.setFillColor(colors.HexColor("#64748b"))
                 self.drawRightString(200 * 2.83, 280 * 2.83, "AI Business Report Generator SaaS")
                 self.setStrokeColor(colors.HexColor("#cbd5e1"))
@@ -158,19 +172,19 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
     styles = getSampleStyleSheet()
     
     h1_style = ParagraphStyle(
-        'H1_PDF', fontName='Malgun-Bold', fontSize=18, leading=24,
+        'H1_PDF', fontName=BOLD_FONT, fontSize=18, leading=24,
         textColor=colors.HexColor("#1e1b4b"), spaceBefore=15, spaceAfter=10
     )
     h2_style = ParagraphStyle(
-        'H2_PDF', fontName='Malgun-Bold', fontSize=13, leading=18,
+        'H2_PDF', fontName=BOLD_FONT, fontSize=13, leading=18,
         textColor=colors.HexColor("#4338ca"), spaceBefore=12, spaceAfter=6, keepWithNext=True
     )
     h3_style = ParagraphStyle(
-        'H3_PDF', fontName='Malgun-Bold', fontSize=11, leading=15,
+        'H3_PDF', fontName=BOLD_FONT, fontSize=11, leading=15,
         textColor=colors.HexColor("#334155"), spaceBefore=8, spaceAfter=4, keepWithNext=True
     )
     body_style = ParagraphStyle(
-        'Body_PDF', fontName='Malgun', fontSize=10, leading=15,
+        'Body_PDF', fontName=MAIN_FONT, fontSize=10, leading=15,
         textColor=colors.HexColor("#1e293b"), spaceAfter=6
     )
 
