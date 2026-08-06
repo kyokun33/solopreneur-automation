@@ -51,13 +51,13 @@ class NumberedCanvas(canvas.Canvas):
                 self.saveState()
                 self.setFont(MAIN_FONT, 8)
                 self.setFillColor(colors.HexColor("#64748b"))
-                self.drawRightString(200 * 2.83, 280 * 2.83, "K-Startup 중기부 정밀 PSST 사업계획서 (3분시리즈 1 v1.00)")
+                self.drawRightString(190 * 2.83, 282 * 2.83, "K-Startup 중기부 표준 사업계획서 (3분시리즈 1 v1.10)")
                 self.setStrokeColor(colors.HexColor("#cbd5e1"))
                 self.setLineWidth(0.5)
-                self.line(15 * 2.83, 278 * 2.83, 200 * 2.83, 278 * 2.83)
+                self.line(20 * 2.83, 280 * 2.83, 190 * 2.83, 280 * 2.83)
                 
                 page_text = f"- {self._pageNumber} / {num_pages} -"
-                self.drawCentredString(105 * 2.83, 12 * 2.83, page_text)
+                self.drawCentredString(105 * 2.83, 10 * 2.83, page_text)
                 self.restoreState()
             super().showPage()
         super().save()
@@ -75,10 +75,10 @@ def detect_domain(title: str, features: str) -> str:
     return "it_saas"
 
 PROGRAM_SPECS = {
-    "packages_15p": {"name": "예비창업패키지 / 초기창업패키지 규격", "target_pages": "15페이지 내외 정통 풀-스펙", "target_num": 15},
-    "cheongsa_12p": {"name": "청년창업사관학교 집중 실행 규격", "target_pages": "10~15페이지 정밀 규격", "target_num": 12},
-    "rnd_25p": {"name": "중기부 / 산업부 R&D 기술개발 과제 규격", "target_pages": "20~30페이지 기술개발 초정밀 규격", "target_num": 25},
-    "export_8p": {"name": "수출바우처 및 마케팅 지원 규격", "target_pages": "5~10페이지 마케팅 규격", "target_num": 8},
+    "packages_15p": {"name": "예비창업패키지 / 초기창업패키지 규격", "target_pages": "15페이지 정통 풀-스펙", "target_num": 15},
+    "cheongsa_12p": {"name": "청년창업사관학교 집중 실행 규격", "target_pages": "12페이지 정밀 규격", "target_num": 12},
+    "rnd_25p": {"name": "중기부 / 산업부 R&D 기술개발 과제 규격", "target_pages": "25페이지 기술개발 초정밀 규격", "target_num": 25},
+    "export_8p": {"name": "수출바우처 및 마케팅 지원 규격", "target_pages": "8페이지 마케팅 규격", "target_num": 8},
     "local_5p": {"name": "지자체 소액 창업 지원 린 규격", "target_pages": "5페이지 이내 숏폼 규격", "target_num": 5}
 }
 
@@ -89,12 +89,12 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
     now_str = datetime.datetime.now().strftime("%Y년 %m월 %d일")
     domain = detect_domain(req.title, req.core_features)
 
-    # R&D 25페이지 전용 초정밀 기술개발 명세 세부 모듈
+    # R&D 25페이지 전용 기술개발 초정밀 대용량 모듈
     rnd_extra_section = ""
     if req.program_type == "rnd_25p":
         rnd_extra_section = f"""---
 
-## 🔬 [R&D 전용] 기술개발 상세 파이프라인 & TRL (기술성숙도) 진단
+## 🔬 [R&D 전용 25P 초정밀 모듈] 기술개발 상세 파이프라인 & TRL 진단
 
 ### 1. 기술성숙도(TRL, Technology Readiness Level) 9단계 달성 목표
 | TRL 단계 | 단계별 정의 | 현재 수준 | 사업 종료 시 목표 수준 | 검증 방법 및 증빙 |
@@ -111,7 +111,12 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 - **보안 및 규제 준수**: ISO/IEC 27001 정보보안준수 및 개인정보보호법(PIPA) 기술적 보호조치 적용
 - **서버 인프라 구획**: AWS Kinesis / GCP BigQuery 기반 빅데이터 수집 및 마이크로서비스(MSA) 오토스케일링
 
-### 3. 선행기술 조사 및 지식재산권(IP) 포트폴리오 10선 비교 분석표
+### 3. 수학적 알고리즘 모델링 & 의사코드 (Pseudocode & Math Modeling)
+- **알고리즘 목적 함수**: min f(x) = sum(w_i * Cost_i) + lambda * Latency
+- **실시간 데이터 스트리밍 연산 파이프라인**: Kafka 메세지 큐 -> Spark Streaming 분산 집계 -> Redis 인메모리 캐싱
+- **보안 토큰 암호화 수식**: Token = HMAC-SHA256(SecretKey, Payload || Timestamp)
+
+### 4. 선행기술 조사 및 지식재산권(IP) 포트폴리오 10선 비교 분석표
 | 번호 | 특허/기술명 | 주요 권리 범주 | 본 프로젝트 차별화 포인트 | IP 회피 및 방어 전략 |
 | :--- | :--- | :--- | :--- | :--- |
 | **1** | 수동 제어 조리 시스템 | 조리 파라미터 수동 세팅 | **AI 알고리즘 실시간 자동 렌더링** | 독립 청구항 구성으로 100% 회피 |
@@ -122,7 +127,16 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 | **6** | 클라우드 오토스케일링 | 단일 서버 하드웨어 | **MSA 트래픽 분산 제어 기술** | 특허 신규 청구항 확보 완료 |
 | **7** | 실시간 청결 감지 제어 | 수동 위생 검사 | **비전 AI 자동 위생 감지 센서** | 전용 알고리즘 특허 등록 진행 |
 
-### 4. 12개월 차 월별 기술개발 상세 실행 계획표 (R&D Timeline)
+### 5. 공인시험기관 (KTL / KTR) 정밀 평가 항목 15종 세부 명세표
+| 평가 항목 | 단위 | 세계 수준 (비교) | 개발 목표치 | 시험 평가 방법 및 공인 기관 |
+| :--- | :--- | :--- | :--- | :--- |
+| **1. 시스템 반응 속도** | ms | 150ms 이내 | **50ms 이내** | KTL 공인 시험성적서 측정 |
+| **2. 동시 접속 처리 (RPS)**| RPS | 2,000 RPS | **5,000 RPS** | 부하 테스트 도구(JMeter) 검증 |
+| **3. 무인 가동 가동률** | % | 98.0% | **99.9% 이상** | 24시간 365일 실시간 센서 관제 |
+| **4. 오류 발생율** | % | 2.5% 이하 | **0.1% 이하** | 로그 트래킹 시스템 자동 수집 |
+| **5. 데이터 암호화 안전성**| Bit | AES-128 | **AES-256** | 정보보호진흥원(KISA) 검증 |
+
+### 6. 12개월 차 월별 기술개발 상세 실행 계획표 (R&D Timeline)
 | 월 (Month) | 기술개발 세부 세부 과제 | 주요 마일스톤 및 딜리버러블 | 담당 인력 및 협력 기관 |
 | :--- | :--- | :--- | :--- |
 | **M1 ~ M2** | 핵심 아키텍처 및 알고리즘 모듈 설계 | 시스템 아키텍처 정의서 작성 | 대표자 및 메인 개발자 |
@@ -132,15 +146,15 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 | **M9 ~ M10** | 필드 실증 테스트 및 타겟 유저 100명 필드 테스트 | 실증 만족도 90% 이상 달성 | 마케팅 및 운영팀 |
 | **M11 ~ M12** | 정식 상용화 배포 및 특허 2건 정식 등록 | 상용화 런칭 및 특허 등록증 | 대표자 및 전담 변리사 |
 
-### 5. 글로벌 특화 경쟁 기술 및 해외 시장 진출 전략 (Global R&D Pipeline)
+### 7. 글로벌 특화 경쟁 기술 및 해외 시장 진출 전략 (Global R&D Pipeline)
 - 미국/유럽 PCT 국제 특허 동시 출원 준비 (글로벌 IP 회피 및 선점)
 - 해외 표준 기술 규격(CE, FCC) 사전 검증 테스트베드 구축
 
-### 6. 연구개발 인프라 구축 및 연구인력 유지 관리 방안
+### 8. 연구개발 인프라 구축 및 연구인력 유지 관리 방안
 - 석/박사급 기술 전담 연구원 3인 상주 개발 및 전공 기술 자문단 매월 워크숍
 - 주간 코드 리뷰 및 CI/CD 자동화 기술 부채 방지 시스템 가동
 
-### 7. 연구개발비 세부 정산 및 기술 자금 집행 내역서
+### 9. 연구개발비 12개월 세부 정산 및 기술 자금 집행 내역서
 - **연구 인력비 (인건비)**: 참여 연구원 3인 급여 (월 300만 원 x 12개월 = 36,000,000원)
 - **연구 장비 및 재료 사입비**: 개발 서버, 센서, 로봇팔/부품 모듈 사입 (44,000,000원)
 - **외부 기술 위탁 및 시험분석비**: KTL 시험성적서 및 특허 법률 출원비 (20,000,000원)"""
@@ -150,7 +164,7 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
     if req.program_type in ["packages_15p", "cheongsa_12p", "rnd_25p"]:
         packages_extra_section = f"""---
 
-## 📊 [시장분석 & GTM] 타겟 유저 세분화 및 밸류체인 정밀 분석
+## 📊 [시장분석 & GTM 15P 모듈] 타겟 유저 세분화 및 밸류체인 정밀 분석
 
 ### 1. 고객 페인포인트 정밀 수치 설문 조사 데이터
 - 타겟 유저 300명 대상 정밀 설문 조사 결과: 기존 대안 서비스 만족도 28.5%에 불과
@@ -168,11 +182,24 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 - **구매자 협상력**: 초저가/고효율 제공으로 구매자 락인(Lock-in) 효과 극대화
 - **공급자 협상력**: 부품/원자재 다변화 공급망 구축으로 원가 안정성 확보
 
-### 4. 3개년 정밀 재무 손익분기점 (BEP) 달성 시점 및 자금 회수 계획
+### 4. 5대 경쟁사 주요 기능 수치 비교 Matrix 표
+| 기능 및 스펙 비교 | A 경쟁사 (수동) | B 경쟁사 (외주) | **{req.title} (본 사업)** | 우위 수치 |
+| :--- | :--- | :--- | :--- | :--- |
+| **처리 단가** | 200만 원 | 100만 원 | **초저가 월 구독/1회성** | **비용 90%↓ 절감** |
+| **완성 소요시간** | 14일 소요 | 7일 소요 | **3초 원터치 자동완성** | **속도 99%↑ 향상** |
+| **무인 가동률** | 0% (대면) | 0% (수동) | **100% 무인 웹 자동 접속** | **가동률 100%** |
+| **데이터 보안** | 이메일 전달 | 엑셀 파일 | **256-bit SSL 암호화 DB** | **보안 100%** |
+
+### 5. 3개년 정밀 재무 손익분기점 (BEP) 달성 시점 및 자금 회수 계획
 - **손익분기점 (BEP) 달성 시점**: 서비스 런칭 7개월 차 유료 유저 350명 달성 시점
 - **초기 투입 자금 회수 (Payback Period)**: 런칭 14개월 차 누적 순이익 1억 원 돌파로 자금 회수 완료
 
-### 5. 마케팅 유저 획득(CAC) 및 LTV(고객생애가치) 재무 추정
+### 6. 리스크 관리 시나리오 (Risk Management Plan A / B / C)
+- **Plan A (정상 성장)**: 1년 차 유저 1,000명 유치 및 목표 매출 1.2억 원 달성
+- **Plan B (경쟁 심화 시)**: B2B 기업체 전용 요금제 출시 및 수수료 15% 인하 대응
+- **Plan C (시장 침체 시)**: 핵심 무인 기능 린(Lean) 서비스로 축소하여 월 서버비 최소화
+
+### 7. 마케팅 유저 획득(CAC) 및 LTV(고객생애가치) 재무 추정
 - **목표 유저 획득 비용 (CAC)**: 건당 15,000원 이하 유지
 - **고객 생애 가치 (LTV)**: 유저당 평균 180,000원 (LTV/CAC 비율 12배 달성)"""
 
@@ -258,7 +285,7 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
 | :--- | :--- | :--- | :--- |
 | **서비스 단가** | 100만 원 ~ 300만 원 (고비용) | **초저가 1회성 또는 월 구독형** | **비용 90%↓ 절감** |
 | **처리 속도** | 수일 ~ 수주 소요 | **3초 이내 즉시 완성 및 렌더링** | **속도 99%↑ 향상** |
-| **접근성** | 방문 대면 상담 필요 | **100% 무인 웹 자동화 접속** | **접근성 100%** |
+| **접근성** | 방문 대면 상담 필요 | **100% 무인 웹 자동 접속** | **접근성 100%** |
 | **사용 편의성** | 전문 지식 필수 | **1버튼 원터치 자동 완성** | **생산성 10배↑** |"""
         service_struct = "[사용자 정보 입력] ➔ [AI 스마트 렌더링 엔진] ➔ [전문 리포트 PDF/MD 즉시 완성]"
         mono_text = """* **단건 이용권 결제 수익 (1회성 건당 9,900원~29,900원)**
@@ -421,40 +448,44 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
     md_content, _ = generate_business_report(req)
     lines = md_content.splitlines()
 
+    # HWP/Word 공식 A4 표준 여백 적용: 좌/우 20mm(56.7pt), 상/하 15mm(42.5pt)
     doc = SimpleDocTemplate(
         pdf_path,
         pagesize=A4,
-        leftMargin=30,
-        rightMargin=30,
-        topMargin=35,
-        bottomMargin=35
+        leftMargin=56.7,
+        rightMargin=56.7,
+        topMargin=42.5,
+        bottomMargin=42.5
     )
 
     prog_type = req.program_type
     
-    # 프로그램 규격별 A4 렌더링 스타일 세밀 동기화 (Target Page Count 완벽 달성)
+    # 대한민국 정부 HWP 표준 폰트 규격: 본문 10.5pt, 줄간격 160%(16.8pt)
+    body_size = 10.5
+    body_lead = 16.8
+    cell_size = 9.5
+    cell_lead = 14.5
+
+    # 프로그램 규격별 A4 렌더링 스타일 세밀 동기화
     if prog_type == "rnd_25p":
-        # 20~25페이지 R&D 풍부한 렌더링 동기화
-        h1_size, h1_lead, h1_before, h1_after = 19, 26, 36, 20
-        h2_size, h2_lead, h2_before, h2_after = 14.5, 20, 26, 16
-        h3_size, h3_lead, h3_before, h3_after = 12.5, 18, 20, 12
-        body_size, body_lead, body_after = 11, 26, 18
-        spacer_height = 30
-        table_padding = 16
-    elif prog_type in ["packages_15p", "cheongsa_12p"]:
-        # 12~15페이지 예창패/초창패 정통 렌더링 동기화
         h1_size, h1_lead, h1_before, h1_after = 18, 24, 28, 16
-        h2_size, h2_lead, h2_before, h2_after = 13.5, 18, 22, 12
-        h3_size, h3_lead, h3_before, h3_after = 11.5, 16, 16, 10
-        body_size, body_lead, body_after = 10.5, 23, 15
-        spacer_height = 22
+        h2_size, h2_lead, h2_before, h2_after = 14, 19, 22, 12
+        h3_size, h3_lead, h3_before, h3_after = 12, 16, 16, 8
+        body_after = 14
+        spacer_height = 20
         table_padding = 12
+    elif prog_type in ["packages_15p", "cheongsa_12p"]:
+        h1_size, h1_lead, h1_before, h1_after = 17, 23, 22, 12
+        h2_size, h2_lead, h2_before, h2_after = 13, 17, 18, 10
+        h3_size, h3_lead, h3_before, h3_after = 11, 15, 14, 6
+        body_after = 12
+        spacer_height = 16
+        table_padding = 10
     else:
-        # 5~8페이지 컴팩트 렌더링 동기화
         h1_size, h1_lead, h1_before, h1_after = 16, 22, 16, 8
         h2_size, h2_lead, h2_before, h2_after = 12, 16, 12, 6
         h3_size, h3_lead, h3_before, h3_after = 10, 14, 8, 4
-        body_size, body_lead, body_after = 10, 16, 8
+        body_after = 8
         spacer_height = 8
         table_padding = 6
 
@@ -475,11 +506,11 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
         textColor=colors.HexColor("#1e293b"), spaceAfter=body_after
     )
     cell_style = ParagraphStyle(
-        'Cell_PDF', fontName=MAIN_FONT, fontSize=9.5, leading=14,
+        'Cell_PDF', fontName=MAIN_FONT, fontSize=cell_size, leading=cell_lead,
         textColor=colors.HexColor("#1e293b")
     )
     cell_header_style = ParagraphStyle(
-        'Cell_Header_PDF', fontName=BOLD_FONT, fontSize=9.5, leading=14,
+        'Cell_Header_PDF', fontName=BOLD_FONT, fontSize=cell_size, leading=cell_lead,
         textColor=colors.HexColor("#1e1b4b")
     )
 
@@ -541,7 +572,7 @@ def build_pdf_file(req: ReportRequest, pdf_path: str):
         elif stripped.startswith("### "):
             story.append(Paragraph(stripped[4:], h3_style))
         elif stripped.startswith("---"):
-            story.append(HRFlowable(width="100%", thickness=0.8, color=colors.HexColor("#6366f1"), spaceBefore=16, spaceAfter=16))
+            story.append(HRFlowable(width="100%", thickness=0.8, color=colors.HexColor("#6366f1"), spaceBefore=14, spaceAfter=14))
         elif stripped:
             clean_text = stripped.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
             story.append(Paragraph(clean_text, body_style))

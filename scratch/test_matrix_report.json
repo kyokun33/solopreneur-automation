@@ -3,141 +3,141 @@
     "prog_label": "예창패/초창패 (목표 15p)",
     "domain_label": "ai커피숍 (F&B)",
     "target_pages": 15,
-    "actual_pages": 8,
-    "char_count": 6992
+    "actual_pages": 7,
+    "char_count": 7649
   },
   {
     "prog_label": "예창패/초창패 (목표 15p)",
     "domain_label": "24시 무인 스토어 (이커머스)",
     "target_pages": 15,
-    "actual_pages": 8,
-    "char_count": 7037
+    "actual_pages": 7,
+    "char_count": 7700
   },
   {
     "prog_label": "예창패/초창패 (목표 15p)",
     "domain_label": "AI 자동화 플랫폼 (IT/SaaS)",
     "target_pages": 15,
-    "actual_pages": 8,
-    "char_count": 6823
+    "actual_pages": 7,
+    "char_count": 7488
   },
   {
     "prog_label": "예창패/초창패 (목표 15p)",
     "domain_label": "스마트 3D 사출 공장 (제조)",
     "target_pages": 15,
-    "actual_pages": 8,
-    "char_count": 6802
+    "actual_pages": 7,
+    "char_count": 7464
   },
   {
     "prog_label": "예창패/초창패 (목표 15p)",
     "domain_label": "정밀 뷰티 헬스케어 (바이오)",
     "target_pages": 15,
-    "actual_pages": 8,
-    "char_count": 6798
+    "actual_pages": 7,
+    "char_count": 7459
   },
   {
     "prog_label": "청년창업사관학교 (목표 12p)",
     "domain_label": "ai커피숍 (F&B)",
     "target_pages": 12,
-    "actual_pages": 8,
-    "char_count": 6985
+    "actual_pages": 7,
+    "char_count": 7642
   },
   {
     "prog_label": "청년창업사관학교 (목표 12p)",
     "domain_label": "24시 무인 스토어 (이커머스)",
     "target_pages": 12,
-    "actual_pages": 8,
-    "char_count": 7030
+    "actual_pages": 7,
+    "char_count": 7693
   },
   {
     "prog_label": "청년창업사관학교 (목표 12p)",
     "domain_label": "AI 자동화 플랫폼 (IT/SaaS)",
     "target_pages": 12,
-    "actual_pages": 8,
-    "char_count": 6816
+    "actual_pages": 7,
+    "char_count": 7481
   },
   {
     "prog_label": "청년창업사관학교 (목표 12p)",
     "domain_label": "스마트 3D 사출 공장 (제조)",
     "target_pages": 12,
-    "actual_pages": 8,
-    "char_count": 6795
+    "actual_pages": 7,
+    "char_count": 7457
   },
   {
     "prog_label": "청년창업사관학교 (목표 12p)",
     "domain_label": "정밀 뷰티 헬스케어 (바이오)",
     "target_pages": 12,
-    "actual_pages": 8,
-    "char_count": 6791
+    "actual_pages": 7,
+    "char_count": 7452
   },
   {
     "prog_label": "R&D 과제 (목표 20~30p)",
     "domain_label": "ai커피숍 (F&B)",
     "target_pages": 25,
-    "actual_pages": 12,
-    "char_count": 9777
+    "actual_pages": 13,
+    "char_count": 11218
   },
   {
     "prog_label": "R&D 과제 (목표 20~30p)",
     "domain_label": "24시 무인 스토어 (이커머스)",
     "target_pages": 25,
-    "actual_pages": 12,
-    "char_count": 9825
+    "actual_pages": 13,
+    "char_count": 11272
   },
   {
     "prog_label": "R&D 과제 (목표 20~30p)",
     "domain_label": "AI 자동화 플랫폼 (IT/SaaS)",
     "target_pages": 25,
-    "actual_pages": 12,
-    "char_count": 9610
+    "actual_pages": 13,
+    "char_count": 11059
   },
   {
     "prog_label": "R&D 과제 (목표 20~30p)",
     "domain_label": "스마트 3D 사출 공장 (제조)",
     "target_pages": 25,
-    "actual_pages": 12,
-    "char_count": 9589
+    "actual_pages": 13,
+    "char_count": 11035
   },
   {
     "prog_label": "R&D 과제 (목표 20~30p)",
     "domain_label": "정밀 뷰티 헬스케어 (바이오)",
     "target_pages": 25,
-    "actual_pages": 12,
-    "char_count": 9588
+    "actual_pages": 13,
+    "char_count": 11033
   },
   {
     "prog_label": "수출바우처 (목표 8p)",
     "domain_label": "ai커피숍 (F&B)",
     "target_pages": 8,
     "actual_pages": 5,
-    "char_count": 5976
+    "char_count": 5970
   },
   {
     "prog_label": "수출바우처 (목표 8p)",
     "domain_label": "24시 무인 스토어 (이커머스)",
     "target_pages": 8,
     "actual_pages": 5,
-    "char_count": 6015
+    "char_count": 6009
   },
   {
     "prog_label": "수출바우처 (목표 8p)",
     "domain_label": "AI 자동화 플랫폼 (IT/SaaS)",
     "target_pages": 8,
     "actual_pages": 5,
-    "char_count": 5798
+    "char_count": 5791
   },
   {
     "prog_label": "수출바우처 (목표 8p)",
     "domain_label": "스마트 3D 사출 공장 (제조)",
     "target_pages": 8,
     "actual_pages": 5,
-    "char_count": 5780
+    "char_count": 5773
   },
   {
     "prog_label": "수출바우처 (목표 8p)",
     "domain_label": "정밀 뷰티 헬스케어 (바이오)",
     "target_pages": 8,
     "actual_pages": 5,
-    "char_count": 5777
+    "char_count": 5770
   },
   {
     "prog_label": "지자체 소액 (목표 5p)",
@@ -158,20 +158,20 @@
     "domain_label": "AI 자동화 플랫폼 (IT/SaaS)",
     "target_pages": 5,
     "actual_pages": 5,
-    "char_count": 5796
+    "char_count": 5795
   },
   {
     "prog_label": "지자체 소액 (목표 5p)",
     "domain_label": "스마트 3D 사출 공장 (제조)",
     "target_pages": 5,
     "actual_pages": 5,
-    "char_count": 5778
+    "char_count": 5777
   },
   {
     "prog_label": "지자체 소액 (목표 5p)",
     "domain_label": "정밀 뷰티 헬스케어 (바이오)",
     "target_pages": 5,
     "actual_pages": 5,
-    "char_count": 5775
+    "char_count": 5774
   }
 ]
