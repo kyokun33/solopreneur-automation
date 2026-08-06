@@ -1,11 +1,17 @@
+import os
+import sys
 import datetime
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+if BASE_DIR not in sys.path:
+    sys.path.insert(0, BASE_DIR)
+
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse, Response, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from schemas import ReportRequest, ReportResponse
 from generator import generate_business_report
-import os
 
 app = FastAPI(
     title="AI Business Report Generator SaaS",
@@ -13,12 +19,14 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Create static and template directories if they don't exist
-os.makedirs("static", exist_ok=True)
-os.makedirs("templates", exist_ok=True)
+static_dir = os.path.join(BASE_DIR, "static")
+template_dir = os.path.join(BASE_DIR, "templates")
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+os.makedirs(static_dir, exist_ok=True)
+os.makedirs(template_dir, exist_ok=True)
+
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
+templates = Jinja2Templates(directory=template_dir)
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
