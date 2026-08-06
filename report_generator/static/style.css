@@ -224,7 +224,14 @@ table, tr, td, th {
 .appendix-page {
     page-break-before: always !important;
     break-before: page !important;
-    margin-top: 50px !important;
+    margin-top: 40px !important;
+}
+
+/* 샘플 PDF 스타일 100% 매칭 테이블 네이비 헤더 및 카드 스타일 */
+.report-content table th {
+    background-color: #1e293b !important;
+    color: #ffffff !important;
+    font-weight: 700;
 }
 
 @media print {
