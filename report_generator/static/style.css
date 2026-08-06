@@ -215,10 +215,16 @@ textarea.form-control {
     background: rgba(255, 255, 255, 0.15);
 }
 
-/* 인쇄 및 PDF/결과 미리보기 표(Table) 잘림 방지 규칙 */
+/* 인쇄 및 PDF/결과 미리보기 표(Table) 및 부록 독립 페이지 분리 규칙 */
 table, tr, td, th {
     page-break-inside: avoid !important;
     break-inside: avoid !important;
+}
+
+.appendix-page {
+    page-break-before: always !important;
+    break-before: page !important;
+    margin-top: 50px !important;
 }
 
 @media print {
@@ -232,6 +238,11 @@ table, tr, td, th {
     table, tr, td, th {
         page-break-inside: avoid !important;
         break-inside: avoid !important;
+    }
+    .appendix-page {
+        page-break-before: always !important;
+        break-before: page !important;
+        margin-top: 0 !important;
     }
 }
 
