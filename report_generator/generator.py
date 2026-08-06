@@ -51,7 +51,7 @@ class NumberedCanvas(canvas.Canvas):
                 self.saveState()
                 self.setFont(MAIN_FONT, 8)
                 self.setFillColor(colors.HexColor("#64748b"))
-                self.drawRightString(200 * 2.83, 280 * 2.83, "AI Business Report Generator SaaS (3분시리즈 1)")
+                self.drawRightString(200 * 2.83, 280 * 2.83, "K-Startup 중기부 PSST 공식 규격 AI 사업계획서 (3분시리즈 1 v2.00)")
                 self.setStrokeColor(colors.HexColor("#cbd5e1"))
                 self.setLineWidth(0.5)
                 self.line(15 * 2.83, 278 * 2.83, 200 * 2.83, 278 * 2.83)
@@ -74,42 +74,77 @@ def detect_domain(title: str, features: str) -> str:
         return "hardware"
     return "it_saas"
 
-EXPERT_SYSTEM_PROMPT = """당신은 15년 차 대한민국 정부지원사업(예창패/초창패/TIPS) 전문 심사위원이자 100억 대 VC 벤처캐피털 투자 심사역입니다.
-사용자가 입력한 [사업 아이템명], [타겟 고객], [핵심 경쟁력], [예산] 정보를 바탕으로 해당 업종에 100% 밀착된 무결점 수석 컨설턴트 수준의 전문 사업계획서를 작성하세요.
+# 중소벤처기업부 K-Startup 공식 PSST 표준 프레임워크 System Prompt
+PSST_OFFICIAL_SYSTEM_PROMPT = """당신은 중소벤처기업부 및 K-Startup(창업진흥원) 예비창업패키지/초기창업패키지/TIPS 공식 사업계획서 수석 평가위원입니다.
+사용자가 입력한 [사업 아이템명], [타겟 고객], [핵심 경쟁력], [예산] 정보를 바탕으로 대한민국 공식 정부지원사업 표준 PSST(Problem - Solution - Scale-up - Team) 양식에 100% 부합하는 최상급 사업계획서를 작성하세요.
 
-반드시 마크다운(Markdown) 표와 세부 항목을 포함하여 아래 목차대로 정교하게 작성하세요:
-# 📄 [사업계획서] {title}
-* **분류**: {category}
-* **작성일자**: {now_str}
+반드시 마크다운 개조식 불렛포인트와 세부 정밀 표를 활용하여 아래 4대 핵심 구조로 작성하세요:
+
+# 📄 [K-Startup PSST 공식 표준 사업계획서] {title}
+* **사업 분류**: 중소벤처기업부/창진원 정부지원사업 제출용 (PSST 표준 양식)
+* **발급일자**: {now_str}
 * **타겟 고객**: {target_customer}
-* **예산 및 목표**: {budget}
+* **사업비 규모**: {budget}
 
 ---
 
-## 1. 사업 개요 및 배경 (Executive Summary)
-### 1.1 추진 배경 및 문제 정의
-### 1.2 비전 및 핵심 가치
+## 1. [P] Problem (문제 인식)
+### 1.1 창업 아이템의 개발 동기 및 필요성
+- 타겟 고객인 **{target_customer}** 계층이 겪고 있는 기존 시장의 핵심 페인 포인트(Pain Point) 분석
+- 시장 조사를 통한 문제의 심각성 및 기술적/사업적 개발 필요성 기술
 
-## 2. 타겟 시장 분석 및 경쟁 우위 (Market & Competitor Analysis)
-### 2.1 목표 시장(TAM-SAM-SOM) 분석
-### 2.2 경쟁 우위 요소 (표 형식)
-
-## 3. 핵심 기술 및 서비스 스펙 (Product Specification)
-### 3.1 솔루션 핵심 기능
-### 3.2 서비스 구조
-
-## 4. 마케팅 전략 및 수익 모델 (GTM & Monetization)
-### 4.1 고투마켓(Go-To-Market) 마케팅 전략
-### 4.2 수익 모델 (Business Model)
-
-## 5. 재무 추정 및 실행 타임라인 (Financial & Roadmap)
-### 5.1 로드맵 (Phase 1, 2, 3)
-### 5.2 예산 집행 계획 (퍼센트 비중 포함)
+### 1.2 기존 대안(경쟁사)의 한계점 및 문제의 심각성
+- 기존 시장 대행사/솔루션의 높은 비용, 느린 속도, 복잡한 접근성의 명확한 한계 제시
 
 ---
-*본 보고서는 "고고플렉스AI 연구소" AI 사업계획서 자동 생성 플랫폼에 의해 정식 발급되었습니다.*"""
 
-def call_openai_gpt(req: ReportRequest, api_key: str) -> str:
+## 2. [S] Solution (실현 가능성 & 차별성)
+### 2.1 개발 및 구현 방안 (핵심 기술 및 서비스)
+- **{title}** 프로젝트의 구체적 해결 솔루션 제시
+- 주요 핵심 기능: **{core_features}**
+
+### 2.2 기술적/사업적 차별화 요소 및 경쟁 우위
+| 구분 | 기존 수동 방식 / 경쟁 대안 | {title} (본 프로젝트) |
+| :--- | :--- | :--- |
+| **운영/제작 단가** | 기존 고비용 구조 | **획기적 비용 절감 (최대 70%↓)** |
+| **처리/운영 속도** | 수일~수주 소요 | **초고속 즉시 완성 및 24시간 가동** |
+| **품질/일관성** | 인적 숙련도 변동 | **표준 알고리즘으로 균일한 최상 품질** |
+
+---
+
+## 3. [S] Scale-up (성장 전략 & 사업화)
+### 3.1 비즈니스 모델(BM) 및 목표 시장(TAM-SAM-SOM)
+- **TAM (전체 시장)**: 국내 관련 산업 및 자동화 거래액 시장
+- **SAM (유효 시장)**: {target_customer} 중심의 솔루션/제품 수요
+- **SOM (수익 시장)**: 초기 1~2년 차 진입 직영 및 가맹/구독 유저 타겟
+- **수익화 모델**: 단건 이용권, 월간 정기 구독(SaaS) 및 B2B 파트너십 마진
+
+### 3.2 단계별 사업화 로드맵 및 시장 진입 전략 (GTM)
+- **Phase 1 (1~3개월 차)**: MVP 시제품 완성 및 초기 타겟 유저 100명 검증
+- **Phase 2 (6개월 차)**: 유료 서비스 전환 및 마케팅 집행 ➔ 월 매출 목표 달성
+- **Phase 3 (1년 차)**: B2B 파트너십 확장 및 전국 인프라 구축 ➔ 연 매출 돌파
+
+### 3.3 사업비 소요 및 자금 조달 계획 (정부지원금 매칭)
+| 집행 항목 | 세부 내역 | 예산 비중 (%) |
+| :--- | :--- | :--- |
+| **시제품 제작 및 설비/인프라** | 개발, 설비, 로봇/시스템 구축 | **40%** |
+| **마케팅 및 시장 진입비** | 바이럴, SEO 최적화, 광고 집행 | **40%** |
+| **운영비 및 예비비** | 지식재산권(특허), 인허가, 기타 | **20%** |
+
+---
+
+## 4. [T] Team (팀 구성 및 보유 역량)
+### 4.1 대표자 및 핵심 팀원의 직무 전문성
+- **대표자 역량**: 본 사업 분야 직무 경력 및 아이템 기획/실행 추진력 보유
+- **협력 네트워크**: 외부 기술 자문단, 디바이스/설비 파트너십 및 전문 자문위원회 구축
+
+### 4.2 사회적 가치 창출 및 향후 기대효과
+- 1인 기업가 및 소상공인 인건비 절감, 비효율 혁신 및 지역 일자리 창출 기여
+
+---
+*본 사업계획서는 중소벤처기업부 K-Startup PSST 공식 표준 규격에 따라 "3분시리즈 1 AI 연구소"에서 정식 발급되었습니다.*"""
+
+def call_openai_psst_gpt(req: ReportRequest, api_key: str) -> str:
     import json
     import urllib.request
     
@@ -119,20 +154,20 @@ def call_openai_gpt(req: ReportRequest, api_key: str) -> str:
         "Authorization": f"Bearer {api_key}"
     }
     
-    user_prompt = f"""[사업 아이템명]: {req.title}
-[보고서 목적]: {req.category}
-[타겟 고객]: {req.target_customer}
-[핵심 기능/경쟁력]: {req.core_features}
-[예산 및 목표]: {req.budget}
+    user_prompt = f"""[창업 아이템명]: {req.title}
+[보고서 분류]: {req.category} (K-Startup PSST 공식 표준)
+[타겟 고객층]: {req.target_customer}
+[핵심 기능 및 경쟁력]: {req.core_features}
+[사업비 및 예산]: {req.budget}
 
-위 사업 조건에 100% 완벽히 밀착된 전문 컨설팅 사업계획서를 마크다운으로 작성해 주세요."""
+위 정보를 기반으로 중소벤처기업부 예비창업패키지/초기창업패키지 합격 기준 K-Startup PSST (Problem-Solution-Scale up-Team) 정식 양식으로 전문 사업계획서를 완벽하게 작성해 주세요."""
 
     data = {
         "model": "gpt-4o-mini",
         "messages": [
-            {"role": "system", "content": EXPERT_SYSTEM_PROMPT.format(
-                title=req.title, category=req.category, now_str=datetime.datetime.now().strftime("%Y년 %m월 %d일"),
-                target_customer=req.target_customer, budget=req.budget
+            {"role": "system", "content": PSST_OFFICIAL_SYSTEM_PROMPT.format(
+                title=req.title, now_str=datetime.datetime.now().strftime("%Y년 %m월 %d일"),
+                target_customer=req.target_customer, budget=req.budget, core_features=req.core_features
             )},
             {"role": "user", "content": user_prompt}
         ],
@@ -148,165 +183,140 @@ def generate_business_report(req: ReportRequest) -> tuple[str, str]:
     api_key = req.openai_api_key or os.environ.get("OPENAI_API_KEY")
     if api_key:
         try:
-            md_content = call_openai_gpt(req, api_key)
+            md_content = call_openai_psst_gpt(req, api_key)
             html_content = markdown.markdown(md_content, extensions=['tables', 'fenced_code'])
             return md_content, html_content
         except Exception as e:
-            print(f"[WARN] OpenAI GPT Call failed: {e}, falling back to Smart Domain Classifier")
+            print(f"[WARN] OpenAI GPT Call failed: {e}, falling back to PSST Engine")
 
-    category_titles = {
-        "government": "정부지원사업 제출용 사업계획서",
-        "ir": "투자 유치(IR) 제안서",
-        "market": "시장 분석 및 수익성 검증 리포트"
-    }
-    cat_name = category_titles.get(req.category, "비즈니스 기획서")
+    cat_name = "중소벤처기업부 K-Startup PSST 공식 표준 사업계획서"
     now_str = datetime.datetime.now().strftime("%Y년 %m월 %d일")
     domain = detect_domain(req.title, req.core_features)
 
     if domain == "fnb":
+        prob_text = f"기존 외식/카페 시장은 높게 치솟는 인건비(매출의 35%+), 일손 부족, 수동 조리/서빙의 비효율로 인해 **{req.target_customer}** 고객층의 만족도 저하 및 매장 수익성 악화를 겪고 있습니다."
+        sol_text = f"**{req.title}** 프로젝트는 24시간 무인 로봇 제조 및 스마트 서빙 시스템을 결합하여 인건비를 70% 이상 절감하고 최상의 균일한 음료/서비스 품질을 제공합니다."
         tam_text = "국내 외식 및 무인 로봇 푸드테크 시장 (약 15조 원 규모)"
-        sam_text = f"{req.target_customer} 중심의 무인 로봇 매장 수요 (약 1조 2,000억 원 규모)"
-        som_text = "초기 1~2년 차 거점 매장 진입 및 프랜차이즈 가맹 목표 (약 30억 원 목표)"
-        
+        sam_text = f"{req.target_customer} 타겟 무인 로봇 매장 수요 (약 1조 2,000억 원 규모)"
+        som_text = "초기 1~2년 차 거점 직영점 진입 및 프랜차이즈 가맹 목표 (약 30억 원)"
         comp_table = f"""| 구분 | 기존 수동 매장 / 일반 카페 | {req.title} (본 프로젝트) |
 | :--- | :--- | :--- |
 | **인건비 비중** | 매출의 30% ~ 40% (고비용) | **인건비 70% 이상 획기적 절감** |
 | **운영 시간** | 10시간 ~ 12시간 한정 운영 | **24시간 365일 무인 자동 가동** |
-| **품질 및 속도** | 조리자 숙련도에 따라 변동 | **로봇 알고리즘으로 균일한 최상 품질** |"""
-        
-        service_struct = "[고객 키오스크/앱 주문] ➔ [로봇 음료 제조 & 무인 서빙] ➔ [고객 음료 수령 및 픽업]"
-        mono_text = """* **매장 음료/디저트 판매 수익**: 24시간 무인 매장 음료 및 디저트 직접 판매
-* **로봇 매장 프랜차이즈 가맹 수익**: 무인 로봇 패키지 매장 가맹비 및 원두/원자재 유통 수익
-* **스마트 매장 광고/협찬 수익**: 무인 서빙 로봇 디스플레이 사이니지 광고 수익"""
-        
-        roadmap_text = """* **Phase 1 (1~3개월 차)**: 무인 로봇 제조/서빙 설비 구축 ➔ 플래그십 1호점 오픈
-* **Phase 2 (6개월 차)**: 24시간 매장 운영 데이터 검증 ➔ 직영 3호점 확장 및 월 매출 3,000만 원 달성
-* **Phase 3 (1년 차)**: 프랜차이즈 가맹 사업 본격화 ➔ 전국 30개 매장 가맹 계약 체결"""
-
-        budget_text = f"""* **총 예산 규모**: **{req.budget}**
-* **로봇 제조/서빙 설비 및 키오스크**: 45%
-* **매장 인테리어 및 보증금**: 35%
-* **원자재(원두/음료) 및 초기 마케팅**: 20%"""
+| **품질/일관성** | 조리자 숙련도에 따라 변동 | **로봇 알고리즘으로 균일한 최상 품질** |"""
+        service_struct = "[고객 앱/키오스크 주문] ➔ [로봇 음료 제조 및 서빙] ➔ [고객 수령 및 AI 자동 청결 관리]"
+        mono_text = """* **24시간 무인 매장 음료/디저트 직접 판매 수익**
+* **로봇 매장 프랜차이즈 가맹비 및 원두/원자재 공급 유통 마진**
+* **무인 로봇 디스플레이 사이니지 타겟 광고 수익**"""
+        budget_table = f"""| 집행 항목 | 세부 내역 | 예산 비중 (%) |
+| :--- | :--- | :--- |
+| **로봇 제조/서빙 설비 및 키오스크** | 제조 로봇팔, 무인 서빙 로봇, 결제 키오스크 | **45%** |
+| **매장 인테리어 및 공간 구획** | 24시간 무인 매장 설계 및 시공 보증금 | **35%** |
+| **원자재 사입 및 바이럴 마케팅** | 원두/음료 부자재 및 개점 홍보 광고 | **20%** |"""
 
     elif domain == "ecommerce":
+        prob_text = f"기존 이커머스 유통 시장은 과도한 재고 부담, 높은 수동 키워드 광고비, 직접 포장/배송의 물리적 한계로 인해 **{req.target_customer}** 타겟 마케팅 및 마진 확보에 어려움을 겪고 있습니다."
+        sol_text = f"**{req.title}** 프로젝트는 AI 기반 무재고 자동 위탁 및 100% 무인 풀필먼트 자동 배송 시스템을 구축하여 리스크 없이 고수익 유통 구조를 실현합니다."
         tam_text = "국내 온라인 쇼핑 거래액 시장 (약 220조 원 규모)"
         sam_text = f"{req.target_customer} 타겟 무인 커머스 수요 (약 5조 원 규모)"
-        som_text = "초기 1년 차 전문 쇼핑몰 진입 (약 10억 원 목표)"
-        
+        som_text = "초기 1년 차 전문 쇼핑몰 진입 (약 10억 원)"
         comp_table = f"""| 구분 | 일반 소매 쇼핑몰 | {req.title} (본 프로젝트) |
 | :--- | :--- | :--- |
-| **재고 부담** | 사입 및 재고 리스크 상존 | **무재고 AI 위탁/자동 풀필먼트** |
+| **재고 리스크** | 사입 및 재고 부담 상존 | **무재고 AI 위탁 & 자동 풀필먼트** |
 | **마케팅 효율** | 높은 수동 키워드 광고비 | **AI 타겟팅으로 광고 ROI 300% 향상** |
 | **물류 소요** | 직접 포장 및 택배 발송 | **100% 무인 물류 자동 발송** |"""
-        
-        service_struct = "[고객 주문] ➔ [AI 무인 주문 접수 & 자동 사입] ➔ [풀필먼트 자동 택배 배송]"
-        mono_text = """* **상품 판매 마진 수익**: 사입가 대비 30~50% 유통 마진 확보
-* **정기 구독 배송 수익**: 주요 타겟 고객 대상 월간 정기 배송 서비스
-* **B2B 도매 유통 수익**: 소상공인 대상 도매 공급 마진"""
-        
-        roadmap_text = """* **Phase 1 (1개월 차)**: 쇼핑몰 구축 및 100종 킬러 상품 등록 ➔ 일 매출 100만 원 달성
-* **Phase 2 (3개월 차)**: AI 바이럴 마케팅 집행 ➔ 월 매출 2,000만 원 달성
-* **Phase 3 (6개월 차)**: PB 자체 브랜드 출시 ➔ 월 매출 5,000만 원 돌파"""
+        service_struct = "[고객 주문 결제] ➔ [AI 주문 자동 접수 & 무인 사입] ➔ [풀필먼트 자동 택배 배송]"
+        mono_text = """* **상품 판매 마진 수익 (사입가 대비 30~50% 유통 마진)**
+* **월간 정기 구독 배송 서비스 수익**
+* **소상공인 대상 B2B 도매 유통 마진**"""
+        budget_table = f"""| 집행 항목 | 세부 내역 | 예산 비중 (%) |
+| :--- | :--- | :--- |
+| **마케팅 및 SNS 바이럴 광고** | AI 타겟팅 SNS 광고 및 숏폼 마케팅 | **50%** |
+| **상품 사입 및 풀필먼트 물류비** | 자동 물류 시스템 연동 및 초기 사입 | **30%** |
+| **쇼핑몰 시스템 및 디자인** | 쇼핑몰 구축 및 UX/UI 디벨롭 | **20%** |"""
 
-        budget_text = f"""* **총 예산 규모**: **{req.budget}**
-* **마케팅 및 SNS 바이럴 광고**: 50%
-* **상품 사입 및 풀필먼트 물류비**: 30%
-* **쇼핑몰 시스템 및 디자인**: 20%"""
-
-    else: # 기본 IT/SaaS 및 일반 서비스
-        tam_text = "국내 디지털 전환 및 서비스 자동화 시장 (약 10조 원 규모)"
-        sam_text = f"{req.target_customer} 타겟 자동화 솔루션 수요 (약 1조 원 규모)"
-        som_text = "초기 1년 차 진입 목표 (약 50억 원 목표)"
-        
+    else:
+        prob_text = f"기존 서비스 시장은 높은 외주 비용, 처리 지연, 대면 상담의 물리적 제약으로 인해 **{req.target_customer}** 계층의 만족도 저하 및 접근성 한계를 보이고 있습니다."
+        sol_text = f"**{req.title}** 프로젝트는 웹 기반 무인 자동화 엔진을 연동하여 3초 만에 완결된 결과물을 제공함으로써 생산성과 편의성을 혁신적으로 높입니다."
+        tam_text = "국내 디지털 전환 및 자동화 서비스 시장 (약 10조 원 규모)"
+        sam_text = f"{req.target_customer} 중심의 자동화 솔루션 수요 (약 1조 원 규모)"
+        som_text = "초기 1년 차 진입 목표 (약 50억 원)"
         comp_table = f"""| 구분 | 기존 수동 서비스 / 대행사 | {req.title} (본 프로젝트) |
 | :--- | :--- | :--- |
 | **서비스 단가** | 100만 원 ~ 300만 원 (고비용) | **초저가 1회성 또는 월 구독형** |
 | **처리 속도** | 수일 ~ 수주 소요 | **3초 이내 즉시 완성 및 렌더링** |
 | **접근성** | 방문 대면 상담 필요 | **100% 무인 웹 자동화 접속** |"""
-        
         service_struct = "[사용자 정보 입력] ➔ [AI 스마트 렌더링 엔진] ➔ [전문 리포트 PDF/MD 즉시 완성]"
-        mono_text = """* **단건 이용권 판매 수익**: 건당 단건 결제 수익
-* **월간 구독형(SaaS) 수익**: 월간 무제한 이용 정기 구독 결제
-* **B2B 맞춤형 커스텀 연동 수익**: 기업체 대상 맞춤형 솔루션 제공"""
-        
-        roadmap_text = """* **Phase 1 (1개월 차)**: MVP 완성 및 서비스 런칭 ➔ 초기 고객 100명 확보
-* **Phase 2 (3개월 차)**: 유료 구독 모델 전환 ➔ 월 매출 500만 원 달성
-* **Phase 3 (6개월 차)**: B2B 파트너십 확장 ➔ 월 매출 2,000만 원 돌파"""
+        mono_text = """* **단건 이용권 결제 수익**: 1회성 건당 이용권 판매
+* **월간 정기 구독(SaaS) 수익**: 월간 무제한 이용 정기 결제
+* **B2B 기업 맞춤형 API 연동 수익**: 기업체 대상 연동 마진"""
+        budget_table = f"""| 집행 항목 | 세부 내역 | 예산 비중 (%) |
+| :--- | :--- | :--- |
+| **마케팅 및 고객 유치비** | 디지털 마케팅, SEO 최적화, 프로모션 | **50%** |
+| **서버 인프라 및 시스템 구축** | 클라우드 서버, 보안, 기능 고도화 | **30%** |
+| **운영비 및 지식재산권** | 특허 출원, 인허가, 예비비 | **20%** |"""
 
-        budget_text = f"""* **총 예산 규모**: **{req.budget}**
-* **서버 인프라 및 시스템 구축**: 30%
-* **마케팅 및 고객 유치**: 50%
-* **운영비 및 기타**: 20%"""
+    md_content = f"""# 📄 [K-Startup PSST 공식 표준 사업계획서] {req.title}
 
-    md_content = f"""# 📄 [사업계획서] {req.title}
-
-* **분류**: {cat_name}
-* **작성일자**: {now_str}
+* **사업 분류**: 중소벤처기업부/창진원 정부지원사업 제출용 (PSST 표준 양식)
+* **발급일자**: {now_str}
 * **타겟 고객**: {req.target_customer}
-* **예산 및 목표**: {req.budget}
+* **사업비 규모**: {req.budget}
 
 ---
 
-## 1. 사업 개요 및 배경 (Executive Summary)
+## 1. [P] Problem (문제 인식)
 
-### 1.1 추진 배경 및 문제 정의
-현재 **{req.target_customer}** 계층은 기존 비효율적인 수동 방식과 높은 비용 부담으로 인해 어려움을 겪고 있습니다. 
-**"{req.title}"** 프로젝트는 이러한 시장 페인 포인트(Pain Point)를 혁신적으로 해결하고, 고효율 무인 자동화 가치를 제공하기 위해 추진됩니다.
+### 1.1 창업 아이템의 개발 동기 및 필요성
+{prob_text}
 
-### 1.2 비전 및 핵심 가치
-* **비전**: {req.target_customer}를 위한 NO.1 대표 비즈니스 브랜드 도약
-* **핵심 가치**: **{req.core_features}**를 기반으로 한 경쟁력 10배 향상
+### 1.2 기존 대안(경쟁사)의 한계점 및 문제의 심각성
+- 기존 수동 방식 및 대행사는 과도한 인건비/비용 부담과 긴 소요 시간으로 인해 고객의 시급한 요구에 대응하지 못하는 치명적 한계가 존재합니다.
+- **{req.title}** 프로젝트는 이 문제를 획기적으로 해결하는 차세대 솔루션입니다.
 
 ---
 
-## 2. 타겟 시장 분석 및 경쟁 우위 (Market & Competitor Analysis)
+## 2. [S] Solution (실현 가능성 & 차별성)
 
-### 2.1 목표 시장(TAM-SAM-SOM) 분석
-* **전체 시장 (TAM)**: {tam_text}
-* **유효 시장 (SAM)**: {sam_text}
-* **수익 시장 (SOM)**: {som_text}
+### 2.1 개발 및 구현 방안 (핵심 기술 및 서비스)
+{sol_text}
+- **핵심 경쟁력 및 기능**: {req.core_features}
 
-### 2.2 경쟁 우위 요소
+### 2.2 기술적/사업적 차별화 요소 및 경쟁 우위
 {comp_table}
 
 ---
 
-## 3. 핵심 기술 및 서비스 스펙 (Product Specification)
+## 3. [S] Scale-up (성장 전략 & 사업화)
 
-### 3.1 솔루션 핵심 기능
-1. **스마트 자동화 엔진**: 입력 정보 기반 최적 알고리즘 실시간 구성
-2. **핵심 경쟁력**: {req.core_features}
-3. **Multi-Format 지원**: 웹 미리보기, 마크다운(MD) 파일 및 PDF 즉시 소장
-
-### 3.2 서비스 구조
-```
-{service_struct}
-```
-
----
-
-## 4. 마케팅 전략 및 수익 모델 (GTM & Monetization)
-
-### 4.1 고투마켓(Go-To-Market) 마케팅 전략
-* **타겟 밀집 채널 직접 집행**: 주요 타겟 고객({req.target_customer})이 밀집한 커뮤니티 및 SNS 바이럴 마케팅
-* **SEO 최적화 콘텐츠 마케팅**: 검색 노출 최적화 블로그 및 숏폼 마케팅
-* **초기 프로모션**: 1회용 시리얼 코드 및 무상 체험권 제공으로 유저 유치
-
-### 4.2 수익 모델 (Business Model)
+### 3.1 비즈니스 모델(BM) 및 목표 시장(TAM-SAM-SOM)
+* **전체 시장 (TAM)**: {tam_text}
+* **유효 시장 (SAM)**: {sam_text}
+* **수익 시장 (SOM)**: {som_text}
+* **수익 모델 (Monetization)**:
 {mono_text}
 
----
+### 3.2 단계별 사업화 로드맵 및 시장 진입 전략 (GTM)
+* **Phase 1 (1~3개월 차)**: MVP 시제품 완성 및 초기 유저 100명 확보 ➔ 핵심 지표 검증
+* **Phase 2 (6개월 차)**: 정식 서비스 유료 전환 및 마케팅 집행 ➔ 월 매출 목표 달성
+* **Phase 3 (1년 차)**: B2B 파트너십 확장 및 가맹/전국 인프라 구축 ➔ 연 매출 돌파
 
-## 5. 재무 추정 및 실행 타임라인 (Financial & Roadmap)
-
-### 5.1 로드맵
-{roadmap_text}
-
-### 5.2 예산 집행 계획
-{budget_text}
+### 3.3 사업비 소요 및 자금 조달 계획 (정부지원금 매칭)
+{budget_table}
 
 ---
-*본 보고서는 "고고플렉스AI 연구소" AI 사업계획서 자동 생성 플랫폼에 의해 정식 발급되었습니다.*
+
+## 4. [T] Team (팀 구성 및 보유 역량)
+
+### 4.1 대표자 및 핵심 팀원의 직무 전문성
+* **대표자 직무 전문성**: 본 비즈니스 분야 핵심 기술 및 사업화 실행 경험 보유
+* **외부 파트너십 및 자문단**: 지식재산권 특허 법률 자문 및 전담 개발/설비 파트너십 구축 완료
+
+### 4.2 사회적 가치 창출 및 기대 효과
+* 소상공인/1인 기업 비용 절감, 비효율 혁신 및 관련 산업 일자리 창출 기여
+
+---
+*본 사업계획서는 중소벤처기업부 K-Startup PSST 공식 표준 규격에 따라 "3분시리즈 1 AI 연구소"에서 정식 발급되었습니다.*
 """
 
     html_content = markdown.markdown(md_content, extensions=['tables', 'fenced_code'])
