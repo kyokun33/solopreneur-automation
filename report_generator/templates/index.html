@@ -251,15 +251,35 @@
         });
 
         function printReport() {
-            const printContent = document.getElementById('printableReport').innerHTML;
-            const win = window.open('', '', 'height=700,width=900');
-            win.document.write('<html><head><title>사업계획서_인쇄</title>');
-            win.document.write('<style>body{font-family:sans-serif; padding:40px; line-height:1.6;} table{width:100%; border-collapse:collapse;} th,td{border:1px solid #ccc; padding:8px;}</style>');
-            win.document.write('</head><body>');
-            win.document.write(printContent);
-            win.document.write('</body></html>');
-            win.document.close();
-            win.print();
+            if (!currentReportData) {
+                alert("생성된 사업계획서 데이터가 없습니다.");
+                return;
+            }
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/api/download-pdf';
+            form.target = '_blank';
+
+            const fields = {
+                title: currentReportData.title || document.getElementById('title').value,
+                category: document.getElementById('category').value,
+                program_type: document.getElementById('program_type').value,
+                target_customer: document.getElementById('target_customer').value,
+                core_features: document.getElementById('core_features').value,
+                budget: document.getElementById('budget').value
+            };
+
+            for (const [k, v] of Object.entries(fields)) {
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = k;
+                hiddenInput.value = v;
+                form.appendChild(hiddenInput);
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
         }
 
         function downloadMD() {

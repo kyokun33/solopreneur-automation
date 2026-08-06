@@ -16,8 +16,8 @@ from generator import generate_business_report
 
 app = FastAPI(
     title="AI Business Report Generator SaaS",
-    description="3분 만에 완성되는 K-Startup 대한민국 HWP/Word 공식 서식 동기화 사업계획서 자동 생성기 (3분시리즈 1 v2.30 정식버전)",
-    version="2.3.0"
+    description="3분 만에 완성되는 K-Startup 대한민국 HWP/Word 공식 서식 동기화 사업계획서 자동 생성기 (3분시리즈 1 v2.40 정식버전)",
+    version="2.4.0"
 )
 
 static_dir = os.path.join(BASE_DIR, "static")
@@ -139,6 +139,41 @@ async def download_markdown_api(title: str = Form(default="사업계획서"), co
         content=bom_content,
         media_type="text/markdown; charset=utf-8",
         headers={"Content-Disposition": f"attachment; filename=\"report.md\"; filename*=UTF-8''{safe_title}.md"}
+    )
+
+@app.post("/api/download-pdf")
+async def download_pdf_api(
+    title: str = Form(default="사업계획서"),
+    category: str = Form(default="government"),
+    program_type: str = Form(default="packages_15p"),
+    target_customer: str = Form(default="전 연령"),
+    core_features: str = Form(default="AI 자동화"),
+    budget: str = Form(default="초기 예산 1,000만 원 / 월 목표 매출 500만 원")
+):
+    from generator import build_pdf_file
+    import tempfile
+    
+    req_obj = ReportRequest(
+        title=title,
+        category=category,
+        program_type=program_type,
+        target_customer=target_customer,
+        core_features=core_features,
+        budget=budget,
+        access_key="DEMO-FREE-2026"
+    )
+    
+    temp_pdf = os.path.join(tempfile.gettempdir(), f"report_{int(datetime.datetime.now().timestamp())}.pdf")
+    build_pdf_file(req_obj, temp_pdf)
+    
+    with open(temp_pdf, "rb") as f:
+        pdf_bytes = f.read()
+        
+    safe_title = urllib.parse.quote(title.replace(' ', '_'))
+    return Response(
+        content=pdf_bytes,
+        media_type="application/pdf",
+        headers={"Content-Disposition": f"inline; filename=\"{safe_title}_KStartup_사업계획서.pdf\""}
     )
 
 @app.post("/download-md")
