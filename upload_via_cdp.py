@@ -4,7 +4,7 @@ import subprocess
 import socket
 from playwright.async_api import async_playwright
 
-DOCUMENT_PATH = r"c:\Users\sude3\OneDrive\바탕 화면\1인기업\NotebookLM_Source_1인기업_수익화아이템3.md"
+DOCUMENT_PATH = r"c:\Users\sude3\OneDrive\바탕 화면\1인기업\NotebookLM_Source_로그프로젝트_전체진행상황.md"
 CDP_URL = "http://127.0.0.1:9222"
 PROFILE_DIR = r"C:\Users\sude3\.chrome_dev_profile"
 
