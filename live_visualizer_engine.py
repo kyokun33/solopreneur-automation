@@ -1,0 +1,126 @@
+import sys
+import time
+import os
+import subprocess
+import argparse
+
+if sys.stdout and hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--task", type=str, default="고감독 실시간 작업 수행 중...")
+parser.add_argument("--action", type=str, default="demo")
+args, _ = parser.parse_known_args()
+
+task_title = args.task
+
+HTML_CONTENT = """<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>🤖 고감독 라이브 실시간 작업 HUD</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@600;800&family=Noto+Sans+KR:wght@700&display=swap');
+    body {
+      background: rgba(15, 23, 42, 0.95);
+      color: #F8FAFC;
+      font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hud {
+      background: #1E293B;
+      border: 2px solid #F97316;
+      border-radius: 24px;
+      padding: 20px 40px;
+      box-shadow: 0 0 40px rgba(249, 115, 22, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .badge {
+      background: #F97316;
+      color: #0F172A;
+      font-weight: 800;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      animation: pulse 1.5s infinite;
+    }
+    .text {
+      font-size: 20px;
+      font-weight: 700;
+      color: #E2E8F0;
+    }
+    #pointer {
+      position: fixed;
+      width: 36px;
+      height: 36px;
+      background: #F97316;
+      border: 3px solid #FFF;
+      border-radius: 50%;
+      box-shadow: 0 0 30px #F97316;
+      pointer-events: none;
+      transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    #pointer::after {
+      content: '🤖';
+      font-size: 18px;
+      position: absolute;
+      top: 4px;
+      left: 4px;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+  </style>
+</head>
+<body>
+  <div class="hud">
+    <div class="badge">LIVE ENGINE</div>
+    <div class="text" id="status-text">🎬 TASK_TITLE_PLACEHOLDER</div>
+  </div>
+  <div id="pointer"></div>
+
+  <script>
+    const p = document.getElementById('pointer');
+    const txt = document.getElementById('status-text');
+
+    async function runDemo() {
+      const coords = [
+        {x: 200, y: 300, msg: "1️⃣ 고감독 대표님 명령 파악 및 분석 중..."},
+        {x: 600, y: 400, msg: "2️⃣ 🤖 네온 포인터로 작업 및 앱 가동 중..."},
+        {x: 400, y: 200, msg: "3️⃣ 대표님 명령 100% 완수 완료!"}
+      ];
+
+      for (let c of coords) {
+        p.style.left = c.x + 'px';
+        p.style.top = c.y + 'px';
+        txt.textContent = c.msg;
+        await new Promise(r => setTimeout(r, 1200));
+      }
+    }
+
+    window.onload = runDemo;
+  </script>
+</body>
+</html>
+""".replace("TASK_TITLE_PLACEHOLDER", task_title)
+
+HTML_PATH = r"c:\Users\sude3\OneDrive\바탕 화면\1인기업\live_visualizer_hud.html"
+with open(HTML_PATH, "w", encoding="utf-8") as f:
+    f.write(HTML_CONTENT)
+
+print(f"🎬 고감독 실시간 시각화 HUD 가동: {task_title}")
+cmd = f'start msedge --app="file:///{HTML_PATH.replace(os.sep, "/")}"'
+subprocess.run(cmd, shell=True)
+
+if args.action == "calc":
+    time.sleep(1)
+    subprocess.run("start calc.exe", shell=True)
