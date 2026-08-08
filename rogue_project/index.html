@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GogoFlex Rogue Project - 성검전설3 링커맨드 JRPG Edition v2.0</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+KR:wght@400;700;900&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; select: none; }
+        body {
+            background-color: #07090e;
+            background-image: 
+                radial-gradient(circle at 50% 30%, rgba(30, 45, 75, 0.4) 0%, transparent 70%),
+                linear-gradient(0deg, #040508 0%, #0c101d 100%);
+            color: #e0e6ed;
+            font-family: 'Noto Sans KR', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Top Bar JRPG Theme */
+        #game-frame {
+            position: relative;
+            width: 960px;
+            background: rgba(16, 22, 36, 0.95);
+            border: 3px solid #d4af37;
+            box-shadow: 
+                0 0 0 2px #3b280c,
+                0 0 25px rgba(212, 175, 55, 0.35),
+                inset 0 0 15px rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #header {
+            padding: 12px 20px;
+            background: linear-gradient(180deg, #2b1f0d 0%, #151006 100%);
+            border-bottom: 2px solid #d4af37;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .title-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .title-box h1 {
+            font-family: 'Press Start 2P', cursive, 'Noto Sans KR';
+            font-size: 1.1rem;
+            color: #ffd700;
+            text-shadow: 2px 2px 0 #000, 0 0 10px rgba(255, 215, 0, 0.6);
+        }
+
+        .title-box p {
+            font-size: 0.75rem;
+            color: #a8b5c8;
+        }
+
+        .stats-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        .stat-card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid #7c6126;
+            border-radius: 6px;
+            padding: 4px 12px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stat-val {
+            color: #50e3c2;
+            font-weight: bold;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.8rem;
+        }
+
+        /* Canvas Area */
+        #canvas-container {
+            position: relative;
+            width: 960px;
+            height: 560px;
+            background: #000;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            background: #0d121d;
+        }
+
+        /* Seiken Densetsu 3 Hero HUD Overlay */
+        #hero-hud {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            display: flex;
+            gap: 12px;
+            pointer-events: none;
+        }
+
+        .hero-card {
+            background: linear-gradient(135deg, rgba(16, 26, 46, 0.9) 0%, rgba(8, 12, 22, 0.95) 100%);
+            border: 2px solid #c5a059;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 4px 12px rgba(0,0,0,0.6);
+            border-radius: 8px;
+            padding: 10px 14px;
+            min-width: 220px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .hero-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid #ffd700;
+            background: radial-gradient(circle, #3a4b6e 0%, #111927 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.6rem;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+        }
+
+        .hero-info {
+            flex: 1;
+        }
+
+        .hero-name {
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .hero-lvl {
+            color: #ffd700;
+            font-size: 0.75rem;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        .bar-label {
+            font-size: 0.65rem;
+            color: #8fa0b5;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3px;
+        }
+
+        .bar-bg {
+            width: 100%;
+            height: 8px;
+            background: #111722;
+            border-radius: 4px;
+            border: 1px solid #36465d;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill-hp {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, #e53935, #ff7043);
+            transition: width 0.15s ease-out;
+        }
+
+        .bar-fill-mp {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, #1e88e5, #42a5f5);
+            transition: width 0.15s ease-out;
+        }
+
+        .bar-fill-sp {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #f57f17, #ffeb3b);
+            box-shadow: 0 0 8px #ffeb3b;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Boss Health Bar Overlay */
+        #boss-hud {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 450px;
+            background: rgba(10, 5, 5, 0.9);
+            border: 2px solid #ff3333;
+            border-radius: 8px;
+            padding: 8px 16px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .boss-name {
+            font-weight: 900;
+            color: #ff4d4d;
+            font-size: 0.9rem;
+            text-align: center;
+            letter-spacing: 1px;
+            text-shadow: 0 0 8px #ff0000;
+        }
+
+        .boss-hp-bg {
+            width: 100%;
+            height: 12px;
+            background: #200;
+            border: 1px solid #ff6666;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .boss-hp-fill {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, #990000, #ff1a1a, #ff6666);
+            transition: width 0.1s;
+        }
+
+        /* Controls Footer */
+        #footer {
+            background: #0b0f19;
+            border-top: 2px solid #36465d;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #8fa0b5;
+        }
+
+        .key-btn {
+            background: #1a2332;
+            border: 1px solid #4a6080;
+            color: #ffd700;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.75rem;
+            box-shadow: 0 2px 0 #0f1520;
+        }
+
+        /* Mute Sound Button */
+        #sound-toggle {
+            background: #223046;
+            border: 1px solid #607d8b;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+        #sound-toggle:hover { background: #37474f; }
+
+        /* Game Over / Victory Overlay */
+        #modal-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-box {
+            background: linear-gradient(135deg, #182030 0%, #0d121c 100%);
+            border: 3px solid #ffd700;
+            border-radius: 12px;
+            padding: 30px 50px;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+        }
+
+        .modal-title { font-size: 2rem; color: #ff4d4d; margin-bottom: 15px; font-family: 'Press Start 2P', monospace; }
+        .modal-btn {
+            margin-top: 20px;
+            background: linear-gradient(180deg, #ffd700 0%, #c59b27 100%);
+            border: none;
+            color: #000;
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 10px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+        }
+        .modal-btn:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body>
+
+    <div id="game-frame">
+        <!-- JRPG Top Bar -->
+        <div id="header">
+            <div class="title-box">
+                <h1>⚔️ SEIKEN ROGUE</h1>
+                <p>성검전설 3 링커맨드 액션 JRPG Edition (v2.00 Final)</p>
+            </div>
+            <div class="stats-group">
+                <div class="stat-card">🏰 층수: <span id="stat-floor" class="stat-val">B1F</span></div>
+                <div class="stat-card">💀 처치: <span id="stat-kills" class="stat-val">0</span></div>
+                <div class="stat-card">🪙 골드: <span id="stat-gold" class="stat-val">0G</span></div>
+                <button id="sound-toggle" onclick="toggleAudio()">🔊 효과음 켜짐</button>
+            </div>
+        </div>
+
+        <!-- Main Canvas Area -->
+        <div id="canvas-container">
+            <canvas id="gameCanvas" width="960" height="560"></canvas>
+
+            <!-- Hero Status HUD Card -->
+            <div id="hero-hud">
+                <div class="hero-card">
+                    <div class="hero-avatar">🗡️</div>
+                    <div class="hero-info">
+                        <div class="hero-name">
+                            <span>용사 고감독</span>
+                            <span class="hero-lvl">Lv.<span id="val-lvl">1</span></span>
+                        </div>
+                        <div class="bar-label"><span>HP</span><span id="val-hp-txt">100/100</span></div>
+                        <div class="bar-bg"><div id="val-hp-bar" class="bar-fill-hp"></div></div>
+                        
+                        <div class="bar-label"><span>MP</span><span id="val-mp-txt">50/50</span></div>
+                        <div class="bar-bg"><div id="val-mp-bar" class="bar-fill-mp"></div></div>
+
+                        <div class="bar-label"><span style="color:#ffeb3b">SP 필살기 게이지</span><span id="val-sp-txt">0%</span></div>
+                        <div class="bar-bg"><div id="val-sp-bar" class="bar-fill-sp"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Boss HP Hud Bar -->
+            <div id="boss-hud">
+                <div class="boss-name" id="boss-title">🐉 카오스 드래곤 3세 (BOSS)</div>
+                <div class="boss-hp-bg"><div id="boss-hp-fill" class="boss-hp-fill"></div></div>
+            </div>
+
+            <!-- Game Over / Victory Modal -->
+            <div id="modal-overlay">
+                <div class="modal-box">
+                    <div id="modal-title" class="modal-title">GAME OVER</div>
+                    <p id="modal-desc" style="color:#a8b5c8; margin-bottom: 10px;">던전에서 전사하였습니다.</p>
+                    <p style="color:#ffd700; font-weight:bold;">최종 도달: <span id="modal-floor">B1F</span> | 처치 수: <span id="modal-kills">0</span></p>
+                    <button class="modal-btn" onclick="restartGame()">다시 도전하기 🗡️</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls Guide Footer -->
+        <div id="footer">
+            <div>
+                이동: <span class="key-btn">W</span><span class="key-btn">A</span><span class="key-btn">S</span><span class="key-btn">D</span> / 방향키 |
+                기본 베기: <span class="key-btn">Space</span> |
+                대시/회피: <span class="key-btn">Shift</span>
+            </div>
+            <div>
+                스킬: <span class="key-btn">Q</span> 화염구 |
+                <span class="key-btn">E</span> 회오리 참격 |
+                <span class="key-btn">R</span> 포션 복용 |
+                <span class="key-btn">F</span> 링 커맨드 메뉴 |
+                <span class="key-btn">Space(SP100%)</span> 성검 초필살기
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ==========================================================================
+           Web Audio API Sound Effects Synthesizer (Retro 16-bit Sound Generator)
+           ========================================================================== */
+        let audioCtx = null;
+        let audioMuted = false;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function toggleAudio() {
+            audioMuted = !audioMuted;
+            document.getElementById('sound-toggle').innerText = audioMuted ? "🔇 효과음 꺼짐" : "🔊 효과음 켜짐";
+        }
+
+        function playSound(type) {
+            if (audioMuted) return;
+            try {
+                const ctx = getAudioContext();
+                const now = ctx.currentTime;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                if (type === 'slash') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(400, now);
+                    osc.frequency.exponentialRampToValueAtTime(80, now + 0.12);
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+                    osc.start(now);
+                    osc.stop(now + 0.12);
+                } else if (type === 'hit') {
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(150, now);
+                    osc.frequency.exponentialRampToValueAtTime(40, now + 0.15);
+                    gain.gain.setValueAtTime(0.4, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+                    osc.start(now);
+                    osc.stop(now + 0.15);
+                } else if (type === 'magic') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(300, now);
+                    osc.frequency.exponentialRampToValueAtTime(900, now + 0.25);
+                    gain.gain.setValueAtTime(0.25, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                } else if (type === 'heal') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523, now);
+                    osc.frequency.setValueAtTime(659, now + 0.1);
+                    osc.frequency.setValueAtTime(783, now + 0.2);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                    osc.start(now);
+                    osc.stop(now + 0.35);
+                } else if (type === 'ultimate') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(200, now);
+                    osc.frequency.linearRampToValueAtTime(800, now + 0.4);
+                    gain.gain.setValueAtTime(0.5, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+                    osc.start(now);
+                    osc.stop(now + 0.5);
+                } else if (type === 'levelup') {
+                    osc.type = 'square';
+                    const notes = [440, 554, 659, 880];
+                    notes.forEach((f, idx) => {
+                        const o = ctx.createOscillator();
+                        const g = ctx.createGain();
+                        o.type = 'triangle';
+                        o.frequency.value = f;
+                        o.connect(g);
+                        g.connect(ctx.destination);
+                        g.gain.setValueAtTime(0.25, now + idx * 0.08);
+                        g.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.08 + 0.15);
+                        o.start(now + idx * 0.08);
+                        o.stop(now + idx * 0.08 + 0.15);
+                    });
+                }
+            } catch(e) {}
+        }
+
+        /* ==========================================================================
+           Core JRPG Game State & Engine
+           ========================================================================== */
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const state = {
+            running: true,
+            floor: 1,
+            kills: 0,
+            gold: 0,
+            ringActive: false,
+            ringAngle: 0,
+            ringSelectedIndex: 0,
+            bossActive: false,
+            boss: null
+        };
+
+        const player = {
+            x: 480, y: 280, radius: 18, speed: 4.2,
+            dirX: 1, dirY: 0,
+            hp: 100, maxHp: 100,
+            mp: 50, maxMp: 50,
+            sp: 0, maxSp: 100,
+            exp: 0, maxExp: 100,
+            level: 1, potions: 3,
+            invincibleTimer: 0,
+            dashCooldown: 0
+        };
+
+        const keys = {};
+        let monsters = [];
+        let projectiles = [];
+        let particles = [];
+        let floatingTexts = [];
+
+        // Ring Command Menu Items (성검전설 3 링커맨드 아이콘 & 스킬)
+        const ringMenuItems = [
+            { name: "포션 복용 (Heal)", icon: "🧪", action: usePotion },
+            { name: "파이어볼 (Fireball)", icon: "🔥", action: castFireball },
+            { name: "회오리 참격 (Spin Slash)", icon: "🌀", action: castSpinSlash },
+            { name: "성검 초필살기 (Seiken Tech)", icon: "⚔️", action: castUltimateTech },
+            { name: "성검의 보호막 (Shield)", icon: "🛡️", action: castShield }
+        ];
+
+        /* ==========================================================================
+           Spawning & Entity Management
+           ========================================================================== */
+        function spawnFloorMonsters() {
+            monsters = [];
+            projectiles = [];
+            state.bossActive = false;
+            document.getElementById('boss-hud').style.display = 'none';
+
+            // Check if Boss Floor (every 3 floors)
+            if (state.floor % 3 === 0) {
+                state.bossActive = true;
+                document.getElementById('boss-hud').style.display = 'flex';
+                document.getElementById('boss-title').innerText = `🐉 카오스 드래곤 (${state.floor}F BOSS)`;
+                
+                state.boss = {
+                    x: 480, y: 150, radius: 42,
+                    hp: 400 + state.floor * 150,
+                    maxHp: 400 + state.floor * 150,
+                    speed: 1.5, color: '#ff2244',
+                    attackTimer: 0, isBoss: true
+                };
+                monsters.push(state.boss);
+                spawnFloatingText(480, 200, "⚠️ BOSS SPAWNED!", "#ff0044", 24);
+                playSound('ultimate');
+            } else {
+                const monsterCount = 5 + state.floor * 2;
+                const types = ['slime', 'skeleton', 'mage'];
+                for (let i = 0; i < monsterCount; i++) {
+                    const type = types[Math.floor(Math.random() * types.length)];
+                    let hp = 35 + state.floor * 12;
+                    let speed = 1.4 + Math.random() * 0.6;
+                    let color = '#4caf50';
+                    let radius = 16;
+
+                    if (type === 'skeleton') { color = '#e0e0e0'; speed = 2.0; hp = 45 + state.floor * 10; }
+                    if (type === 'mage') { color = '#9c27b0'; speed = 1.0; radius = 18; }
+
+                    monsters.push({
+                        x: Math.random() * (canvas.width - 160) + 80,
+                        y: Math.random() * (canvas.height - 160) + 80,
+                        radius, hp, maxHp: hp, speed, color, type,
+                        shootTimer: 0, isBoss: false
+                    });
+                }
+            }
+        }
+
+        spawnFloorMonsters();
+
+        /* ==========================================================================
+           Controls & Input Listeners
+           ========================================================================== */
+        window.addEventListener('keydown', e => {
+            getAudioContext();
+            const k = e.key.toLowerCase();
+            keys[k] = true;
+
+            if (e.key === ' ' && !state.ringActive) {
+                if (player.sp >= player.maxSp) {
+                    castUltimateTech();
+                } else {
+                    playerAttack();
+                }
+            }
+
+            if (k === 'q' && !state.ringActive) castFireball();
+            if (k === 'e' && !state.ringActive) castSpinSlash();
+            if (k === 'r' && !state.ringActive) usePotion();
+            if (k === 'shift' && !state.ringActive) playerDash();
+            if (k === 'f' || k === 'tab') {
+                e.preventDefault();
+                state.ringActive = !state.ringActive;
+                playSound('magic');
+            }
+
+            if (state.ringActive) {
+                if (k === 'arrowright' || k === 'd') {
+                    state.ringSelectedIndex = (state.ringSelectedIndex + 1) % ringMenuItems.length;
+                    playSound('slash');
+                }
+                if (k === 'arrowleft' || k === 'a') {
+                    state.ringSelectedIndex = (state.ringSelectedIndex - 1 + ringMenuItems.length) % ringMenuItems.length;
+                    playSound('slash');
+                }
+                if (e.key === 'Enter') {
+                    ringMenuItems[state.ringSelectedIndex].action();
+                    state.ringActive = false;
+                }
+            }
+        });
+
+        window.addEventListener('keyup', e => {
+            keys[e.key.toLowerCase()] = false;
+        });
+
+        /* ==========================================================================
+           Combat Actions & Skills
+           ========================================================================== */
+        function playerAttack() {
+            playSound('slash');
+            // Slash Arc
+            const attackRange = 65;
+            const attackAngle = Math.atan2(player.dirY, player.dirX);
+
+            // Create Visual Slash Wave Particle
+            for (let a = -0.6; a <= 0.6; a += 0.2) {
+                const px = player.x + Math.cos(attackAngle + a) * 35;
+                const py = player.y + Math.sin(attackAngle + a) * 35;
+                createParticles(px, py, '#50e3c2', 4, 3);
+            }
+
+            // Hit Detection
+            monsters.forEach(m => {
+                const dist = Math.hypot(m.x - player.x, m.y - player.y);
+                if (dist < attackRange + m.radius) {
+                    const dmg = 25 + Math.floor(Math.random() * 15);
+                    m.hp -= dmg;
+                    spawnFloatingText(m.x, m.y - 15, `-${dmg}`, '#ffffff', 18);
+                    createParticles(m.x, m.y, '#ff9800', 8, 4);
+                    addSP(12);
+                    playSound('hit');
+                }
+            });
+        }
+
+        function castFireball() {
+            if (player.mp >= 12) {
+                player.mp -= 12;
+                playSound('magic');
+                projectiles.push({
+                    x: player.x, y: player.y,
+                    vx: player.dirX * 9, vy: player.dirY * 9,
+                    radius: 12, dmg: 45, type: 'fireball', life: 75,
+                    color: '#ff5722'
+                });
+                spawnFloatingText(player.x, player.y - 20, "🔥 파이어볼!", "#ff7043", 14);
+            } else {
+                spawnFloatingText(player.x, player.y - 20, "MP 부족!", "#42a5f5", 14);
+            }
+        }
+
+        function castSpinSlash() {
+            if (player.mp >= 20) {
+                player.mp -= 20;
+                playSound('slash');
+                spawnFloatingText(player.x, player.y - 25, "🌀 회오리 참격!", "#50e3c2", 16);
+
+                for (let i = 0; i < 16; i++) {
+                    const ang = (Math.PI * 2 / 16) * i;
+                    createParticles(player.x + Math.cos(ang) * 40, player.y + Math.sin(ang) * 40, '#50e3c2', 5, 4);
+                }
+
+                monsters.forEach(m => {
+                    const dist = Math.hypot(m.x - player.x, m.y - player.y);
+                    if (dist < 90 + m.radius) {
+                        const dmg = 40 + Math.floor(Math.random() * 20);
+                        m.hp -= dmg;
+                        spawnFloatingText(m.x, m.y - 15, `CRITICAL -${dmg}`, '#ffd700', 20);
+                        createParticles(m.x, m.y, '#ffd700', 10, 5);
+                        addSP(15);
+                    }
+                });
+            }
+        }
+
+        function usePotion() {
+            if (player.potions > 0 && player.hp < player.maxHp) {
+                player.potions--;
+                player.hp = Math.min(player.maxHp, player.hp + 50);
+                playSound('heal');
+                spawnFloatingText(player.x, player.y - 25, "🧪 HP +50 회복!", "#66bb6a", 18);
+                createParticles(player.x, player.y, '#66bb6a', 15, 4);
+            }
+        }
+
+        function castShield() {
+            if (player.mp >= 25) {
+                player.mp -= 25;
+                player.invincibleTimer = 180; // 3 seconds
+                playSound('magic');
+                spawnFloatingText(player.x, player.y - 25, "🛡️ 성검의 보호막!", "#ffd700", 16);
+            }
+        }
+
+        function castUltimateTech() {
+            if (player.sp >= player.maxSp) {
+                player.sp = 0;
+                playSound('ultimate');
+                spawnFloatingText(player.x, player.y - 30, "⚔️ 초필살기: 성검 십자참!", "#ffeb3b", 26);
+
+                // Fullscreen Flash Light Effect
+                createParticles(canvas.width/2, canvas.height/2, '#ffffff', 50, 8);
+
+                monsters.forEach(m => {
+                    const dmg = 180 + Math.floor(Math.random() * 50);
+                    m.hp -= dmg;
+                    spawnFloatingText(m.x, m.y - 20, `💥 -${dmg}`, '#ff1744', 24);
+                    createParticles(m.x, m.y, '#ff1744', 20, 6);
+                });
+            }
+        }
+
+        function playerDash() {
+            if (player.dashCooldown <= 0) {
+                player.dashCooldown = 60;
+                player.x += player.dirX * 70;
+                player.y += player.dirY * 70;
+                player.x = Math.max(25, Math.min(canvas.width - 25, player.x));
+                player.y = Math.max(25, Math.min(canvas.height - 25, player.y));
+                createParticles(player.x, player.y, '#50e3c2', 12, 3);
+                playSound('slash');
+            }
+        }
+
+        function addSP(val) {
+            player.sp = Math.min(player.maxSp, player.sp + val);
+        }
+
+        function spawnFloatingText(x, y, text, color, size = 16) {
+            floatingTexts.push({ x, y, text, color, size, life: 45, maxLife: 45 });
+        }
+
+        function createParticles(x, y, color, count = 8, maxSpeed = 4) {
+            for (let i = 0; i < count; i++) {
+                const ang = Math.random() * Math.PI * 2;
+                const spd = Math.random() * maxSpeed;
+                particles.push({
+                    x, y,
+                    vx: Math.cos(ang) * spd,
+                    vy: Math.sin(ang) * spd,
+                    color, radius: 2 + Math.random() * 3,
+                    life: 25 + Math.random() * 15, maxLife: 40
+                });
+            }
+        }
+
+        /* ==========================================================================
+           Main Update Loop
+           ========================================================================== */
+        function update() {
+            if (!state.running) return;
+
+            // Player Movement
+            let moveX = 0, moveY = 0;
+            if (keys['w'] || keys['arrowup']) moveY -= 1;
+            if (keys['s'] || keys['arrowdown']) moveY += 1;
+            if (keys['a'] || keys['arrowleft']) moveX -= 1;
+            if (keys['d'] || keys['arrowright']) moveX += 1;
+
+            if (moveX !== 0 || moveY !== 0) {
+                const len = Math.hypot(moveX, moveY);
+                player.dirX = moveX / len;
+                player.dirY = moveY / len;
+                player.x += player.dirX * player.speed;
+                player.y += player.dirY * player.speed;
+                player.x = Math.max(25, Math.min(canvas.width - 25, player.x));
+                player.y = Math.max(25, Math.min(canvas.height - 25, player.y));
+            }
+
+            // Timers
+            if (player.invincibleTimer > 0) player.invincibleTimer--;
+            if (player.dashCooldown > 0) player.dashCooldown--;
+            if (player.mp < player.maxMp) player.mp = Math.min(player.maxMp, player.mp + 0.08);
+
+            // Projectiles update
+            projectiles = projectiles.filter(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life--;
+
+                // Collision with Monsters
+                for (let m of monsters) {
+                    if (Math.hypot(m.x - p.x, m.y - p.y) < m.radius + p.radius) {
+                        m.hp -= p.dmg;
+                        spawnFloatingText(m.x, m.y - 15, `-${p.dmg}`, '#ff7043', 18);
+                        createParticles(m.x, m.y, p.color, 10, 4);
+                        playSound('hit');
+                        addSP(10);
+                        return false;
+                    }
+                }
+                return p.life > 0 && p.x > 0 && p.x < canvas.width && p.y > 0 && p.y < canvas.height;
+            });
+
+            // Monsters update
+            const aliveMonsters = [];
+            for (let m of monsters) {
+                if (m.hp <= 0) {
+                    // Monster Death Rewards
+                    state.kills++;
+                    const goldEarned = Math.floor(Math.random() * 20) + 15;
+                    state.gold += goldEarned;
+                    player.exp += 30;
+
+                    spawnFloatingText(m.x, m.y, `+${goldEarned}G`, '#ffd700', 16);
+                    createParticles(m.x, m.y, '#ffd700', 12, 4);
+
+                    if (player.exp >= player.maxExp) {
+                        player.level++;
+                        player.exp = 0;
+                        player.maxExp += 50;
+                        player.maxHp += 25;
+                        player.hp = player.maxHp;
+                        player.potions++;
+                        playSound('levelup');
+                        spawnFloatingText(player.x, player.y - 40, "🎉 LEVEL UP!", "#ffd700", 24);
+                    }
+                    continue;
+                }
+
+                // AI Movement towards Player
+                const angle = Math.atan2(player.y - m.y, player.x - m.x);
+                m.x += Math.cos(angle) * m.speed;
+                m.y += Math.sin(angle) * m.speed;
+
+                // Mage Ranged Attack
+                if (m.type === 'mage') {
+                    m.shootTimer = (m.shootTimer || 0) + 1;
+                    if (m.shootTimer > 120) {
+                        m.shootTimer = 0;
+                        projectiles.push({
+                            x: m.x, y: m.y,
+                            vx: Math.cos(angle) * 5, vy: Math.sin(angle) * 5,
+                            radius: 8, dmg: 15, type: 'dark', life: 100, color: '#ab47bc'
+                        });
+                    }
+                }
+
+                // Player Hit Detection
+                const dist = Math.hypot(player.x - m.x, player.y - m.y);
+                if (dist < player.radius + m.radius) {
+                    if (player.invincibleTimer <= 0) {
+                        const dmg = m.isBoss ? 25 : 8;
+                        player.hp = Math.max(0, player.hp - dmg);
+                        player.invincibleTimer = 30;
+                        spawnFloatingText(player.x, player.y - 15, `-${dmg}`, '#ff1744', 18);
+                        createParticles(player.x, player.y, '#ff1744', 8, 3);
+                        playSound('hit');
+
+                        if (player.hp <= 0) {
+                            gameOver();
+                        }
+                    }
+                }
+
+                aliveMonsters.push(m);
+            }
+            monsters = aliveMonsters;
+
+            // Floor Progression
+            if (monsters.length === 0) {
+                state.floor++;
+                spawnFloorMonsters();
+                spawnFloatingText(canvas.width / 2, 200, `🏰 ${state.floor}F 진입!`, "#50e3c2", 28);
+            }
+
+            // Update UI elements
+            document.getElementById('stat-floor').innerText = 'B' + state.floor + 'F';
+            document.getElementById('stat-kills').innerText = state.kills;
+            document.getElementById('stat-gold').innerText = state.gold + 'G';
+
+            document.getElementById('val-lvl').innerText = player.level;
+            document.getElementById('val-hp-txt').innerText = `${Math.ceil(player.hp)}/${player.maxHp}`;
+            document.getElementById('val-hp-bar').style.width = (player.hp / player.maxHp * 100) + '%';
+
+            document.getElementById('val-mp-txt').innerText = `${Math.ceil(player.mp)}/${player.maxMp}`;
+            document.getElementById('val-mp-bar').style.width = (player.mp / player.maxMp * 100) + '%';
+
+            document.getElementById('val-sp-txt').innerText = `${Math.floor(player.sp / player.maxSp * 100)}%`;
+            document.getElementById('val-sp-bar').style.width = (player.sp / player.maxSp * 100) + '%';
+
+            if (state.bossActive && state.boss) {
+                document.getElementById('boss-hp-fill').style.width = Math.max(0, (state.boss.hp / state.boss.maxHp * 100)) + '%';
+            }
+        }
+
+        /* ==========================================================================
+           Drawing & Render Engine
+           ========================================================================== */
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 1. Draw JRPG Dungeon Floor Tiles
+            ctx.strokeStyle = 'rgba(40, 60, 95, 0.15)';
+            ctx.lineWidth = 1;
+            for (let x = 0; x < canvas.width; x += 40) {
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+            }
+            for (let y = 0; y < canvas.height; y += 40) {
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+            }
+
+            // 2. Draw Monsters
+            monsters.forEach(m => {
+                ctx.shadowBlur = 12;
+                ctx.shadowColor = m.color;
+                ctx.fillStyle = m.color;
+                ctx.beginPath();
+                ctx.arc(m.x, m.y, m.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                // Monster Eyes
+                ctx.fillStyle = '#000';
+                ctx.beginPath();
+                ctx.arc(m.x - 4, m.y - 3, 2, 0, Math.PI * 2);
+                ctx.arc(m.x + 4, m.y - 3, 2, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Monster Health Bar
+                if (!m.isBoss) {
+                    ctx.fillStyle = 'rgba(0,0,0,0.6)';
+                    ctx.fillRect(m.x - 18, m.y - m.radius - 10, 36, 5);
+                    ctx.fillStyle = '#ff1744';
+                    ctx.fillRect(m.x - 18, m.y - m.radius - 10, 36 * Math.max(0, m.hp / m.maxHp), 5);
+                }
+            });
+
+            // 3. Draw Player Sprite (Hero with Glowing Sword)
+            if (player.invincibleTimer % 4 < 2) {
+                ctx.shadowBlur = 18;
+                ctx.shadowColor = '#50e3c2';
+                ctx.fillStyle = '#50e3c2';
+                ctx.beginPath();
+                ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Hero Crown / Visor
+                ctx.fillStyle = '#ffd700';
+                ctx.fillRect(player.x - 8, player.y - 12, 16, 4);
+
+                // Sword Direction Indicator
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(player.x, player.y);
+                ctx.lineTo(player.x + player.dirX * 30, player.y + player.dirY * 30);
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+            }
+
+            // 4. Draw Projectiles
+            projectiles.forEach(p => {
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = p.color;
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            });
+
+            // 5. Draw Particles
+            particles = particles.filter(p => {
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius * (p.life / p.maxLife), 0, Math.PI * 2);
+                ctx.fill();
+                p.x += p.vx;
+                p.y += p.vy;
+                p.life--;
+                return p.life > 0;
+            });
+
+            // 6. Draw Floating Combat Text
+            floatingTexts = floatingTexts.filter(t => {
+                ctx.font = `bold ${t.size}px 'Noto Sans KR', sans-serif`;
+                ctx.fillStyle = t.color;
+                ctx.shadowColor = '#000';
+                ctx.shadowBlur = 4;
+                ctx.fillText(t.text, t.x - 15, t.y);
+                ctx.shadowBlur = 0;
+                t.y -= 0.8;
+                t.life--;
+                return t.life > 0;
+            });
+
+            // 7. Draw Ring Command Menu (성검전설3 링 커맨드 시각화)
+            if (state.ringActive) {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                const ringRadius = 85;
+                const count = ringMenuItems.length;
+
+                ctx.strokeStyle = '#ffd700';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(player.x, player.y, ringRadius, 0, Math.PI * 2);
+                ctx.stroke();
+
+                ringMenuItems.forEach((item, idx) => {
+                    const angle = (Math.PI * 2 / count) * idx - Math.PI / 2;
+                    const ix = player.x + Math.cos(angle) * ringRadius;
+                    const iy = player.y + Math.sin(angle) * ringRadius;
+
+                    const isSelected = idx === state.ringSelectedIndex;
+                    ctx.fillStyle = isSelected ? '#ffd700' : 'rgba(16, 26, 46, 0.9)';
+                    ctx.strokeStyle = isSelected ? '#ffffff' : '#c5a059';
+                    ctx.lineWidth = isSelected ? 3 : 1;
+
+                    ctx.beginPath();
+                    ctx.arc(ix, iy, isSelected ? 24 : 20, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    ctx.font = isSelected ? "20px sans-serif" : "16px sans-serif";
+                    ctx.textAlign = "center";
+                    ctx.textBaseline = "middle";
+                    ctx.fillText(item.icon, ix, iy);
+
+                    if (isSelected) {
+                        ctx.font = "bold 15px 'Noto Sans KR'";
+                        ctx.fillStyle = "#ffd700";
+                        ctx.fillText(item.name, player.x, player.y + ringRadius + 40);
+                    }
+                });
+            }
+        }
+
+        function gameOver() {
+            state.running = false;
+            document.getElementById('modal-title').innerText = "GAME OVER";
+            document.getElementById('modal-title').style.color = "#ff4d4d";
+            document.getElementById('modal-desc').innerText = "마왕군에게 패배하여 영혼이 스러졌습니다.";
+            document.getElementById('modal-floor').innerText = "B" + state.floor + "F";
+            document.getElementById('modal-kills').innerText = state.kills;
+            document.getElementById('modal-overlay').style.display = 'flex';
+        }
+
+        function restartGame() {
+            state.running = true;
+            state.floor = 1;
+            state.kills = 0;
+            state.gold = 0;
+            player.hp = 100; player.maxHp = 100;
+            player.mp = 50; player.maxMp = 50;
+            player.sp = 0; player.level = 1;
+            player.potions = 3;
+            document.getElementById('modal-overlay').style.display = 'none';
+            spawnFloorMonsters();
+        }
+
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
+</body>
+</html>
