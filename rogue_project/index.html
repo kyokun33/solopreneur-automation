@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>인피니트 소드: 무한 던전 - JRPG Beta v1.00 (용사 슈드 Sude)</title>
+    <title>인피니트 소드: 무한 던전 - JRPG Beta v1.00 (2x Zoom & Attack Delay)</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+KR:wght@400;700;900&display=swap');
 
@@ -179,7 +179,7 @@
         .boss-bar-bg { width: 100%; height: 12px; background: #200; border: 1px solid #f87171; border-radius: 4px; overflow: hidden; }
         .boss-bar-fill { height: 100%; width: 100%; background: linear-gradient(90deg, #7f1d1d, #dc2626, #f87171); transition: width 0.1s; }
 
-        /* Village Outpost Hub Modal (Banana's Workshop) */
+        /* Outpost Modal Overlay */
         #hub-modal {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -284,7 +284,7 @@
         }
         .modal-btn:hover { transform: scale(1.05); }
 
-        /* Footer Controls Guide */
+        /* Footer Controls */
         #footer {
             background: #090d16;
             border-top: 2px solid #334155;
@@ -324,7 +324,7 @@
         <div id="header">
             <div class="title-box">
                 <h1>⚔️ 인피니트 소드: 무한 던전</h1>
-                <p>성검전설 3 링커맨드 JRPG (용사 슈드 Sude · 12 FPS Sprite Animation)</p>
+                <p>성검전설 3 링커맨드 JRPG (용사 슈드 · 2배 확대 & 몹 공격 딜레이 반영)</p>
             </div>
             <div class="stats-group">
                 <div class="stat-card">🗺️ 맵: <span id="stat-stage-name" class="stat-val">버섯 숲</span></div>
@@ -335,7 +335,7 @@
             </div>
         </div>
 
-        <!-- Canvas Game Screen -->
+        <!-- Canvas Screen Container -->
         <div id="canvas-container">
             <canvas id="gameCanvas" width="980" height="570"></canvas>
 
@@ -351,7 +351,7 @@
                 <div class="boss-bar-bg"><div id="boss-bar-fill" class="boss-bar-fill"></div></div>
             </div>
 
-            <!-- Image 1 Mock Game Screen Blue Status Box (Bottom Right) -->
+            <!-- Status Box (Bottom Right) -->
             <div id="mock-game-hud">
                 <div style="font-weight:bold; color:#fbbf24; font-size:0.85rem; margin-bottom:6px; display:flex; justify-content:space-between">
                     <span>용사 슈드 [팔라딘 V6]</span>
@@ -374,7 +374,7 @@
                 </div>
             </div>
 
-            <!-- Image 2 Outpost Village & Shop Modal (Banana's Workshop) -->
+            <!-- Village Outpost & Shop Modal -->
             <div id="hub-modal">
                 <div class="hub-container">
                     <div class="hub-header">
@@ -385,12 +385,12 @@
                         <div class="hub-card" onclick="upgradeWeapon()">
                             <div class="hub-card-icon">🔮</div>
                             <div class="hub-card-title">무기 강화</div>
-                            <div class="hub-card-desc">공격력 +15 / 성스러운 속성 (100G)</div>
+                            <div class="hub-card-desc">공격력 +15 (100G)</div>
                         </div>
                         <div class="hub-card" onclick="craftSkill()">
                             <div class="hub-card-icon">🧪</div>
                             <div class="hub-card-title">스킬 제작</div>
-                            <div class="hub-card-desc">룬 & 포자 결합 (Max MP +25 - 150G)</div>
+                            <div class="hub-card-desc">최대 MP +25 (150G)</div>
                         </div>
                         <div class="hub-card" onclick="upgradeArmor()">
                             <div class="hub-card-icon">⚙️</div>
@@ -426,7 +426,7 @@
         <!-- Footer Controls Guide -->
         <div id="footer">
             <div>
-                이동(12 FPS Sprite): <span class="key-btn">W</span><span class="key-btn">A</span><span class="key-btn">S</span><span class="key-btn">D</span> |
+                이동: <span class="key-btn">W</span><span class="key-btn">A</span><span class="key-btn">S</span><span class="key-btn">D</span> |
                 기본 공격: <span class="key-btn">Space</span> |
                 회피: <span class="key-btn">Shift</span>
             </div>
@@ -496,7 +496,7 @@
         }
 
         /* ==========================================================================
-           10 Stage Themes & Specs (Image 2 & 3 Specs)
+           10 Stage Themes Specs
            ========================================================================== */
         const STAGE_THEMES = [
             { id: 1, name: "속삭이는 버섯 숲", icon: "🍄", bg: "#0a170d", grid: "rgba(34, 197, 94, 0.12)", prop: "mushroom", bossName: "버섯 여왕 마코니아 (Maconia)" },
@@ -531,11 +531,12 @@
             boss: null
         };
 
-        // Hero Sude (용사 슈드 - 12 FPS Sprite Animation Holding)
+        // Hero Sude (2x Zoom Viewport Tracking Enabled)
         const player = {
             x: 490, y: 285, radius: 18, speed: 2.25,
             dirX: 0, dirY: 1, facing: 'down',
             animFrame: 0, animTimer: 0,
+            invincibleTimer: 0, // Hit Invincibility
             hp: 100, maxHp: 100,
             mp: 50, maxMp: 50,
             sp: 0, maxSp: 100,
@@ -592,7 +593,8 @@
                 state.boss = {
                     x: 490, y: 160, radius: 44,
                     hp: 450 + state.floor * 160, maxHp: 450 + state.floor * 160,
-                    speed: 0.8, color: currentTheme.grid, type: 'boss', isBoss: true
+                    speed: 0.8, color: currentTheme.grid, type: 'boss', isBoss: true,
+                    attackCooldown: 0, hitStun: 0
                 };
                 monsters.push(state.boss);
                 spawnFloatingText(490, 200, "⚠️ BOSS APPEARED!", "#ef4444", 26);
@@ -608,7 +610,8 @@
                         radius: 18,
                         hp: 40 + state.floor * 12, maxHp: 40 + state.floor * 12,
                         speed: 0.7 + Math.random() * 0.3,
-                        color: currentTheme.grid, type, isBoss: false
+                        color: currentTheme.grid, type, isBoss: false,
+                        attackCooldown: 0, hitStun: 0
                     });
                 }
             }
@@ -661,7 +664,7 @@
         window.addEventListener('keyup', e => { keys[e.key.toLowerCase()] = false; });
 
         /* ==========================================================================
-           Paladin Sude Skills (Image 1 Specs)
+           Paladin Sude Skills (Monster Hit Stun & Recoil Added)
            ========================================================================== */
         function castHolySlash() {
             playSound('slash');
@@ -678,6 +681,14 @@
                 if (dist < attackRange + m.radius) {
                     const dmg = player.atkPower + Math.floor(Math.random() * 15);
                     m.hp -= dmg;
+                    m.hitStun = 25; // Monster Hit Stun Delay
+                    m.attackCooldown = 60; // 1 second attack delay on hit
+
+                    // Knockback Monster
+                    const angle = Math.atan2(m.y - player.y, m.x - player.x);
+                    m.x += Math.cos(angle) * 20;
+                    m.y += Math.sin(angle) * 20;
+
                     spawnFloatingText(m.x, m.y - 15, `-${dmg}`, '#ffffff', 18);
                     createParticles(m.x, m.y, '#38bdf8', 6, 2);
                     addSP(10);
@@ -726,6 +737,8 @@
                 monsters.forEach(m => {
                     const dmg = 220 + Math.floor(Math.random() * 60);
                     m.hp -= dmg;
+                    m.hitStun = 40;
+                    m.attackCooldown = 90;
                     spawnFloatingText(m.x, m.y - 20, `💥 -${dmg}`, '#ef4444', 24);
                     createParticles(m.x, m.y, '#ef4444', 12, 3);
                 });
@@ -804,7 +817,7 @@
         }
 
         /* ==========================================================================
-           Main Update Loop (12 FPS Animation Frame Holding)
+           Main Update Loop (Monster Attack Delay & Hit Stun Logic)
            ========================================================================== */
         function update() {
             if (state.mode !== 'INGAME' || !state.running || state.hubActive) return;
@@ -824,7 +837,6 @@
                 player.x = Math.max(25, Math.min(canvas.width - 25, player.x));
                 player.y = Math.max(25, Math.min(canvas.height - 25, player.y));
 
-                // 12 FPS Animation Holding (1 frame every 5 engine updates)
                 player.animTimer++;
                 if (player.animTimer >= 5) {
                     player.animFrame = (player.animFrame + 1) % 4;
@@ -832,6 +844,7 @@
                 }
             }
 
+            if (player.invincibleTimer > 0) player.invincibleTimer--;
             if (player.shieldTimer > 0) player.shieldTimer--;
             if (player.mp < player.maxMp) player.mp = Math.min(player.maxMp, player.mp + 0.05);
 
@@ -841,6 +854,7 @@
                     monsters.forEach(m => {
                         if (Math.hypot(m.x - c.x, m.y - c.y) < c.radius + m.radius) {
                             m.hp -= 15;
+                            m.hitStun = 15;
                             spawnFloatingText(m.x, m.y - 10, `-15`, '#38bdf8', 16);
                         }
                     });
@@ -854,6 +868,8 @@
                 for (let m of monsters) {
                     if (Math.hypot(m.x - p.x, m.y - p.y) < m.radius + p.radius) {
                         m.hp -= p.dmg;
+                        m.hitStun = 20;
+                        m.attackCooldown = 45;
                         spawnFloatingText(m.x, m.y - 15, `-${p.dmg}`, '#fbbf24', 18);
                         createParticles(m.x, m.y, p.color, 6, 2);
                         playSound('hit');
@@ -881,20 +897,36 @@
                     continue;
                 }
 
-                const angle = Math.atan2(player.y - m.y, player.x - m.x);
-                m.x += Math.cos(angle) * m.speed;
-                m.y += Math.sin(angle) * m.speed;
+                // Monster Attack Cooldown & Hit Stun Delay Logic
+                if (m.hitStun > 0) {
+                    m.hitStun--;
+                } else {
+                    const angle = Math.atan2(player.y - m.y, player.x - m.x);
+                    m.x += Math.cos(angle) * m.speed;
+                    m.y += Math.sin(angle) * m.speed;
+                }
 
+                if (m.attackCooldown > 0) {
+                    m.attackCooldown--;
+                }
+
+                // Hit Detection with Monster Attack Cooldown & Invincibility
                 if (Math.hypot(player.x - m.x, player.y - m.y) < player.radius + m.radius) {
-                    let dmg = m.isBoss ? 20 : 6;
-                    if (player.shieldTimer > 0) dmg = Math.floor(dmg * 0.3);
-                    player.hp = Math.max(0, player.hp - dmg);
-                    spawnFloatingText(player.x, player.y - 15, `-${dmg}`, '#ef4444', 16);
-                    createParticles(player.x, player.y, '#ef4444', 4, 2);
-                    playSound('hit');
+                    if (player.invincibleTimer <= 0 && m.attackCooldown <= 0) {
+                        let dmg = m.isBoss ? 20 : 6;
+                        if (player.shieldTimer > 0) dmg = Math.floor(dmg * 0.3);
+                        player.hp = Math.max(0, player.hp - dmg);
+                        
+                        player.invincibleTimer = 60; // 1 second invincibility for player
+                        m.attackCooldown = 90; // 1.5 seconds attack delay for monster after hitting
 
-                    if (player.hp <= 0) {
-                        triggerGameOver();
+                        spawnFloatingText(player.x, player.y - 15, `-${dmg}`, '#ef4444', 16);
+                        createParticles(player.x, player.y, '#ef4444', 4, 2);
+                        playSound('hit');
+
+                        if (player.hp <= 0) {
+                            triggerGameOver();
+                        }
                     }
                 }
                 alive.push(m);
@@ -924,49 +956,33 @@
         }
 
         /* ==========================================================================
-           Drawing Engine (Image 1 Title & Image 2/3 Pixel Sprites)
+           Drawing Engine (2x Zoom Viewport Camera Tracking)
            ========================================================================== */
         function drawTitleScreen(ctx) {
             ctx.fillStyle = "#040510"; ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Archway Stone Frame (Image 1 Specs)
             ctx.strokeStyle = "#475569"; ctx.lineWidth = 14;
             ctx.beginPath(); ctx.arc(canvas.width / 2, 280, 200, Math.PI, 0); ctx.stroke();
-
             ctx.fillStyle = "#0f172a"; ctx.beginPath(); ctx.arc(canvas.width / 2, 280, 190, 0, Math.PI * 2); ctx.fill();
 
-            ctx.fillStyle = "#a855f7"; ctx.beginPath(); ctx.arc(220, 180, 25, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = "#38bdf8"; ctx.beginPath(); ctx.arc(760, 180, 25, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = "#ef4444"; ctx.beginPath(); ctx.arc(780, 420, 30, 0, Math.PI * 2); ctx.fill();
-
-            ctx.font = "900 52px 'Noto Sans KR', sans-serif";
-            ctx.textAlign = "center";
-
+            ctx.font = "900 52px 'Noto Sans KR', sans-serif"; ctx.textAlign = "center";
             ctx.fillStyle = "#000";
-            ctx.fillText("인피니트 소드", canvas.width / 2 + 4, 184);
-            ctx.fillText("무한 던전", canvas.width / 2 + 4, 254);
-
-            ctx.fillStyle = "#38bdf8";
-            ctx.fillText("인피니트 소드", canvas.width / 2, 180);
-            ctx.fillStyle = "#fbbf24";
-            ctx.fillText("무한 던전", canvas.width / 2, 250);
+            ctx.fillText("인피니트 소드", canvas.width / 2 + 4, 184); ctx.fillText("무한 던전", canvas.width / 2 + 4, 254);
+            ctx.fillStyle = "#38bdf8"; ctx.fillText("인피니트 소드", canvas.width / 2, 180);
+            ctx.fillStyle = "#fbbf24"; ctx.fillText("무한 던전", canvas.width / 2, 250);
 
             drawPixelArtSude(ctx, 360, 360, 'right', 0);
 
             const iconBoxX = 430, iconBoxY = 345;
             ctx.fillStyle = "rgba(15, 23, 42, 0.9)";
             ctx.strokeStyle = "#fbbf24"; ctx.lineWidth = 2;
-            ctx.fillRect(iconBoxX, iconBoxY, 180, 45);
-            ctx.strokeRect(iconBoxX, iconBoxY, 180, 45);
+            ctx.fillRect(iconBoxX, iconBoxY, 180, 45); ctx.strokeRect(iconBoxX, iconBoxY, 180, 45);
 
-            ctx.font = "20px sans-serif";
-            ctx.fillText("⚔️  🛡️  ✨  👼", iconBoxX + 90, iconBoxY + 30);
+            ctx.font = "20px sans-serif"; ctx.fillText("⚔️  🛡️  ✨  👼", iconBoxX + 90, iconBoxY + 30);
 
             ctx.font = "900 22px 'Press Start 2P', monospace";
-            ctx.fillStyle = "#ffffff";
-            ctx.shadowColor = "#38bdf8"; ctx.shadowBlur = 10;
-            ctx.fillText("✨ PRESS START (CLICK TO PLAY) ✨", canvas.width / 2, 470);
-            ctx.shadowBlur = 0;
+            ctx.fillStyle = "#ffffff"; ctx.shadowColor = "#38bdf8"; ctx.shadowBlur = 10;
+            ctx.fillText("✨ PRESS START (CLICK TO PLAY) ✨", canvas.width / 2, 470); ctx.shadowBlur = 0;
         }
 
         function drawPixelArtSude(ctx, x, y, facing, frame) {
@@ -1058,8 +1074,22 @@
             }
 
             const currentTheme = getCurrentStage();
+
+            // 2x Zoom Viewport Camera Tracking
+            ctx.save();
+            
+            // Calculate Camera Focus on Hero Sude
+            const camX = player.x - (canvas.width / 4);
+            const camY = player.y - (canvas.height / 4);
+
+            // Scale 2x & Translate Camera
+            ctx.scale(2, 2);
+            ctx.translate(-camX, -camY);
+
+            // Map Background
             ctx.fillStyle = currentTheme.bg; ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+            // Grid
             ctx.strokeStyle = currentTheme.grid; ctx.lineWidth = 1;
             for (let x = 0; x < canvas.width; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
             for (let y = 0; y < canvas.height; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
@@ -1073,7 +1103,11 @@
             });
 
             monsters.forEach(m => drawPixelMonster(ctx, m));
-            drawPixelArtSude(ctx, player.x, player.y, player.facing, player.animFrame);
+
+            // Draw Player with Flashing Invincibility Effect
+            if (player.invincibleTimer % 4 < 2) {
+                drawPixelArtSude(ctx, player.x, player.y, player.facing, player.animFrame);
+            }
 
             projectiles.forEach(p => {
                 ctx.shadowBlur = 10; ctx.shadowColor = p.color;
@@ -1101,7 +1135,7 @@
 
             if (state.ringActive) {
                 ctx.fillStyle = 'rgba(0, 0, 0, 0.55)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillRect(camX, camY, canvas.width / 2, canvas.height / 2);
 
                 const ringRadius = 85;
                 const count = ringMenuItems.length;
@@ -1132,6 +1166,8 @@
                     }
                 });
             }
+
+            ctx.restore();
         }
 
         function gameLoop() {
