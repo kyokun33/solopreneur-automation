@@ -1,0 +1,73 @@
+import os
+from PIL import Image
+
+def process_sprite_sheet():
+    input_path = r"c:\Users\sude3\OneDrive\바탕 화면\1인기업\rogue_project\Assets\Sprites\sude_spritesheet.jpg"
+    output_png = r"c:\Users\sude3\OneDrive\바탕 화면\1인기업\rogue_project\Assets\Sprites\sude_spritesheet.png"
+    
+    if os.path.exists(input_path):
+        img = Image.open(input_path).convert("RGBA")
+        img.save(output_png, "PNG")
+        print(f"[SUCCESS] Created Unity PNG Sprite Sheet: {output_png} (Size: {img.size})")
+
+        # Generate Unity .meta File for Multiple Sprite Sheet Slicing
+        meta_content = """fileFormatVersion: 2
+guid: a1b2c3d4e5f678901234567890abcdef
+TextureImporter:
+  fileIDToRecycleName: {}
+  externalObjects: {}
+  serializedVersion: 12
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+  bumpMap:
+    convertToNormalMap: 0
+  isReadable: 1
+  textureFormat: -1
+  textureType: 8
+  textureShape: 1
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteSheet:
+    sprites:
+      - serializedVersion: 2
+        name: sude_walk_south_0
+        rect:
+          serializedVersion: 2
+          x: 10
+          y: 700
+          width: 60
+          height: 60
+        pivot: {x: 0.5, y: 0.5}
+        alignment: 0
+      - serializedVersion: 2
+        name: sude_paladin_v6
+        rect:
+          serializedVersion: 2
+          x: 600
+          y: 700
+          width: 90
+          height: 90
+        pivot: {x: 0.5, y: 0.5}
+        alignment: 0
+  wrapU: 0
+  wrapV: 0
+  filterMode: 0
+  aniso: 1
+  textureCompression: 1
+"""
+        meta_path = output_png + ".meta"
+        with open(meta_path, "w", encoding="utf-8") as f:
+            f.write(meta_content)
+        print(f"[SUCCESS] Generated Unity Meta File: {meta_path}")
+
+if __name__ == "__main__":
+    process_sprite_sheet()
