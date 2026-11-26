@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ [슈드용사] 대표님 원본 26개 동작별 스프라이트 모션 뷰어 & 캐릭터 디자인 테스터</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: #03050a;
+            color: #f8fafc;
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.25), transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.15), transparent 50%);
+        }
+
+        /* Top HUD Header */
+        .hud-header {
+            max-width: 1400px;
+            margin: 0 auto 20px auto;
+            background: rgba(15, 23, 42, 0.92);
+            border: 2px solid #fbbf24;
+            border-radius: 16px;
+            padding: 16px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 35px rgba(251, 191, 36, 0.35);
+            backdrop-filter: blur(12px);
+        }
+
+        .hud-title h1 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #fbbf24;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+        }
+
+        .badge-official {
+            background: linear-gradient(135deg, #10b981, #047857);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Workspace Grid Layout */
+        .workspace {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .workspace { grid-template-columns: 1fr; }
+        }
+
+        .stage-card {
+            background: rgba(15, 23, 42, 0.95);
+            border: 2px solid rgba(251, 191, 36, 0.4);
+            border-radius: 18px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        .stage-title {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-weight: 700;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            background: #020617;
+            border: 3px solid #334155;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
+        }
+
+        canvas {
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            display: block;
+        }
+
+        .stage-hud-overlay {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid #fbbf24;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.65rem;
+            color: #fbbf24;
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Controls Panel */
+        .control-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .panel-card {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .panel-card-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #fbbf24;
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .action-btn {
+            background: #1e293b;
+            border: 1.5px solid #3b82f6;
+            color: #e0f2fe;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action-btn:hover {
+            border-color: #fbbf24;
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        .action-btn:active {
+            transform: scale(0.96);
+        }
+
+        .key-hint {
+            background: #334155;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 800;
+        }
+
+        /* Frame Gallery List Box */
+        .frame-list-box {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .frame-item {
+            background: #020617;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .frame-item img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            image-rendering: pixelated;
+        }
+
+        .frame-item label {
+            font-size: 0.6rem;
+            color: #cbd5e1;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HUD Header -->
+    <div class="hud-header">
+        <div class="hud-title">
+            <h1>⚔️ [슈드용사] 대표님 원본 26개 동작별 실시간 모션 테스터</h1>
+        </div>
+        <div class="badge-official">
+            📁 슈드_스프라이트_동작별정리 (26 Files Loaded)
+        </div>
+    </div>
+
+    <!-- Workspace -->
+    <div class="workspace">
+        
+        <!-- Stage Area -->
+        <div class="stage-card">
+            <div class="stage-title">
+                <span>🎥 대표님 원본 26개 이미지 실시간 렌더링 스테이지</span>
+                <span>키보드 [W,A,S,D] / 방향키 / Q, W, E, SPACE 컨트롤</span>
+            </div>
+
+            <div class="canvas-wrapper">
+                <canvas id="mainCanvas" width="600" height="440"></canvas>
+                <div class="stage-hud-overlay">
+                    <span id="hudState">STATE: IDLE_SOUTH</span>
+                    <span id="hudFrame">FRAME: idle_south_00.png</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls Panel -->
+        <div class="control-panel">
+            
+            <!-- Motion Actions -->
+            <div class="panel-card">
+                <div class="panel-card-title">
+                    ⚡ 동작 모션 테스트 컨트롤
+                </div>
+                <div class="action-grid">
+                    <button class="action-btn" onclick="triggerMotion('attack')">⚔️ 8단계 검 공격 <span class="key-hint">Q</span></button>
+                    <button class="action-btn" onclick="triggerMotion('shield')">🛡️ 방패 방어 모션 <span class="key-hint">W</span></button>
+                    <button class="action-btn" onclick="triggerMotion('skill')">✨ 스킬 참격 모션 <span class="key-hint">E</span></button>
+                    <button class="action-btn" onclick="triggerMotion('idle')">🛑 대기 자세 <span class="key-hint">S</span></button>
+                </div>
+            </div>
+
+            <!-- Loaded 26 Files Gallery -->
+            <div class="panel-card">
+                <div class="panel-card-title">
+                    <span>🖼️ 대표님 원본 프레임 목록 (26)</span>
+                </div>
+                <div class="frame-list-box" id="frameListBox">
+                    <!-- Javascript Will Populate 26 Images -->
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        // Official 26 Frames Loaded from sude_official_sprites
+        const spritePaths = {
+            idle_south: [
+                "sude_official_sprites/idle_south_00.png",
+                "sude_official_sprites/idle_south_01.png",
+                "sude_official_sprites/idle_south_02.png"
+            ],
+            walk_south: [
+                "sude_official_sprites/walk_south_00.png",
+                "sude_official_sprites/walk_south_01.png",
+                "sude_official_sprites/walk_south_02.png",
+                "sude_official_sprites/walk_south_03.png"
+            ],
+            walk_north: [
+                "sude_official_sprites/walk_north_00.png",
+                "sude_official_sprites/walk_north_01.png",
+                "sude_official_sprites/walk_north_02.png"
+            ],
+            run_east: [
+                "sude_official_sprites/run_east_00.png",
+                "sude_official_sprites/run_east_01.png",
+                "sude_official_sprites/run_east_02.png"
+            ],
+            attack_east: [
+                "sude_official_sprites/attack_east_00_ready.png",
+                "sude_official_sprites/attack_east_01_raise.png",
+                "sude_official_sprites/attack_east_02_raise.png",
+                "sude_official_sprites/attack_east_03_peak.png",
+                "sude_official_sprites/attack_east_04_peak.png",
+                "sude_official_sprites/attack_east_05_peak.png",
+                "sude_official_sprites/attack_east_06_swing.png",
+                "sude_official_sprites/attack_east_07_recover.png"
+            ],
+            shield_block: [
+                "sude_official_sprites/shield_block_east_00.png",
+                "sude_official_sprites/shield_block_east_01.png"
+            ],
+            skill_slash: [
+                "sude_official_sprites/skill_slash_east_00.png",
+                "sude_official_sprites/skill_slash_east_01.png"
+            ]
+        };
+
+        // Preload All Images
+        const imageCache = {};
+        let totalLoaded = 0;
+
+        for (const [key, paths] of Object.entries(spritePaths)) {
+            imageCache[key] = [];
+            paths.forEach(p => {
+                const img = new Image();
+                img.src = p;
+                img.onload = () => { totalLoaded++; };
+                imageCache[key].push({ img, src: p });
+            });
+        }
+
+        // Render Frame Gallery Box
+        const galleryBox = document.getElementById('frameListBox');
+        for (const [key, paths] of Object.entries(spritePaths)) {
+            paths.forEach(p => {
+                const fname = p.split('/').pop();
+                const item = document.createElement('div');
+                item.className = 'frame-item';
+                item.innerHTML = `<img src="${p}" alt="${fname}"><label>${fname}</label>`;
+                galleryBox.appendChild(item);
+            });
+        }
+
+        // Stage Loop State
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let heroX = 300;
+        let heroY = 220;
+        let currentState = 'idle_south';
+        let currentDir = 'south'; // south, north, east, west
+        let frameIdx = 0;
+        let animTimer = 0;
+        let isAttacking = false;
+
+        const keys = {};
+
+        window.addEventListener('keydown', (e) => {
+            keys[e.key.toLowerCase()] = true;
+            if (['Space', 'KeyQ', 'KeyW', 'KeyE', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) e.preventDefault();
+            if (e.code === 'KeyQ') triggerMotion('attack');
+            if (e.code === 'KeyW') triggerMotion('shield');
+            if (e.code === 'KeyE') triggerMotion('skill');
+        });
+
+        window.addEventListener('keyup', (e) => { keys[e.key.toLowerCase()] = false; });
+
+        function triggerMotion(type) {
+            isAttacking = true;
+            frameIdx = 0;
+            if (type === 'attack') currentState = 'attack_east';
+            if (type === 'shield') currentState = 'shield_block';
+            if (type === 'skill') currentState = 'skill_slash';
+            if (type === 'idle') { currentState = 'idle_south'; isAttacking = false; }
+        }
+
+        function update(timestamp) {
+            if (!isAttacking) {
+                let dx = 0; let dy = 0;
+                if (keys['w'] || keys['arrowup']) { dy -= 1; currentState = 'walk_north'; currentDir = 'north'; }
+                else if (keys['s'] || keys['arrowdown']) { dy += 1; currentState = 'walk_south'; currentDir = 'south'; }
+                else if (keys['d'] || keys['arrowright']) { dx += 1; currentState = 'run_east'; currentDir = 'east'; }
+                else if (keys['a'] || keys['arrowleft']) { dx -= 1; currentState = 'run_east'; currentDir = 'west'; }
+                else { currentState = 'idle_south'; currentDir = 'south'; }
+
+                if (dx !== 0 && dy !== 0) { dx *= 0.7071; dy *= 0.7071; }
+                heroX = Math.max(50, Math.min(canvas.width - 50, heroX + dx * 5));
+                heroY = Math.max(50, Math.min(canvas.height - 50, heroY + dy * 5));
+            }
+
+            // Animation Frame Advance
+            if (timestamp - animTimer > (currentState === 'attack_east' ? 80 : 120)) {
+                animTimer = timestamp;
+                const frames = imageCache[currentState];
+                if (frames && frames.length > 0) {
+                    frameIdx++;
+                    if (frameIdx >= frames.length) {
+                        if (isAttacking) {
+                            isAttacking = false;
+                            currentState = 'idle_south';
+                        }
+                        frameIdx = 0;
+                    }
+                }
+            }
+
+            // Render Stage
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Shadow
+            ctx.fillStyle = 'rgba(0,0,0,0.4)';
+            ctx.beginPath();
+            ctx.ellipse(heroX, heroY + 36, 28, 8, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            const currentFrames = imageCache[currentState];
+            let activeSrc = "loading...";
+
+            if (currentFrames && currentFrames.length > 0) {
+                const curItem = currentFrames[frameIdx % currentFrames.length];
+                const img = curItem.img;
+                activeSrc = curItem.src.split('/').pop();
+
+                if (img && img.complete && img.naturalWidth > 0) {
+                    ctx.save();
+                    ctx.translate(heroX, heroY);
+
+                    // Flip West for run_east
+                    if (currentDir === 'west' && currentState === 'run_east') {
+                        ctx.scale(-1, 1);
+                    }
+
+                    // Render Real User Frame Image
+                    ctx.drawImage(img, -img.naturalWidth / 2, -img.naturalHeight / 2);
+                    ctx.restore();
+                }
+            }
+
+            document.getElementById('hudState').innerText = `STATE: ${currentState.toUpperCase()}`;
+            document.getElementById('hudFrame').innerText = `FRAME: ${activeSrc}`;
+
+            requestAnimationFrame(update);
+        }
+
+        requestAnimationFrame(update);
+    </script>
+</body>
+</html>

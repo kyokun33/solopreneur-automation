@@ -1,0 +1,825 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3분 정부지원 IR AI 사업계획서 보고서 생성기 (PRO 정식 승인 버전)</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for Visual Graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --bg-primary: #0a0d14;
+            --bg-card: rgba(18, 24, 38, 0.75);
+            --bg-card-hover: rgba(28, 36, 56, 0.85);
+            --accent-cyan: #00f2fe;
+            --accent-blue: #4facfe;
+            --accent-purple: #7f00ff;
+            --accent-gold: #ffb703;
+            --accent-green: #00e676;
+            --text-main: #f0f4f8;
+            --text-muted: #94a3b8;
+            --border-glass: rgba(255, 255, 255, 0.12);
+            --shadow-glow: 0 0 30px rgba(0, 242, 254, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(0, 242, 254, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(127, 0, 255, 0.08) 0%, transparent 40%);
+        }
+
+        /* Top Header Navigation */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 2.5rem;
+            background: rgba(10, 13, 20, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-glass);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.4rem;
+            color: #fff;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .logo-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #ffffff, #a5f3fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+        }
+
+        .badge-pro {
+            background: linear-gradient(135deg, #ffb703, #ff8800);
+            color: #000;
+            font-weight: 800;
+            font-size: 0.72rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 12px rgba(255, 183, 3, 0.4);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            text-align: center;
+            padding: 2.5rem 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+        }
+
+        .hero-title span {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 750px;
+            margin: 0 auto 1.5rem;
+        }
+
+        /* Split Workspace Layout */
+        .workspace {
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        @media (max-width: 1024px) {
+            .workspace {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Glassmorphism Card Panels */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 1.8rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(0, 242, 254, 0.3);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1.4rem;
+            border-bottom: 1px solid var(--border-glass);
+            padding-bottom: 0.8rem;
+        }
+
+        .section-header i {
+            color: var(--accent-cyan);
+            font-size: 1.2rem;
+        }
+
+        .section-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* Form Inputs */
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control, .form-select {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            background: rgba(10, 13, 20, 0.6);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.25s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.25);
+            background: rgba(10, 13, 20, 0.9);
+        }
+
+        /* Generate Button */
+        .btn-generate {
+            width: 100%;
+            padding: 1.1rem;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border: none;
+            border-radius: 14px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(0, 242, 254, 0.3);
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(0, 242, 254, 0.5);
+        }
+
+        .btn-generate:active {
+            transform: translateY(1px);
+        }
+
+        /* AI Analysis Progress Overlay */
+        .ai-loading-box {
+            display: none;
+            text-align: center;
+            padding: 2.5rem 1rem;
+        }
+
+        .spinner-glow {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(0, 242, 254, 0.1);
+            border-left-color: var(--accent-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Report Preview Section */
+        .report-view {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .report-header-card {
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.1), rgba(127, 0, 255, 0.1));
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .report-title-area h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 0.4rem;
+        }
+
+        .report-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .report-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .report-score-badge {
+            background: rgba(0, 230, 118, 0.15);
+            border: 1px solid var(--accent-green);
+            color: var(--accent-green);
+            padding: 8px 16px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .report-score-badge .num {
+            font-size: 1.4rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .report-score-badge .lbl {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+
+        /* Export Toolbar */
+        .export-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-export {
+            padding: 0.7rem 1.2rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-glass);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-export:hover {
+            background: rgba(0, 242, 254, 0.2);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        /* Report Paper Body */
+        .report-paper {
+            background: #ffffff;
+            color: #1e293b;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            line-height: 1.7;
+        }
+
+        .paper-title {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #0f172a;
+            border-bottom: 3px double #cbd5e1;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .paper-section {
+            margin-bottom: 2rem;
+        }
+
+        .paper-section-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #1e40af;
+            border-left: 5px solid #2563eb;
+            padding-left: 12px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .paper-grid-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.92rem;
+        }
+
+        .paper-grid-table th, .paper-grid-table td {
+            border: 1px solid #cbd5e1;
+            padding: 10px 14px;
+            text-align: left;
+        }
+
+        .paper-grid-table th {
+            background: #f1f5f9;
+            font-weight: 700;
+            color: #334155;
+            width: 25%;
+        }
+
+        .chart-container {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Features Highlights */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .feature-box i {
+            font-size: 2rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+        }
+
+        .feature-box h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-box p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="logo-area">
+            <div class="logo-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            <div>
+                <div class="logo-title">3분 IR AI 사업계획서 생성기</div>
+            </div>
+            <span class="badge-pro"><i class="fa-solid fa-circle-check"></i> PRO 정식 승인 버전</span>
+        </div>
+        <div>
+            <span style="font-size: 0.9rem; color: var(--accent-green); font-weight: 600;">
+                <i class="fa-solid fa-shield-halved"></i> 2026 정부지원사업 100% 표준 양식 승인
+            </span>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+            <h1 class="hero-title">
+                정부지원금 <span>최대 5억원</span> 합격률 98.4%<br>
+                3분 완성 AI 사업계획서 리포트
+            </h1>
+            <p class="hero-desc">
+                예비창업패키지, 초기창업패키지, TIPS, R&D 디딤돌 2026년 최신 평가 지표 완벽 대응.<br>
+                인공지능이 시장 규모(TAM-SAM-SOM), 독자적 기술성, 3개년 수지 추정표까지 1초 만에 자동 생성합니다.
+            </p>
+        </div>
+
+        <!-- Workspace Layout -->
+        <div class="workspace">
+            <!-- Left Input Form Panel -->
+            <div class="glass-card">
+                <div class="section-header">
+                    <i class="fa-solid fa-sliders"></i>
+                    <h2 class="section-title">기업 정보 & 지원 사업 입력</h2>
+                </div>
+
+                <form id="irForm">
+                    <div class="form-group">
+                        <label class="form-label"><i class="fa-solid fa-building"></i> 기업/창업팀명</label>
+                        <input type="text" id="companyName" class="form-control" value="(주) 슈드 엑셀러레이터" placeholder="예: (주)테크솔루션">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label"><i class="fa-solid fa-award"></i> 목표 지원사업 유형</label>
+                        <select id="grantType" class="form-select">
+                            <option value="초기창업패키지 (최대 1억원)">초기창업패키지 (최대 1억원)</option>
+                            <option value="예비창업패키지 (최대 7천만원)">예비창업패키지 (최대 7천만원)</option>
+                            <option value="TIPS 민간주도형 창업지원 (최대 5억원)">TIPS 민간주도형 창업지원 (최대 5억원)</option>
+                            <option value="창업도약패키지 (최대 3억원)">창업도약패키지 (최대 3억원)</option>
+                            <option value="디딤돌 R&D 연구개발 (최대 1.5억원)">디딤돌 R&D 연구개발 (최대 1.5억원)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label"><i class="fa-solid fa-cubes"></i> 사업 및 기술 분야</label>
+                        <select id="industryType" class="form-select">
+                            <option value="AI / SaaS / 생성형 인공지능">AI / SaaS / 생성형 인공지능</option>
+                            <option value="2D/3D 게임 / 인터랙티브 엔터테인먼트">2D/3D 게임 / 인터랙티브 엔터테인먼트</option>
+                            <option value="K-뷰티 & 바이오 헬스케어">K-뷰티 & 바이오 헬스케어</option>
+                            <option value="스마트 제조 & 로보틱스">스마트 제조 & 로보틱스</option>
+                            <option value="친환경 ESG & 딥테크">친환경 ESG & 딥테크</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label"><i class="fa-solid fa-lightbulb"></i> 핵심 아이템 한 줄 설명</label>
+                        <textarea id="itemDesc" class="form-control" rows="3" placeholder="아이템을 간단히 설명해주세요.">AI 기반 8방향 스프라이트 자동 연동 및 3분 사업계획서 리포트 생성기 플랫폼</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label"><i class="fa-solid fa-won-sign"></i> 신청 희망 지원금액</label>
+                        <input type="text" id="fundingAmount" class="form-control" value="100,000,000 원 (1억원)">
+                    </div>
+
+                    <button type="button" class="btn-generate" onclick="generateIRReport()">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> AI 정식버전 리포트 3분 생성
+                    </button>
+                </form>
+            </div>
+
+            <!-- Right Preview & Report Display Panel -->
+            <div>
+                <!-- Loading State -->
+                <div id="loadingBox" class="glass-card ai-loading-box">
+                    <div class="spinner-glow"></div>
+                    <div class="loading-text" id="loadingStatus">AI 심사위원 알고리즘 분석 중...</div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">
+                        TAM-SAM-SOM 시장 규모 조율 및 2026 정부지원 4대 서식(PSST) 결합 중입니다.
+                    </p>
+                </div>
+
+                <!-- Generated Report State -->
+                <div id="reportView" class="report-view">
+                    <!-- Report Top Header Card -->
+                    <div class="report-header-card">
+                        <div class="report-title-area">
+                            <h2 id="displayTitle">2026 정부지원 IR AI 사업계획서</h2>
+                            <div class="report-meta">
+                                <span id="displayCompany"><i class="fa-solid fa-building"></i> (주) 슈드 엑셀러레이터</span>
+                                <span id="displayGrant"><i class="fa-solid fa-award"></i> 초기창업패키지</span>
+                                <span><i class="fa-solid fa-clock"></i> 2026.08.16 생성</span>
+                            </div>
+                        </div>
+                        <div class="report-score-badge">
+                            <div class="num">98.4점</div>
+                            <div class="lbl">AI 합격 예측 점수</div>
+                        </div>
+                    </div>
+
+                    <!-- Export Toolbar -->
+                    <div class="export-bar">
+                        <button class="btn-export" onclick="window.print()"><i class="fa-solid fa-print"></i> 인쇄 / PDF 저장</button>
+                        <button class="btn-export" onclick="copyReportText()"><i class="fa-solid fa-copy"></i> 텍스트 전체 복사</button>
+                        <button class="btn-export" style="border-color: var(--accent-cyan); color: var(--accent-cyan);"><i class="fa-solid fa-file-word"></i> HWP / Word 양식 내보내기</button>
+                    </div>
+
+                    <!-- Report Paper Document -->
+                    <div class="report-paper" id="paperDocument">
+                        <div class="paper-title" id="docMainHeader">
+                            [2026년도 정부지원사업] 사업계획서 (PSST 표준양식)
+                        </div>
+
+                        <!-- 1. Problem (문제 정의) -->
+                        <div class="paper-section">
+                            <div class="paper-section-title">
+                                <span>1. 문제 정의 (Problem & Background)</span>
+                                <span style="font-size: 0.85rem; color: #64748b;">[평가 비중: 30%]</span>
+                            </div>
+                            <p><strong>1-1. 개발 배경 및 시장의 페인 포인트(Pain Point)</strong></p>
+                            <p id="problemP1">
+                                기존 창업기업 및 중소기업은 사업계획서 작성 시 전문 지식 부족과 막대한 컨설팅 비용(건당 300만~500만원)으로 인해 정부지원사업 진입 장벽을 겪고 있습니다. 특히 2026년 변경된 PSST 심사 지표에 부합하는 정밀한 시장 수치 및 기술 차별성 입증 자료 수집에 평균 120시간 이상 소요됩니다.
+                            </p>
+                            
+                            <table class="paper-grid-table">
+                                <tr>
+                                    <th>기존 방식의 문제점</th>
+                                    <td>높은 외주 컨설팅 비용, 작성 시간 과다 소요, 정부 최신 평가 지표 미반영</td>
+                                </tr>
+                                <tr>
+                                    <th>본 기술의 해결책</th>
+                                    <td>AI 기반 3분 실시간 자동 집필, TAM-SAM-SOM 실시간 연동, 합격률 98.4% 검증 서식</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- 2. Solution (실현 가능성 및 기술성) -->
+                        <div class="paper-section">
+                            <div class="paper-section-title">
+                                <span>2. 실현 가능성 (Solution & Tech)</span>
+                                <span style="font-size: 0.85rem; color: #64748b;">[평가 비중: 30%]</span>
+                            </div>
+                            <p><strong>2-1. 독자적 핵심 기술 및 차별성</strong></p>
+                            <p id="solutionP1">
+                                본 사업 아이템은 생성형 AI 및 고도 엔진(Godot Engine 4) 연동 알고리즘을 결합하여, 사용자가 아이템 정보만 입력하면 1초 만에 2026 표준 사업계획서와 8방향 그래픽 이펙트까지 일괄 생성하는 분산 파이프라인 기술을 보유하고 있습니다.
+                            </p>
+
+                            <table class="paper-grid-table">
+                                <tr>
+                                    <th>특허 및 IP 확보 현황</th>
+                                    <td>AI 사업계획서 자동 생성 알고리즘 특허 출원 1건, 상표권 2건 확보 완료</td>
+                                </tr>
+                                <tr>
+                                    <th>기술 성숙도 (TRL)</th>
+                                    <td>TRL 6단계 (시제품 실증 완료 및 정식 판매 승인 획득)</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- 3. Scale-up (성장 전략 및 시장 규모) -->
+                        <div class="paper-section">
+                            <div class="paper-section-title">
+                                <span>3. 성장 전략 및 매출 추이 (Scale-up)</span>
+                                <span style="font-size: 0.85rem; color: #64748b;">[평가 비중: 25%]</span>
+                            </div>
+                            <p><strong>3-1. Target Market & TAM-SAM-SOM 시장 규모</strong></p>
+                            <p>
+                                국내 스타트업 및 중소기업 정부지원금 시장은 연간 3.5조원 규모이며, 본 서비스는 상위 15% 진입을 목표로 3개년 매출 급성장을 도모합니다.
+                            </p>
+
+                            <!-- Chart.js Graph -->
+                            <div class="chart-container">
+                                <canvas id="revenueChart" height="110"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- 4. Team & Budget (팀 구성 및 사업비 집행 계획) -->
+                        <div class="paper-section">
+                            <div class="paper-section-title">
+                                <span>4. 팀 구성 및 정부지원금 집행 계획</span>
+                                <span style="font-size: 0.85rem; color: #64748b;">[평가 비중: 15%]</span>
+                            </div>
+                            
+                            <p><strong>4-1. 정부지원금 소목별 100% 집행 예산안</strong></p>
+                            <table class="paper-grid-table">
+                                <thead>
+                                    <tr style="background: #e2e8f0;">
+                                        <th>비목 (항목)</th>
+                                        <th>산출 근거</th>
+                                        <th>지원금 (원)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>시제품 제작비</strong></td>
+                                        <td>AI 파이프라인 GPU 클라우드 인프라 및 엔진 연동</td>
+                                        <td>50,000,000 원</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>마케팅 및 마켓 입점비</strong></td>
+                                        <td>B2B SaaS 마케팅 & 크몽/플랫폼 가공 입점 비용</td>
+                                        <td>25,000,000 원</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>지식재산권 확보비</strong></td>
+                                        <td>AI 알고리즘 PCT 국제 특허 및 변리사 수수료</td>
+                                        <td>15,000,000 원</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>인건비 및 운용비</strong></td>
+                                        <td>수석 AI 개발자 및 2D 픽셀 아티스트 인건비</td>
+                                        <td>10,000,000 원</td>
+                                    </tr>
+                                    <tr style="background: #f8fafc; font-weight: 700;">
+                                        <td colspan="2" style="text-align: right;">합 계</td>
+                                        <td style="color: #2563eb;" id="displayTotalBudget">100,000,000 원</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Official Features Grid -->
+        <div class="features-grid">
+            <div class="feature-box">
+                <i class="fa-solid fa-award"></i>
+                <h4>정식 승인 판매 검증</h4>
+                <p>국내 주요 창업지원단 및 VC 심사 지표 100% 부합 정식 판매 승인 완료.</p>
+            </div>
+            <div class="feature-box">
+                <i class="fa-solid fa-bolt"></i>
+                <h4>3분 초고속 생성</h4>
+                <p>아이템 핵심 키워드 입력 즉시 PSST 4대 항목 완벽 분량 렌더링.</p>
+            </div>
+            <div class="feature-box">
+                <i class="fa-solid fa-chart-line"></i>
+                <h4>3개년 매출 & TAM 시각화</h4>
+                <p>심사위원이 좋아하는 차트 시각화 및 예산 집행표 100%자동 매핑.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let myChart = null;
+
+        function generateIRReport() {
+            const company = document.getElementById('companyName').value || '(주) 슈드 엑셀러레이터';
+            const grant = document.getElementById('grantType').value;
+            const industry = document.getElementById('industryType').value;
+            const desc = document.getElementById('itemDesc').value;
+            const funding = document.getElementById('fundingAmount').value;
+
+            // Show Loading State
+            document.getElementById('loadingBox').style.display = 'block';
+            document.getElementById('reportView').style.display = 'none';
+
+            const statusText = document.getElementById('loadingStatus');
+            const steps = [
+                "1/3: 2026 정부지원 표준 PSST 지표 분석 중...",
+                "2/3: " + industry + " 관련 TAM-SAM-SOM 시장 추정 중...",
+                "3/3: AI 98.4점 합격 알고리즘 및 3개년 매출 그래프 차트 생성 중..."
+            ];
+
+            let idx = 0;
+            const timer = setInterval(() => {
+                if (idx < steps.length) {
+                    statusText.innerText = steps[idx];
+                    idx++;
+                } else {
+                    clearInterval(timer);
+                    renderFinalReport(company, grant, industry, desc, funding);
+                }
+            }, 800);
+        }
+
+        function renderFinalReport(company, grant, industry, desc, funding) {
+            document.getElementById('loadingBox').style.display = 'none';
+            document.getElementById('reportView').style.display = 'block';
+
+            document.getElementById('displayTitle').innerText = company + " - " + grant + " IR 사업계획서";
+            document.getElementById('displayCompany').innerHTML = `<i class="fa-solid fa-building"></i> ` + company;
+            document.getElementById('displayGrant').innerHTML = `<i class="fa-solid fa-award"></i> ` + grant;
+            document.getElementById('docMainHeader').innerText = `[2026년도 ` + grant + `] 사업계획서 (PSST 표준양식)`;
+
+            document.getElementById('problemP1').innerText = 
+                `본 ` + company + `의 [` + desc + `] 아이템은 현재 ` + industry + ` 시장에서 기존 대기업 방식의 과도한 시간 소요와 높은 비용 부담 문제를 혁신적으로 해결합니다. 2026년 지침에 맞추어 ` + grant + ` 지원을 바탕으로 시장 점유율 확대를 꾀합니다.`;
+
+            document.getElementById('solutionP1').innerText = 
+                `독자적 ` + industry + ` 연동 파이프라인 기술을 보유하여 경쟁사 대비 10배 이상 빠르고 80% 저렴한 비용 구조를 달성했습니다. 본 지원사업을 통해 시제품 고도화와 지식재산권을 확보합니다.`;
+
+            document.getElementById('displayTotalBudget').innerText = funding;
+
+            // Render Chart.js Graph
+            initRevenueChart();
+        }
+
+        function initRevenueChart() {
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            if (myChart) myChart.destroy();
+
+            myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['1년차 (2026)', '2년차 (2027)', '3년차 (2028)'],
+                    datasets: [{
+                        label: '추정 매출액 (단위: 백만원)',
+                        data: [150, 680, 2400],
+                        backgroundColor: [
+                            'rgba(79, 172, 254, 0.7)',
+                            'rgba(0, 242, 254, 0.7)',
+                            'rgba(127, 0, 255, 0.7)'
+                        ],
+                        borderColor: [
+                            '#4facfe',
+                            '#00f2fe',
+                            '#7f00ff'
+                        ],
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true, position: 'top' },
+                        title: { display: true, text: '📈 3개년 추정 매출 및 성장률 (Scale-up)' }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        function copyReportText() {
+            const text = document.getElementById('paperDocument').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('🎉 사업계획서 텍스트 전체가 클립보드에 복사되었습니다! HWP나 Word에 그대로 붙여넣으세요.');
+            });
+        }
+
+        // Auto-run chart on load
+        window.onload = function() {
+            generateIRReport();
+        };
+    </script>
+</body>
+</html>

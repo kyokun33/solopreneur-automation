@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔗 NotebookLM & Antigravity IDE 완벽 연동 기술 가이드</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: 'Pretendard', sans-serif;
+            padding: 30px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e1b4b, #311b92);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid #6366f1;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .title { font-size: 1.8rem; font-weight: 900; color: #a5b4fc; }
+        .sub { font-size: 0.95rem; color: #cbd5e1; margin-top: 8px; }
+
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #38bdf8;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge {
+            background: #4338ca;
+            color: #e0e7ff;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        pre {
+            background: #090d16;
+            padding: 16px;
+            border-radius: 10px;
+            border: 1px solid #1e293b;
+            color: #f1f5f9;
+            font-family: 'Consolas', monospace;
+            font-size: 0.88rem;
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
+        .step-list {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .step-list li {
+            margin-bottom: 8px;
+            color: #e2e8f0;
+        }
+
+        .highlight { color: #fbbf24; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <div class="title">🔗 NotebookLM & Antigravity IDE 기술 연동 보고서</div>
+            <div class="sub">AI 수석 총괄 디렉터 고감독 정밀 조사 | 대표님 모니터 전면 라이브 렌더링</div>
+        </div>
+
+        <!-- Method 1: MCP Server -->
+        <div class="card">
+            <div class="card-title">
+                <span>1. NotebookLM MCP Server 연동 (공식 MCP 구성 방식)</span>
+                <span class="badge">추천 1위</span>
+            </div>
+            <p>Antigravity IDE의 MCP(Model Context Protocol) 환경변수에 구글 쿠키 세션을 연결하여 안티그래비티 에이전트가 direct API를 호출하는 방식입니다.</p>
+            <div class="step-list">
+                <li><strong>1단계:</strong> 크롬 브라우저에서 `notebooklm.google.com` 로그인 후 F12 (개발자 도구) -> Application -> Cookies 이동</li>
+                <li><strong>2단계:</strong> `__Secure-1PSID` 및 `SID` 쿠키 문자열 복사</li>
+                <li><strong>3단계:</strong> Antigravity MCP 설정파일(`mcp_config.json`) 환경변수 바인딩</li>
+            </div>
+            <pre>{
+  "mcpServers": {
+    "notebooklm": {
+      "command": "npx",
+      "args": ["-y", "notebooklm-mcp"],
+      "env": {
+        "NOTEBOOKLM_AUTH_TOKEN": "구글_세션_쿠키_문자열"
+      }
+    }
+  }
+}</pre>
+        </div>
+
+        <!-- Method 2: Google Drive Auto-Sync -->
+        <div class="card">
+            <div class="card-title">
+                <span>2. Google Drive Desktop 실시간 수집 연동 (가장 안정적 방식)</span>
+                <span class="badge">추천 2위</span>
+            </div>
+            <p>Antigravity가 보고서를 대표님 PC의 Google Drive 동기화 폴더에 자동 저장을 수행하고, NotebookLM에서 Google Drive를 소스로 연결하는 방식입니다.</p>
+            <ol class="step-list">
+                <li>Antigravity가 생성하는 모든 `.txt` / `.pdf` 보고서를 `G:\내 드라이브\보고서\` 경로에 자동 출력</li>
+                <li>NotebookLM의 [소스 추가] -> [Google Drive] 클릭 1회 연동</li>
+                <li>이후 파일이 수정될 때마다 NotebookLM이 구글 드라이브에서 <strong>100% 무인 자동 수집</strong></li>
+            </ol>
+        </div>
+
+        <!-- Method 3: Playwright DOM Selector -->
+        <div class="card">
+            <div class="card-title">
+                <span>3. Playwright DOM 요소 정밀 추적 웹 자동화</span>
+                <span class="badge">개발용</span>
+            </div>
+            <p>단순 마우스 좌표 클릭이 아닌, HTML 구조(`aria-label`, `CSS Selector`)를 정밀 지정하여 웹 UI를 100% 타격하는 방식입니다.</p>
+            <pre>page.click('button[aria-label="새 노트북 만들기"]')
+page.fill('input[placeholder="제목 없는 노트북"]', '보고서')
+page.click('button:has-text("소스 추가")')</pre>
+        </div>
+
+    </div>
+
+</body>
+</html>

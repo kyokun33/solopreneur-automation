@@ -1,0 +1,158 @@
+{
+  "last_node_id": 9,
+  "last_link_id": 9,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadImage",
+      "pos": [40, 60],
+      "size": [315, 314],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        { "name": "IMAGE", "type": "IMAGE", "links": [1], "slot_index": 0 },
+        { "name": "MASK", "type": "MASK", "links": null }
+      ],
+      "properties": { "Node name for S&R": "LoadImage" },
+      "widgets_values": ["sude_hero_reference.png", "image"]
+    },
+    {
+      "id": 2,
+      "type": "VAEEncode",
+      "pos": [400, 60],
+      "size": [210, 80],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        { "name": "pixels", "type": "IMAGE", "link": 1 },
+        { "name": "vae", "type": "VAE", "link": 2 }
+      ],
+      "outputs": [
+        { "name": "LATENT", "type": "LATENT", "links": [3], "slot_index": 0 }
+      ],
+      "properties": { "Node name for S&R": "VAEEncode" }
+    },
+    {
+      "id": 4,
+      "type": "CheckpointLoaderSimple",
+      "pos": [40, 420],
+      "size": [315, 100],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        { "name": "MODEL", "type": "MODEL", "links": [4], "slot_index": 0 },
+        { "name": "CLIP", "type": "CLIP", "links": [5, 6], "slot_index": 1 },
+        { "name": "VAE", "type": "VAE", "links": [2, 7], "slot_index": 2 }
+      ],
+      "properties": { "Node name for S&R": "CheckpointLoaderSimple" },
+      "widgets_values": ["v1-5-pruned-emaonly.safetensors"]
+    },
+    {
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "pos": [400, 180],
+      "size": [420, 160],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        { "name": "clip", "type": "CLIP", "link": 5 }
+      ],
+      "outputs": [
+        { "name": "CONDITIONING", "type": "CONDITIONING", "links": [8], "slot_index": 0 }
+      ],
+      "properties": { "Node name for S&R": "CLIPTextEncode" },
+      "widgets_values": ["2D pixel art character sprite sheet, Novice Hero Sude 100% matching input reference image, silver hair, dark iron armor with glowing rune lines, 8-direction character stance (South, SouthEast, East, NorthEast, North, NorthWest, West, SouthWest), 16-bit SNES JRPG style, clean white background, sharp pixel edges, high quality, masterwork"]
+    },
+    {
+      "id": 7,
+      "type": "CLIPTextEncode",
+      "pos": [400, 380],
+      "size": [420, 140],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        { "name": "clip", "type": "CLIP", "link": 6 }
+      ],
+      "outputs": [
+        { "name": "CONDITIONING", "type": "CONDITIONING", "links": [9], "slot_index": 0 }
+      ],
+      "properties": { "Node name for S&R": "CLIPTextEncode" },
+      "widgets_values": ["blurry, low quality, distorted, bad proportions, watermark, text, 3d, realistic, photo, noise, artifacts, changed armor, wrong hair color"]
+    },
+    {
+      "id": 3,
+      "type": "KSampler",
+      "pos": [860, 180],
+      "size": [315, 260],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        { "name": "model", "type": "MODEL", "link": 4 },
+        { "name": "positive", "type": "CONDITIONING", "link": 8 },
+        { "name": "negative", "type": "CONDITIONING", "link": 9 },
+        { "name": "latent_image", "type": "LATENT", "link": 3 }
+      ],
+      "outputs": [
+        { "name": "LATENT", "type": "LATENT", "links": [10], "slot_index": 0 }
+      ],
+      "properties": { "Node name for S&R": "KSampler" },
+      "widgets_values": [884102, "randomize", 20, 7.5, "euler", "normal", 0.70]
+    },
+    {
+      "id": 8,
+      "type": "VAEDecode",
+      "pos": [1220, 180],
+      "size": [210, 60],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        { "name": "samples", "type": "LATENT", "link": 10 },
+        { "name": "vae", "type": "VAE", "link": 7 }
+      ],
+      "outputs": [
+        { "name": "IMAGE", "type": "IMAGE", "links": [11], "slot_index": 0 }
+      ],
+      "properties": { "Node name for S&R": "VAEDecode" }
+    },
+    {
+      "id": 9,
+      "type": "SaveImage",
+      "pos": [1460, 180],
+      "size": [315, 270],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        { "name": "images", "type": "IMAGE", "link": 11 }
+      ],
+      "outputs": [],
+      "properties": { "Node name for S&R": "SaveImage" },
+      "widgets_values": ["Sude_Hero_100Percent_Matched_SpriteSheet"]
+    }
+  ],
+  "links": [
+    [1, 1, 0, 2, 0, "IMAGE"],
+    [2, 4, 2, 2, 1, "VAE"],
+    [3, 2, 0, 3, 3, "LATENT"],
+    [4, 4, 0, 3, 0, "MODEL"],
+    [5, 4, 1, 6, 0, "CLIP"],
+    [6, 4, 1, 7, 0, "CLIP"],
+    [7, 4, 2, 8, 1, "VAE"],
+    [8, 6, 0, 3, 1, "CONDITIONING"],
+    [9, 7, 0, 3, 2, "CONDITIONING"],
+    [10, 3, 0, 8, 0, "LATENT"],
+    [11, 8, 0, 9, 0, "IMAGE"]
+  ],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}

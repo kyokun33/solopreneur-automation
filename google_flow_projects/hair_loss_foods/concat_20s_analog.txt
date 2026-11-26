@@ -1,0 +1,4 @@
+file 'f:/1인기업/google_flow_projects/hair_loss_foods/scene1_20s_analog.wav'
+file 'f:/1인기업/google_flow_projects/hair_loss_foods/scene2_20s_analog.wav'
+file 'f:/1인기업/google_flow_projects/hair_loss_foods/scene3_20s_analog.wav'
+file 'f:/1인기업/google_flow_projects/hair_loss_foods/scene4_20s_analog.wav'

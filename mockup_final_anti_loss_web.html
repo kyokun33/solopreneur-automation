@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-Loss Funnel Web Mockup</title>
+    <style>
+        /* 🍎 Apple-style Minimalist UI/UX Rules 적용 */
+        :root {
+            --color-primary: #0066CC; /* Tech Blue */
+            --color-background: #F5F5F7; /* Light Gray for background */
+            --color-surface: #FFFFFF; /* Pure White for cards/widgets */
+            --color-text: #1D1D1F; /* Deep Charcoal for text */
+            --color-loss: #CC3333; /* Warning Red for Loss Accent */
+            --shadow-soft: 0 4px 24px rgba(0,0,0,0.04);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* 4:5 모바일 최적화 컨테이너 */
+        .mockup-container {
+            width: 100%;
+            max-width: 450px; /* 4:5 비율을 위한 최대 너비 설정 */
+            background-color: var(--color-surface);
+            border-radius: 16px;
+            box-shadow: var(--shadow-soft);
+            padding: 20px;
+        }
+
+        /* Typography & Headings */
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 600;
+            border-bottom: 2px solid var(--color-background);
+            padding-bottom: 8px;
+            margin-top: 25px;
+        }
+
+        /* --- 1. Loss Counter Widget Styling (The Core) --- */
+        .loss-widget {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+            border: 2px solid var(--color-loss); /* Loss Accent Border */
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Spring Physics Effect */
+        }
+
+        .loss-widget.faded {
+            opacity: 0.3;
+            transform: translateY(10px);
+        }
+
+        .loss-label {
+            font-size: 16px;
+            color: var(--color-text);
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        #loss-counter {
+            font-size: 3.2em;
+            font-weight: 800;
+            color: var(--color-loss);
+            display: block;
+            margin: 10px 0;
+            transition: color 0.4s ease;
+        }
+
+        .formula {
+            font-size: 14px;
+            color: #666;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+        }
+
+        /* --- 2. Interactive Calculator Styling --- */
+        .calculator {
+            background-color: var(--color-surface);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        #risk-result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9ff;
+            border: 1px solid var(--color-primary);
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        /* --- 3. Content Cards Styling --- */
+        .cards-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--color-surface);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow-soft);
+            border-left: 4px solid var(--color-primary); /* Subtle Branding */
+        }
+
+        .card h3 {
+            font-size: 18px;
+            margin-top: 0;
+            color: var(--color-text);
+        }
+
+        .card p {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+    <div class="mockup-container">
+        <!-- Hero Section -->
+        <h1>시간당 $55 손실, 당신의 시간은 얼마인가요?</h1>
+
+        <!-- 1. Loss Counter Widget (Interactive & Animated) -->
+        <div id="loss-widget" class="loss-widget">
+            <p class="loss-label">현재 누적 리스크 비용</p>
+            <span id="loss-counter">$0.00</span>
+            <div class="formula">손실 = 시간당 $55 * 경과 시간 + 리스크 비용</div>
+        </div>
+
+        <!-- 2. Interactive Calculator -->
+        <div class="calculator">
+            <h2>나만의 리스크 계산하기</h2>
+            <div class="input-group">
+                <label for="time-loss">경과 시간 (시간)</label>
+                <input type="number" id="time-loss" value="10" min="0">
+            </div>
+            <div class="input-group">
+                <label for="risk-cost">추가 리스크 비용 (예상)</label>
+                <input type="number" id="risk-cost" value="50" min="0">
+            </div>
+            <button onclick="calculateRisk()">리스크 계산하기</button>
+            <div id="risk-result">결과를 기다리는 중...</div>
+        </div>
+
+        <!-- 3. Content Cards -->
+        <h2>손실 인식 기반 콘텐츠</h2>
+        <div class="cards-grid">
+            
+            <!-- Card 1: Time Loss Focus -->
+            <div class="card">
+                <h3>[Before] 시간 낭비의 현실</h3>
+                <p>당신이 매일 허비하는 시간은 단순한 시간이 아닙니다. 이는 잠재적인 수익을 놓치고 기회를 상실하는 직접적인 비용입니다. 시간=돈이라는 공식을 인식해야 합니다.</p>
+            </div>
+
+            <!-- Card 2: Risk Cost Focus -->
+            <div class="card">
+                <h3>[After] 리스크를 계산하고 통제하기</h3>
+                <p>추상적인 불안감 대신, '손실 = 시간 * 가치 + 리스크 비용' 공식을 통해 당신이 실제로 놓치고 있는 금액을 시각적으로 확인하세요. 통제가 곧 이득입니다.</p>
+            </div>
+
+            <!-- Card 3: Action Focus -->
+            <div class="card">
+                <h3>[Action] 즉시 손실 회피 계획 수립</h3>
+                <p>감정적인 반응은 행동을 마비시킵니다. 계산된 리스크를 바탕으로 구체적인 탈출 전략과 회복 계획을 세우세요. 지금 바로 행동하여 손실을 막으십시오.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for Interactivity and Animation
+        const lossWidget = document.getElementById('loss-widget');
+        const lossCounter = document.getElementById('loss-counter');
+        const riskResult = document.getElementById('risk-result');
+
+        let currentLoss = 0;
+
+        // --- Loss Counter Animation Logic (Fade-In Up on Load) ---
+        window.onload = function() {
+            setTimeout(() => {
+                lossWidget.classList.remove('faded');
+            }, 100); // Slight delay for smooth initial load feel
+        };
+
+        // Function to update the visual loss counter (Simulated Real-time)
+        function updateLossDisplay(lossAmount) {
+            currentLoss = parseFloat(lossAmount);
+            lossCounter.textContent = `$${currentLoss.toFixed(2)}`;
+        }
+
+        // Function to calculate risk based on user input
+        function calculateRisk() {
+            const timeLoss = parseFloat(document.getElementById('time-loss').value) || 0;
+            const riskCost = parseFloat(document.getElementById('risk-cost').value) || 0;
+            
+            // Core Formula: 손실 = 시간당 $55 * 경과 시간 + 리스크 비용
+            const timeLossAmount = timeLoss * 55;
+            const totalRisk = timeLossAmount + riskCost;
+
+            updateLossDisplay(totalRisk);
+            
+            riskResult.innerHTML = `총 예상 리스크 비용: <span style="color: ${totalRisk > 0 ? 'var(--color-loss)' : 'var(--color-primary)'};">${totalRisk.toFixed(2)}</span>`;
+        }
+
+        // Simulate real-time update based on calculation (for demonstration)
+        document.getElementById('time-loss').addEventListener('input', function() {
+            calculateRisk();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>네이버 주요 뉴스 베스트 TOP 7 카드뉴스 (4:5 비율)</title>
+    <meta name="description" content="경제, 정치, 엔터, 스포츠, 사회, IT/과학, 세계 카테고리별 오늘 핫뉴스 TOP 7 카드뉴스 4:5 비율">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-gradient-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
+    <div class="app-wrapper">
+        <header class="app-header">
+            <span class="badge-live">LIVE TOP 7</span>
+            <h1>오늘의 네이버 뉴스 베스트 7</h1>
+            <p>2026년 8월 27일 주요 카테고리 핫이슈 (4:5 비율 카드뉴스)</p>
+        </header>
+
+        <div class="card-slider-container">
+            <button class="nav-btn prev-btn" id="prevBtn" aria-label="이전 카드">&lt;</button>
+
+            <!-- 4:5 Aspect Ratio Card Stage -->
+            <div class="card-stage" id="cardStage">
+
+                <!-- Cover Slide -->
+                <div class="card-item active" data-index="0">
+                    <div class="card-inner cover-card">
+                        <span class="card-category">HOT ISSUE SUMMARY</span>
+                        <div class="cover-content">
+                            <span class="date-tag">2026. 08. 27</span>
+                            <h2 class="cover-title">네이버 뉴스<br><span class="highlight">BEST TOP 7</span><br>카드뉴스 브리핑</h2>
+                            <p class="cover-subtitle">경제 · 정치 · 엔터 · 스포츠 · 사회 · IT · 세계</p>
+                        </div>
+                        <div class="card-footer">
+                            <span>▶ 옆으로 넘겨서 확인하기</span>
+                            <span class="ratio-badge">4 : 5 Aspect Ratio</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- News 1: 경제 -->
+                <div class="card-item" data-index="1">
+                    <div class="card-inner economy-card">
+                        <div class="card-header-row">
+                            <span class="category-badge cat-economy">경제</span>
+                            <span class="news-num">01 / 07</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="news-title">한은 기준금리 0.25%p 인상<br><span class="accent-red">연 3.00% 돌파</span></h3>
+                            <p class="news-desc">한국은행 금통위, 물가 상승 대응 위해 두 달 연속 금리 인상 감행. 3년 7개월 만의 연속 인상으로 가계부담 가중 우려.</p>
+                            <div class="key-point-box">
+                                <strong>📌 핵심 포인트</strong>
+                                <ul>
+                                    <li>기준금리 연 2.75% ➔ 연 3.00%</li>
+                                    <li>2분기 가계 소득 4.5%↑, 실질소비는 0.4%에 그쳐</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <span>Naver News • 경제 섹션 1위</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- News 2: 정치 -->
+                <div class="card-item" data-index="2">
+                    <div class="card-inner politics-card">
+                        <div class="card-header-row">
+                            <span class="category-badge cat-politics">정치</span>
+                            <span class="news-num">02 / 07</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="news-title">국토 균형 발전 발표<br><span class="accent-blue">3대 메가 프로젝트</span></h3>
+                            <p class="news-desc">대통령-기초단체장 간담회서 "수도권 집중 해소 못하면 대한민국 미래 없다"며 5극 3특 중심 지방 균형 발전 선언.</p>
+                            <div class="key-point-box">
+                                <strong>📌 핵심 포인트</strong>
+                                <ul>
+                                    <li>5극 3특 체제 지방 분권 정책 가속</li>
+                                    <li>지방 산업용 전기요금 차등제 추진</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <span>Naver News • 정치 섹션 1위</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- News 3: 엔터 -->
+                <div class="card-item" data-index="3">
+                    <div class="card-inner culture-card">
+                        <div class="card-header-row">
+                            <span class="category-badge cat-culture">엔터</span>
+                            <span class="news-num">03 / 07</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="news-title">K-컬처 & AI 엔터테인먼트<br>글로벌 신시장 개척</h3>
+                            <p class="news-desc">K-콘텐츠 플랫폼과 AI 기술의 융합으로 해외 시장 창출 급격화. 숏폼 및 디지털 에셋 연계 마케팅 폭발적 성장.</p>
+                            <div class="key-point-box">
+                                <strong>📌 핵심 포인트</strong>
+                                <ul>
+                                    <li>글로벌 팬덤 대상 AI 숏폼 콘텐츠 부상</li>
+                                    <li>문화 콘텐츠 수출 실적 최고치 경신</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <span>Naver News • 엔터 섹션 1위</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- News 4: 스포츠 -->
+                <div class="card-item" data-index="4">
+                    <div class="card-inner sports-card">
+                        <div class="card-header-row">
+                            <span class="category-badge cat-sports">스포츠</span>
+                            <span class="news-num">04 / 07</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="news-title">한국 축구 대표팀<br>월드컵 예선 조 1위 탈환</h3>
+                            <p class="news-desc">치열한 접전 끝에 극적인 역전골로 승리. 10연속 월드컵 본선 진출 청신호.</p>
+                            <div class="key-point-box">
+                                <strong>📌 핵심 포인트</strong>
+                                <ul>
+                                    <li>후반 추가시간 기적의 결승골</li>
+                                    <li>차기 홈 경기 승리 시 본선 확정</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <span>Naver News • 스포츠 섹션 1위</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- News 5: 사회 -->
+                <div class="card-item" data-index="5">
+                    <div class="card-inner society-card">
+                        <div class="card-header-row">
+                            <span class="category-badge cat-society">사회</span>
+                            <span class="news-num">05 / 07</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="news-title">네팔 대홍수 발생<br>한국인 9명 수색 총력</h3>
+                            <p class="news-desc">네팔·중국 티베트 접경 수력발전소 건설 현장에 있던 한국인 9명 연락 두절. 외교부·소방청 신속대응팀 긴급 현지 급파.</p>
+                            <div class="key-point-box">
+                                <strong>📌 핵심 포인트</strong>
+                                <ul>
+                                    <li>현장 대응팀 긴급 현지 유입 수색</li>
+                                    <li>티베트 접경지역 폭우로 수색 지연</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <span>Naver News • 사회 섹션 1위</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- News 6: IT/과학 -->
+                <div class="card-item" data-index="6">
+                    <div class="card-inner tech-card">
+                        <div class="card-header-row">
+                            <span class="category-badge cat-tech">IT · 과학</span>
+                            <span class="news-num">06 / 07</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="news-title">제2차 AI 미래전략회의<br>국내 빅테크 보안 총력전</h3>
+                            <p class="news-desc">과기정통부 장관 주재 미래전략회의 개최. 국내 빅테크 기업들 사이버 보안 및 차세대 생성형 AI 주도권 확보 사투.</p>
+                            <div class="key-point-box">
+                                <strong>📌 핵심 포인트</strong>
+                                <ul>
+                                    <li>국가 AI 전략 기술 가이드라인 발표</li>
+                                    <li>보안 AI 솔루션 시장 주도권 경쟁 가열</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <span>Naver News • IT/과학 섹션 1위</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- News 7: 세계 -->
+                <div class="card-item" data-index="7">
+                    <div class="card-inner world-card">
+                        <div class="card-header-row">
+                            <span class="category-badge cat-world">세계</span>
+                            <span class="news-num">07 / 07</span>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="news-title">미 연준(Fed) 금리 동결<br>글로벌 증시 안도랠리</h3>
+                            <p class="news-desc">미국 연방준비제도가 기준금리를 동결함에 따라 글로벌 불확실성 완화. 아시아 및 주요국 증시 일제히 반등.</p>
+                            <div class="key-point-box">
+                                <strong>📌 핵심 포인트</strong>
+                                <ul>
+                                    <li>연내 추가 인하 가능성 시사</li>
+                                    <li>환율 안정세 접어들어</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <span>Naver News • 세계 섹션 1위</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <button class="nav-btn next-btn" id="nextBtn" aria-label="다음 카드">&gt;</button>
+        </div>
+
+        <!-- Indicators -->
+        <div class="dots-indicator" id="dotsContainer">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+            <span class="dot" data-index="3"></span>
+            <span class="dot" data-index="4"></span>
+            <span class="dot" data-index="5"></span>
+            <span class="dot" data-index="6"></span>
+            <span class="dot" data-index="7"></span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "1": {
+    "inputs": {
+      "prompt": "2D pixel art character sprite sheet in 16-bit SNES JRPG style, Novice Hero Sude, 8-direction character stance (South, SouthEast, East, NorthEast, North, NorthWest, West, SouthWest), clean white background, sharp pixel edges",
+      "model_name": "gemini-3-pro-image",
+      "api_key": "ANTIGRAVITY_API_KEY_LOCAL",
+      "seed": 42109,
+      "control_after_generate": "randomize"
+    },
+    "class_type": "OpenAIImageGenerator",
+    "_meta": {
+      "title": "Antigravity API Nodes (OpenAIImageGenerator)"
+    }
+  },
+  "2": {
+    "inputs": {
+      "filename_prefix": "Sude_8dir_7motions_AI_Generated",
+      "images": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  }
+}

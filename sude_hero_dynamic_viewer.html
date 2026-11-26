@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ 슈드용사(Hero Sude) 다각도 모션 & 애니메이션 뷰어</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: #090d16;
+            color: #f8fafc;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.15), transparent 70%),
+                radial-gradient(circle at 10% 80%, rgba(59, 130, 246, 0.1), transparent 50%);
+        }
+
+        /* Top HUD Navbar */
+        .hud-header {
+            width: 100%;
+            max-width: 1200px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 2px solid #fbbf24;
+            border-radius: 16px;
+            padding: 16px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 25px rgba(251, 191, 36, 0.3);
+            backdrop-filter: blur(12px);
+            margin-bottom: 24px;
+        }
+
+        .hud-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hud-title h1 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #fbbf24;
+            letter-spacing: -0.5px;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+
+        .hud-badge {
+            background: #d97706;
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .hud-stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .stat-val {
+            color: #38bdf8;
+        }
+
+        /* Main Workspace Container */
+        .workspace {
+            width: 100%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 24px;
+        }
+
+        @media (max-width: 992px) {
+            .workspace {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Stage Area */
+        .stage-card {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 20px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .stage-title {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            font-weight: 700;
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            background: #020617;
+            border: 3px solid #334155;
+            border-radius: 16px;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.8), 0 0 20px rgba(56, 189, 248, 0.2);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        canvas {
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            cursor: grab;
+        }
+
+        canvas:active {
+            cursor: grabbing;
+        }
+
+        .stage-grid-overlay {
+            position: absolute;
+            inset: 0;
+            background-size: 32px 32px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            pointer-events: none;
+        }
+
+        .stage-hud-overlay {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.65rem;
+            color: #fbbf24;
+            display: flex;
+            gap: 12px;
+            backdrop-filter: blur(6px);
+        }
+
+        /* Controls Panel */
+        .control-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .panel-card {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .panel-card-title {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #fbbf24;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px;
+        }
+
+        /* Direction D-Pad Grid */
+        .dpad-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            width: 180px;
+            margin: 0 auto 16px auto;
+        }
+
+        .dpad-btn {
+            background: #1e293b;
+            border: 2px solid #475569;
+            color: #f8fafc;
+            font-weight: 700;
+            border-radius: 10px;
+            height: 48px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            font-size: 1.2rem;
+        }
+
+        .dpad-btn:hover {
+            background: #3b82f6;
+            border-color: #60a5fa;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .dpad-btn:active, .dpad-btn.active {
+            background: #fbbf24;
+            color: #0f172a;
+            border-color: #f59e0b;
+            transform: translateY(1px);
+        }
+
+        .dpad-center {
+            background: #0f172a;
+            border-color: #334155;
+            font-size: 0.7rem;
+            color: #64748b;
+        }
+
+        /* Action Buttons Group */
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 1.5px solid #3b82f6;
+            color: #e0f2fe;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .action-btn:hover {
+            border-color: #fbbf24;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .action-btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn-q { border-color: #38bdf8; }
+        .btn-w { border-color: #a855f7; }
+        .btn-e { border-color: #10b981; }
+        .btn-r { border-color: #ef4444; }
+
+        /* Speed & Scale Sliders */
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .slider-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+        }
+
+        input[type="range"] {
+            width: 120px;
+            accent-color: #fbbf24;
+            cursor: pointer;
+        }
+
+        /* Multi-Direction Preview Strip */
+        .directional-strip {
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 24px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        .strip-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .strip-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .strip-card {
+            background: #020617;
+            border: 2px solid #1e293b;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .strip-card:hover {
+            border-color: #fbbf24;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(251, 191, 36, 0.2);
+        }
+
+        .strip-card.active-dir {
+            border-color: #3b82f6;
+            background: rgba(30, 58, 138, 0.2);
+        }
+
+        .strip-card label {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: #fbbf24;
+        }
+
+        .sub-canvas {
+            image-rendering: pixelated;
+        }
+
+        /* Keyboard Guide Legend */
+        .key-hint {
+            display: inline-block;
+            background: #334155;
+            color: #f8fafc;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-bottom: 2px solid #0f172a;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HUD Header -->
+    <div class="hud-header">
+        <div class="hud-title">
+            <h1>⚔️ HERO SUDE (용사 슈드)</h1>
+            <span class="hud-badge">PALADIN V6 LIVE MOTION</span>
+        </div>
+        <div class="hud-stats">
+            <div class="stat-box">
+                <span>HP:</span>
+                <span class="stat-val" id="hudHp">120 / 120</span>
+            </div>
+            <div class="stat-box">
+                <span>MP:</span>
+                <span class="stat-val" id="hudMp">60 / 60</span>
+            </div>
+            <div class="stat-box">
+                <span>SP:</span>
+                <span class="stat-val" style="color: #fbbf24;" id="hudSp">100 (MAX)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Workspace -->
+    <div class="workspace">
+        
+        <!-- Stage Area -->
+        <div class="stage-card">
+            <div class="stage-title">
+                <span>🎥 360° 다각도 실시간 모션 인터랙티브 스테이지</span>
+                <span>마우스 드래그 / 키보드 [W,A,S,D] 로 이동</span>
+            </div>
+
+            <div class="canvas-wrapper">
+                <div class="stage-grid-overlay"></div>
+                <canvas id="mainCanvas" width="600" height="420"></canvas>
+                <div class="stage-hud-overlay">
+                    <span id="hudState">STATE: IDLE</span>
+                    <span id="hudDir">DIR: SOUTH (DOWN)</span>
+                    <span id="hudPos">POS: (300, 210)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls Panel -->
+        <div class="control-panel">
+            
+            <!-- D-Pad Directional Controller -->
+            <div class="panel-card">
+                <div class="panel-card-title">
+                    🧭 4방향 시선 & 이동 조종기
+                </div>
+                <div class="dpad-grid">
+                    <div></div>
+                    <button class="dpad-btn" id="btnUp" onclick="setDirection('up')">▲</button>
+                    <div></div>
+
+                    <button class="dpad-btn" id="btnLeft" onclick="setDirection('left')">◀</button>
+                    <div class="dpad-btn dpad-center">SUDE</div>
+                    <button class="dpad-btn" id="btnRight" onclick="setDirection('right')">▶</button>
+
+                    <div></div>
+                    <button class="dpad-btn" id="btnDown" onclick="setDirection('down')">▼</button>
+                    <div></div>
+                </div>
+                <div style="text-align: center; font-size: 0.8rem; color: #94a3b8;">
+                    키보드 방향키 또는 <span class="key-hint">W</span><span class="key-hint">A</span><span class="key-hint">S</span><span class="key-hint">D</span> 지원
+                </div>
+            </div>
+
+            <!-- Skill Action Controls -->
+            <div class="panel-card">
+                <div class="panel-card-title">
+                    ⚡ 팔라딘 V6 신성 스킬 발동
+                </div>
+                <div class="action-grid">
+                    <button class="action-btn btn-q" onclick="triggerSkill('slash')">
+                        <span>⚔️ Holy Slash</span> <span class="key-hint">Q</span>
+                    </button>
+                    <button class="action-btn btn-w" onclick="triggerSkill('shield')">
+                        <span>🛡️ Holy Shield</span> <span class="key-hint">W</span>
+                    </button>
+                    <button class="action-btn btn-e" onclick="triggerSkill('consecration')">
+                        <span>✨ Consecrate</span> <span class="key-hint">E</span>
+                    </button>
+                    <button class="action-btn btn-r" onclick="triggerSkill('blade')">
+                        <span>👼 Angel Blade</span> <span class="key-hint">R</span>
+                    </button>
+                </div>
+                <button class="action-btn" style="width: 100%; margin-top: 10px; background: linear-gradient(135deg, #d97706, #b45309); border-color: #fbbf24; font-size: 0.95rem;" onclick="triggerSkill('ultimate')">
+                    🔥 궁극기: 신성한 강림 (Divine Intervention) <span class="key-hint">SPACE</span>
+                </button>
+            </div>
+
+            <!-- Display Settings -->
+            <div class="panel-card">
+                <div class="panel-card-title">
+                    ⚙️ 옵션 & 속도 조절
+                </div>
+                <div class="slider-group">
+                    <div class="slider-item">
+                        <span>이동 속도:</span>
+                        <input type="range" id="speedRange" min="2" max="10" value="5" oninput="moveSpeed = parseInt(this.value)">
+                    </div>
+                    <div class="slider-item">
+                        <span>애니메이션 FPS:</span>
+                        <input type="range" id="fpsRange" min="6" max="24" value="12" oninput="animFPS = parseInt(this.value)">
+                    </div>
+                    <div class="slider-item">
+                        <span>캐릭터 크기 (Zoom):</span>
+                        <input type="range" id="zoomRange" min="2" max="5" value="3" oninput="heroScale = parseInt(this.value)">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 4-Directional Simultaneous Preview Strip -->
+    <div class="directional-strip">
+        <div class="panel-card-title" style="border: none; margin-bottom: 0;">
+            👁️ 4방향 (South, East, West, North) 실시간 동시 모션 비교 프리뷰
+        </div>
+        <div class="strip-grid">
+            <div class="strip-card" id="cardSouth">
+                <label>⬇️ SOUTH (정면 / 남쪽)</label>
+                <canvas id="cvsSouth" width="120" height="120" class="sub-canvas"></canvas>
+            </div>
+            <div class="strip-card" id="cardEast">
+                <label>➡️ EAST (우측 / 동쪽)</label>
+                <canvas id="cvsEast" width="120" height="120" class="sub-canvas"></canvas>
+            </div>
+            <div class="strip-card" id="cardWest">
+                <label>⬅️ WEST (좌측 / 서쪽)</label>
+                <canvas id="cvsWest" width="120" height="120" class="sub-canvas"></canvas>
+            </div>
+            <div class="strip-card" id="cardNorth">
+                <label>⬆️ NORTH (후면 / 북쪽)</label>
+                <canvas id="cvsNorth" width="120" height="120" class="sub-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hero Sude State Management
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let heroX = 300;
+        let heroY = 210;
+        let direction = 'down'; // down, up, left, right
+        let isMoving = false;
+        let moveSpeed = 5;
+        let animFPS = 12;
+        let heroScale = 3;
+
+        let currentSkill = null;
+        let skillTimer = 0;
+        let shieldTimer = 0;
+
+        let frameIndex = 0;
+        let lastAnimTime = 0;
+
+        const keys = {};
+
+        // Keyboard Event Listeners
+        window.addEventListener('keydown', (e) => {
+            keys[e.key.toLowerCase()] = true;
+            if (['Space', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) {
+                e.preventDefault();
+            }
+            handleHotkeys(e.code);
+        });
+
+        window.addEventListener('keyup', (e) => {
+            keys[e.key.toLowerCase()] = false;
+        });
+
+        function handleHotkeys(code) {
+            if (code === 'KeyQ') triggerSkill('slash');
+            if (code === 'KeyW') triggerSkill('shield');
+            if (code === 'KeyE') triggerSkill('consecration');
+            if (code === 'KeyR') triggerSkill('blade');
+            if (code === 'Space') triggerSkill('ultimate');
+        }
+
+        function setDirection(dir) {
+            direction = dir;
+            updateDpadUI();
+        }
+
+        function updateDpadUI() {
+            document.querySelectorAll('.dpad-btn').forEach(btn => btn.classList.remove('active'));
+            if (direction === 'up') document.getElementById('btnUp').classList.add('active');
+            if (direction === 'down') document.getElementById('btnDown').classList.add('active');
+            if (direction === 'left') document.getElementById('btnLeft').classList.add('active');
+            if (direction === 'right') document.getElementById('btnRight').classList.add('active');
+
+            document.querySelectorAll('.strip-card').forEach(card => card.classList.remove('active-dir'));
+            if (direction === 'down') document.getElementById('cardSouth').classList.add('active-dir');
+            if (direction === 'right') document.getElementById('cardEast').classList.add('active-dir');
+            if (direction === 'left') document.getElementById('cardWest').classList.add('active-dir');
+            if (direction === 'up') document.getElementById('cardNorth').classList.add('active-dir');
+        }
+
+        function triggerSkill(type) {
+            currentSkill = type;
+            skillTimer = 30; // 30 frames duration
+            if (type === 'shield') shieldTimer = 180; // 3 seconds shield
+        }
+
+        // Procedural Pixel Art Drawing Engine for Hero Sude
+        function drawHeroPixelArt(targetCtx, x, y, scale, dir, stepFrame, activeSkill, hasShield) {
+            targetCtx.save();
+            targetCtx.translate(x, y);
+
+            // Shadow
+            targetCtx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+            targetCtx.beginPath();
+            targetCtx.ellipse(0, 14 * scale, 10 * scale, 4 * scale, 0, 0, Math.PI * 2);
+            targetCtx.fill();
+
+            const bounceY = (stepFrame % 2 === 1 && isMoving) ? -1 * scale : 0;
+
+            // Paladin Color Palette
+            const gold = '#fbbf24';
+            const goldDark = '#d97706';
+            const silver = '#cbd5e1';
+            const armorBlue = '#2563eb';
+            const capeRed = '#dc2626';
+            const skin = '#fde047';
+            const eyeColor = '#0f172a';
+            const holyWhite = '#ffffff';
+
+            // Cape (Behind Body for Down/Left/Right)
+            if (dir !== 'up') {
+                targetCtx.fillStyle = capeRed;
+                targetCtx.fillRect(-7 * scale, (-6 + bounceY) * scale, 14 * scale, 16 * scale);
+            }
+
+            // Legs / Boots
+            targetCtx.fillStyle = goldDark;
+            const legOffset = (stepFrame % 4 === 1) ? 2 * scale : ((stepFrame % 4 === 3) ? -2 * scale : 0);
+            targetCtx.fillRect((-5 + legOffset) * scale, (6 + bounceY) * scale, 4 * scale, 8 * scale);
+            targetCtx.fillRect((1 - legOffset) * scale, (6 + bounceY) * scale, 4 * scale, 8 * scale);
+
+            // Body Armor
+            targetCtx.fillStyle = gold;
+            targetCtx.fillRect(-6 * scale, (-6 + bounceY) * scale, 12 * scale, 12 * scale);
+
+            // Armor Blue Emblem Accent
+            targetCtx.fillStyle = armorBlue;
+            targetCtx.fillRect(-3 * scale, (-3 + bounceY) * scale, 6 * scale, 6 * scale);
+            targetCtx.fillStyle = holyWhite;
+            targetCtx.fillRect(-1 * scale, (-2 + bounceY) * scale, 2 * scale, 4 * scale);
+
+            // Cape (For Up direction - in front)
+            if (dir === 'up') {
+                targetCtx.fillStyle = capeRed;
+                targetCtx.fillRect(-7 * scale, (-6 + bounceY) * scale, 14 * scale, 18 * scale);
+            }
+
+            // Head / Helmet
+            targetCtx.fillStyle = silver;
+            targetCtx.fillRect(-5 * scale, (-16 + bounceY) * scale, 10 * scale, 10 * scale);
+            targetCtx.fillStyle = gold;
+            targetCtx.fillRect(-5 * scale, (-16 + bounceY) * scale, 10 * scale, 3 * scale); // Crown Accent
+
+            // Face & Visor according to direction
+            if (dir === 'down') {
+                targetCtx.fillStyle = eyeColor;
+                targetCtx.fillRect(-3 * scale, (-12 + bounceY) * scale, 2 * scale, 2 * scale);
+                targetCtx.fillRect(1 * scale, (-12 + bounceY) * scale, 2 * scale, 2 * scale);
+            } else if (dir === 'left') {
+                targetCtx.fillStyle = eyeColor;
+                targetCtx.fillRect(-4 * scale, (-12 + bounceY) * scale, 2 * scale, 2 * scale);
+            } else if (dir === 'right') {
+                targetCtx.fillStyle = eyeColor;
+                targetCtx.fillRect(2 * scale, (-12 + bounceY) * scale, 2 * scale, 2 * scale);
+            }
+
+            // Sword (Holy Blade)
+            targetCtx.fillStyle = silver;
+            targetCtx.strokeStyle = gold;
+            targetCtx.lineWidth = 1 * scale;
+
+            let swordX = 8 * scale;
+            let swordY = (-8 + bounceY) * scale;
+            let swordRot = 0;
+
+            if (dir === 'left') {
+                swordX = -8 * scale;
+            }
+
+            if (activeSkill === 'slash') {
+                swordRot = Math.sin(Date.now() / 50) * 1.5;
+            }
+
+            targetCtx.save();
+            targetCtx.translate(swordX, swordY);
+            targetCtx.rotate(swordRot);
+            // Hilt
+            targetCtx.fillStyle = gold;
+            targetCtx.fillRect(-3 * scale, 2 * scale, 6 * scale, 2 * scale);
+            // Blade
+            targetCtx.fillStyle = '#38bdf8';
+            targetCtx.fillRect(-1 * scale, -12 * scale, 2 * scale, 14 * scale);
+            targetCtx.restore();
+
+            // Holy Shield Aura Effect
+            if (hasShield > 0) {
+                targetCtx.strokeStyle = 'rgba(56, 189, 248, 0.8)';
+                targetCtx.lineWidth = 2 * scale;
+                targetCtx.shadowColor = '#38bdf8';
+                targetCtx.shadowBlur = 15;
+                targetCtx.beginPath();
+                targetCtx.arc(0, (-2 + bounceY) * scale, 18 * scale, 0, Math.PI * 2);
+                targetCtx.stroke();
+                targetCtx.shadowBlur = 0;
+            }
+
+            // Skill Effects Overlay
+            if (activeSkill === 'slash') {
+                targetCtx.strokeStyle = 'rgba(251, 191, 36, 0.9)';
+                targetCtx.lineWidth = 3 * scale;
+                targetCtx.beginPath();
+                targetCtx.arc(0, 0, 24 * scale, -Math.PI / 3, Math.PI / 3);
+                targetCtx.stroke();
+            } else if (activeSkill === 'consecration') {
+                targetCtx.fillStyle = 'rgba(251, 191, 36, 0.2)';
+                targetCtx.beginPath();
+                targetCtx.ellipse(0, 10 * scale, 30 * scale, 12 * scale, 0, 0, Math.PI * 2);
+                targetCtx.fill();
+            } else if (activeSkill === 'ultimate') {
+                targetCtx.fillStyle = 'rgba(239, 68, 68, 0.3)';
+                targetCtx.beginPath();
+                targetCtx.arc(0, 0, (40 + Math.sin(Date.now() / 100) * 10) * scale, 0, Math.PI * 2);
+                targetCtx.fill();
+            }
+
+            targetCtx.restore();
+        }
+
+        // Game Loop
+        function update(timestamp) {
+            // Movement Logic
+            isMoving = false;
+            let dx = 0;
+            let dy = 0;
+
+            if (keys['w'] || keys['arrowup']) { dy -= 1; direction = 'up'; isMoving = true; }
+            if (keys['s'] || keys['arrowdown']) { dy += 1; direction = 'down'; isMoving = true; }
+            if (keys['a'] || keys['arrowleft']) { dx -= 1; direction = 'left'; isMoving = true; }
+            if (keys['d'] || keys['arrowright']) { dx += 1; direction = 'right'; isMoving = true; }
+
+            if (dx !== 0 && dy !== 0) {
+                dx *= 0.7071;
+                dy *= 0.7071;
+            }
+
+            heroX = Math.max(30, Math.min(canvas.width - 30, heroX + dx * moveSpeed));
+            heroY = Math.max(40, Math.min(canvas.height - 40, heroY + dy * moveSpeed));
+
+            if (isMoving) updateDpadUI();
+
+            // Timers
+            if (skillTimer > 0) {
+                skillTimer--;
+                if (skillTimer === 0) currentSkill = null;
+            }
+
+            if (shieldTimer > 0) shieldTimer--;
+
+            // Frame Animation Timer
+            if (timestamp - lastAnimTime > (1000 / animFPS)) {
+                lastAnimTime = timestamp;
+                frameIndex = (frameIndex + 1) % 4;
+            }
+
+            // Render Main Canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawHeroPixelArt(ctx, heroX, heroY, heroScale, direction, frameIndex, currentSkill, shieldTimer);
+
+            // Render Sub Canvases (South, East, West, North simultaneous strip)
+            renderSubCanvas('cvsSouth', 'down');
+            renderSubCanvas('cvsEast', 'right');
+            renderSubCanvas('cvsWest', 'left');
+            renderSubCanvas('cvsNorth', 'up');
+
+            // HUD Info Update
+            document.getElementById('hudState').innerText = `STATE: ${currentSkill ? currentSkill.toUpperCase() : (isMoving ? 'WALKING' : 'IDLE')}`;
+            document.getElementById('hudDir').innerText = `DIR: ${direction.toUpperCase()}`;
+            document.getElementById('hudPos').innerText = `POS: (${Math.round(heroX)}, ${Math.round(heroY)})`;
+
+            requestAnimationFrame(update);
+        }
+
+        function renderSubCanvas(canvasId, dir) {
+            const subCvs = document.getElementById(canvasId);
+            const subCtx = subCvs.getContext('2d');
+            subCtx.clearRect(0, 0, subCvs.width, subCvs.height);
+            drawHeroPixelArt(subCtx, 60, 60, 2.5, dir, frameIndex, currentSkill, shieldTimer);
+        }
+
+        // Start Loop
+        requestAnimationFrame(update);
+    </script>
+</body>
+</html>

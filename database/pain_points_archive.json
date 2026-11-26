@@ -1,0 +1,38 @@
+[
+  {
+    "id": "PP-20260827-001",
+    "date": "2026-08-27",
+    "source": "Reddit r/SaaS / YouTube",
+    "platform": "YouTube",
+    "title": "긴 동영상 핵심 요약 및 타임스탬프 자동화 부재",
+    "description": "유튜브 긴 영상(30분 이상)에서 원하는 솔루션 구간(10초)만 빠르게 찾고 싶으나 일일이 시청해야 함",
+    "scores": {
+      "severity": 25,
+      "demand_volume": 22,
+      "commercial_utility": 20,
+      "feasibility": 18
+    },
+    "total_score": 85,
+    "status": "APPROVED",
+    "app_name": "YouTube Fast Finder",
+    "note": "65점 이상 채택 대상"
+  },
+  {
+    "id": "PP-20260827-002",
+    "date": "2026-08-27",
+    "source": "Reddit r/ChatGPT / Twitter",
+    "platform": "Twitter/X",
+    "title": "트위터 긴 스레드 북마크 유실 및 정리 불능",
+    "description": "트위터 유용한 스레드를 북마크해두어도 나중에 찾기 어렵고 일일이 캡처/복사해야 함",
+    "scores": {
+      "severity": 20,
+      "demand_volume": 18,
+      "commercial_utility": 17,
+      "feasibility": 19
+    },
+    "total_score": 74,
+    "status": "APPROVED",
+    "app_name": "ThreadToDoc",
+    "note": "65점 이상 채택 대상"
+  }
+]

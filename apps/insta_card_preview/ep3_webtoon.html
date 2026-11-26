@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1350, initial-scale=1.0">
+<title>짠식이네 괴짜 4컷 만화 EP.3 - Vertical Stack</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;900&family=Nanum+Gothic+Coding:wght@700&display=swap');
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        width: 1080px;
+        height: 1350px;
+        background-color: #0f172a;
+        font-family: 'Gothic A1', sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        overflow: hidden;
+    }
+
+    /* Webtoon Header */
+    .header-banner {
+        width: 100%;
+        height: 80px;
+        background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+        border: 4px solid #000000;
+        box-shadow: 6px 6px 0px #000000;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 28px;
+        margin-bottom: 20px;
+        flex-shrink: 0;
+    }
+
+    .header-title {
+        color: #ffffff;
+        font-size: 30px;
+        font-weight: 900;
+        text-shadow: 3px 3px 0px #000;
+    }
+
+    .header-sub {
+        background-color: #ffe600;
+        color: #000000;
+        font-size: 18px;
+        font-weight: 900;
+        padding: 6px 16px;
+        border-radius: 20px;
+        border: 3px solid #000;
+    }
+
+    /* Main Artwork Container - Position Relative for absolute bubbles */
+    .comic-page {
+        width: 1024px;
+        height: 1024px; /* The generated image is 1024x1024 */
+        position: relative;
+        border: 6px solid #000000;
+        border-radius: 12px;
+        box-shadow: 6px 6px 0px #000000;
+        background-color: #ffffff;
+        overflow: hidden;
+    }
+
+    .comic-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Speech Bubble Base CSS */
+    .bubble {
+        position: absolute;
+        background: #ffffff;
+        border: 4px solid #000000;
+        border-radius: 24px;
+        padding: 10px 16px;
+        font-size: 20px;
+        font-weight: 900;
+        color: #000;
+        box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+        max-width: 320px;
+        line-height: 1.3;
+        z-index: 10;
+    }
+
+    /* Tail for speech bubbles */
+    .bubble::after {
+        content: '';
+        position: absolute;
+        border: 10px solid transparent;
+        z-index: -1;
+    }
+
+    .bubble::before {
+        content: '';
+        position: absolute;
+        border: 14px solid transparent;
+        z-index: -2;
+    }
+
+    /* Tail Bottom Left */
+    .tail-bl::after { border-top-color: #ffffff; bottom: -18px; left: 20px; }
+    .tail-bl::before { border-top-color: #000000; bottom: -26px; left: 16px; }
+
+    /* Tail Bottom Right */
+    .tail-br::after { border-top-color: #ffffff; bottom: -18px; right: 20px; }
+    .tail-br::before { border-top-color: #000000; bottom: -26px; right: 16px; }
+
+    /* Tail Top Left */
+    .tail-tl::after { border-bottom-color: #ffffff; top: -18px; left: 20px; }
+    .tail-tl::before { border-bottom-color: #000000; top: -26px; left: 16px; }
+
+    /* Tail Right Center (pointing right) */
+    .tail-r::after { border-left-color: #ffffff; right: -18px; top: 15px; }
+    .tail-r::before { border-left-color: #000000; right: -26px; top: 11px; }
+
+    /* Thought Bubble Base CSS */
+    .thought {
+        position: absolute;
+        background: #ffffff;
+        border: 4px dashed #000000;
+        border-radius: 30px;
+        padding: 10px 16px;
+        font-size: 20px;
+        font-weight: 900;
+        color: #000;
+        box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+        max-width: 320px;
+        line-height: 1.3;
+        z-index: 10;
+    }
+
+    /* Panel 1 (Y: 0~250) */
+    .b1-dad { top: 20px; left: 20px; }
+    .b1-son { top: 100px; left: 750px; }
+
+    /* Panel 2 (Y: 256~500) */
+    .b2-dad { top: 270px; left: 700px; }
+    .b2-dog { top: 270px; left: 20px; } /* thought */
+    
+    /* Panel 3 (Y: 512~750) */
+    .b3-mom { top: 530px; left: 700px; }
+    .b3-son { top: 530px; left: 20px; }
+
+    /* Panel 4 (Y: 768~1024) */
+    .b4-dog-think { top: 780px; left: 20px; } /* thought */
+    .b4-dog-shout { top: 780px; left: 700px; border: 4px solid #ff0000; background: #ffff00; }
+
+    /* Footer Caption */
+    .footer-caption {
+        margin-top: auto;
+        background-color: #000;
+        color: #ffe600;
+        padding: 10px 30px;
+        border-radius: 30px;
+        font-size: 22px;
+        font-weight: 900;
+        border: 4px solid #fff;
+    }
+
+</style>
+</head>
+<body>
+
+    <div class="header-banner">
+        <div class="header-title">🤖 짠식이네 괴짜일기 EP.3</div>
+        <div class="header-sub">국가대표 감독, 챗GPT 논란 편</div>
+    </div>
+
+    <!-- Comic Page with Absolute Bubbles -->
+    <div class="comic-page">
+        <!-- Background Artwork (NO TEXT GENERATED) -->
+        <img src="C:/Users/sude3/.gemini/antigravity-ide/brain/56530e97-1a0e-490c-892e-df0023440a6a/ep3_chatgpt_coach_v2_1788328619708.jpg" class="comic-image" alt="만화 원화">
+        
+        <!-- Panel 1 Bubbles -->
+        <div class="bubble tail-br b1-dad">야 대박!<br>이번 국대 감독 챗지피티한테 물어본대!</div>
+        <div class="bubble tail-bl b1-son">그게 왜?</div>
+
+        <!-- Panel 2 Bubbles -->
+        <div class="bubble tail-bl b2-dad">(검색 중)<br>'우리 가족 저녁 메뉴 정해줘'</div>
+        <div class="thought b2-dog">💭 감독이 할 짓이냐 저게...</div>
+
+        <!-- Panel 3 Bubbles -->
+        <div class="bubble tail-bl b3-mom">AI한테 물어서 잘될 거면<br>세상 고민이 없게? 쯧쯧.</div>
+        <div class="bubble tail-bl b3-son">엄마도 방금 폰에<br>'나 살찐 거 같아?' 검색했잖아.</div>
+
+        <!-- Panel 4 Bubbles -->
+        <div class="thought b4-dog-think">💭 결정은 인간이 해야지...</div>
+        <div class="bubble tail-bl b4-dog-shout">헥헥! 간식이다아아악!!</div>
+    </div>
+
+    <div class="footer-caption">
+        우리 집엔 감독보다 AI 의존도가 더 높다 🤖⚽
+    </div>
+
+</body>
+</html>

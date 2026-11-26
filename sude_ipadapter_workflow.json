@@ -1,0 +1,122 @@
+{
+  "1": {
+    "inputs": {
+      "image": "sude_hero_reference.png",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "🖼️ 노드 1: 대표님 원본 캐릭터 참조 이미지 로더"
+    }
+  },
+  "2": {
+    "inputs": {
+      "pixels": [
+        "1",
+        0
+      ],
+      "vae": [
+        "4",
+        2
+      ]
+    },
+    "class_type": "VAEEncode",
+    "_meta": {
+      "title": "⚙️ 노드 2: VAE 인코더 (원본 픽셀 100% 라텐트 변환)"
+    }
+  },
+  "3": {
+    "inputs": {
+      "seed": 884102,
+      "steps": 20,
+      "cfg": 7.5,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 0.70,
+      "model": [
+        "4",
+        0
+      ],
+      "positive": [
+        "6",
+        0
+      ],
+      "negative": [
+        "7",
+        0
+      ],
+      "latent_image": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "⚡ 노드 3: KSampler (8방향 모션 스프라이트 렌더러)"
+    }
+  },
+  "4": {
+    "inputs": {
+      "ckpt_name": "v1-5-pruned-emaonly.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "🤖 노드 4: AI 모델 체크포인트 로더"
+    }
+  },
+  "6": {
+    "inputs": {
+      "text": "2D pixel art character sprite sheet, Novice Hero Sude 100% matching input reference image, silver hair, dark iron armor with glowing rune lines, 8-direction character stance (South, SouthEast, East, NorthEast, North, NorthWest, West, SouthWest), 16-bit SNES JRPG style, clean white background, sharp pixel edges, high quality, masterwork",
+      "clip": [
+        "4",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "✨ 노드 6: 긍정 프롬프트 (원본 외형 고정 & 8방향 모션)"
+    }
+  },
+  "7": {
+    "inputs": {
+      "text": "blurry, low quality, distorted, bad proportions, watermark, text, 3d, realistic, photo, noise, artifacts, changed armor, wrong hair color",
+      "clip": [
+        "4",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "🚫 노드 7: 네거티브 프롬프트 (외형 변형 방지)"
+    }
+  },
+  "8": {
+    "inputs": {
+      "samples": [
+        "3",
+        0
+      ],
+      "vae": [
+        "4",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "🎨 노드 8: VAE 디코더"
+    }
+  },
+  "9": {
+    "inputs": {
+      "filename_prefix": "Sude_Hero_100Percent_Matched_SpriteSheet",
+      "images": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "💾 노드 9: 100% 외형 고정 스프라이트 시트 저장"
+    }
+  }
+}

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ [슈드용사] 픽셀 아트 디자인 & 스프라이트 마스터 갤러리</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;900&family=Press+Start+2P&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        body {
+            background-color: #050814;
+            background-image: 
+                radial-gradient(circle at 50% 20%, rgba(56, 189, 248, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(251, 191, 36, 0.15) 0%, transparent 50%),
+                linear-gradient(180deg, #050814 0%, #0c1229 100%);
+            color: #f8fafc;
+            font-family: 'Pretendard', sans-serif;
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header HUD */
+        .hud-header {
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid #fbbf24;
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.35);
+            border-radius: 16px;
+            padding: 24px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 28px;
+            backdrop-filter: blur(12px);
+        }
+
+        .header-title h1 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #fbbf24;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 0 0 12px rgba(251, 191, 36, 0.5);
+        }
+
+        .header-title p {
+            font-size: 0.95rem;
+            color: #38bdf8;
+            margin-top: 6px;
+            font-weight: 600;
+        }
+
+        .pill-badge {
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid #38bdf8;
+            color: #34d399;
+            padding: 8px 18px;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 1rem;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        /* Director Banner */
+        .director-banner {
+            background: linear-gradient(135deg, rgba(30, 27, 75, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
+            border: 2px solid #818cf8;
+            border-radius: 16px;
+            padding: 20px 28px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .director-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: #4f46e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            border: 3px solid #fbbf24;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.8);
+            flex-shrink: 0;
+        }
+
+        .director-info h3 {
+            font-size: 1.2rem;
+            color: #c084fc;
+            margin-bottom: 4px;
+            font-weight: 800;
+        }
+
+        .director-info p {
+            font-size: 0.95rem;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+
+        /* Category Sections */
+        .category-section {
+            margin-bottom: 40px;
+        }
+
+        .category-title {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: #fbbf24;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 10px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        .sprite-card {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid #334155;
+            border-radius: 16px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sprite-card:hover {
+            transform: translateY(-6px);
+            border-color: #38bdf8;
+            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.3);
+        }
+
+        .img-box {
+            position: relative;
+            background: #020617;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 240px;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .img-box img {
+            max-width: 100%;
+            max-height: 380px;
+            object-fit: contain;
+            image-rendering: pixelated; /* Sharp pixel art rendering */
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        .card-meta {
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .card-meta h3 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #38bdf8;
+        }
+
+        .card-meta p {
+            font-size: 0.88rem;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 6px;
+        }
+
+        .tag {
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid #475569;
+            color: #fbbf24;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
+        /* Scanline Overlay Effect */
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="scanlines"></div>
+
+<div class="container">
+
+    <!-- Top HUD Bar -->
+    <div class="hud-header">
+        <div class="header-title">
+            <h1>⚔️ [슈드용사] 픽셀 아트 디자인 스프라이트 마스터 갤러리</h1>
+            <p>🛡️ 픽셀 캐릭터, 50종/10종 몬스터 시각 스펙트럼, 10대 배경 테마 & 타이틀 그래픽 100% 한눈에 보기</p>
+        </div>
+        <div class="pill-badge">PIXEL ART V6</div>
+    </div>
+
+    <!-- Director Banner -->
+    <div class="director-banner">
+        <div class="director-avatar">🎨</div>
+        <div class="director-msg director-info">
+            <h3>🎩 고감독 & 수석 디자인팀 스프라이트 라이브 전시관</h3>
+            <p>대표님! 요청하신 <strong>'슈드용사' 전용 픽셀 아트 스프라이트 에셋 전체</strong>를 브라우저 최상단 전면에 시각화하여 표출했습니다! 각 픽셀 에셋은 픽셀화 렌더링(Pixelated Rendering)이 적용되어 고화질 픽셀 감성을 100% 느낄 수 있습니다!</p>
+        </div>
+    </div>
+
+    <!-- Category 1: Hero Sude Pixel Art -->
+    <div class="category-section">
+        <div class="category-title">🛡️ 1. 주인공 용사 슈드 (Hero Sude: Paladin V6) 픽셀 아트</div>
+        <div class="gallery-grid">
+            <div class="sprite-card">
+                <div class="img-box">
+                    <img src="슈드용사/Assets/주인공 픽셀 최종.png" alt="주인공 픽셀 최종">
+                </div>
+                <div class="card-meta">
+                    <h3>🛡️ 용사 슈드 (Sude Paladin V6) 메인 픽셀 아티팩트</h3>
+                    <p>성기사의 황금 갑옷, 신성한 서클릿 및 인피니트 대검을 장착한 용사 슈드의 메인 아트워크</p>
+                    <div class="card-tags">
+                        <span class="tag">주인공</span>
+                        <span class="tag">팔라딘 V6</span>
+                        <span class="tag">황금 갑옷</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sprite-card">
+                <div class="img-box">
+                    <img src="슈드용사/Assets/Sprites/sude_spritesheet.png" alt="sude_spritesheet">
+                </div>
+                <div class="card-meta">
+                    <h3>🏃 용사 슈드 8방향 스프라이트 시트</h3>
+                    <p>유니티 애니메이터 12 FPS 레트로 프레임 연동용 이동/공격 픽셀 프레임 모음</p>
+                    <div class="card-tags">
+                        <span class="tag">스프라이트 시트</span>
+                        <span class="tag">8방향 애니메이션</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category 2: Monsters & Bosses -->
+    <div class="category-section">
+        <div class="category-title">👾 2. 50종 일반 몬스터 & 10대 대장격 보스 시각 스펙트럼</div>
+        <div class="gallery-grid">
+            <div class="sprite-card">
+                <div class="img-box">
+                    <img src="슈드용사/Assets/몬스터.png" alt="몬스터 픽셀 수집">
+                </div>
+                <div class="card-meta">
+                    <h3>👾 50종 일반 몬스터 & 10종 대장격 보스 스펙트럼</h3>
+                    <p>버섯돌이, 기계골렘, 사막전갈, 차원악마, 화산사냥개, 서리해골 및 10대 마왕 보스 마물군</p>
+                    <div class="card-tags">
+                        <span class="tag">몬스터 DB</span>
+                        <span class="tag">6대 AI 패턴</span>
+                        <span class="tag">보스전</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sprite-card">
+                <div class="img-box">
+                    <img src="슈드용사/Assets/sprites.jpg" alt="몬스터 아케이드 스프라이트">
+                </div>
+                <div class="card-meta">
+                    <h3>👹 픽셀 몬스터 아케이드 타일맵</h3>
+                    <p>유니티 Sprite Editor 슬라이스 및 2D 몬스터 인스턴스 스폰 전용 스프라이트 시트</p>
+                    <div class="card-tags">
+                        <span class="tag">2D 타일맵</span>
+                        <span class="tag">스폰 에셋</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category 3: Stages & Shop -->
+    <div class="category-section">
+        <div class="category-title">🗺️ 3. 10대 비주얼 테마 스테이지 & 허브 상점 (Shop)</div>
+        <div class="gallery-grid">
+            <div class="sprite-card">
+                <div class="img-box">
+                    <img src="슈드용사/Assets/맵과상점.png" alt="맵과 상점 시각화">
+                </div>
+                <div class="card-meta">
+                    <h3>🛒 10대 비주얼 배경 테마 & 허브 상점 (Shop)</h3>
+                    <p>속삭이는 버섯 숲, 녹슨 기계 무덤, 소금 사막 배경 아트 및 매 스테이지 연동 5대 능력치 허브 상점</p>
+                    <div class="card-tags">
+                        <span class="tag">10대 비주얼 테마</span>
+                        <span class="tag">허브 상점</span>
+                        <span class="tag">40개 관문</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sprite-card">
+                <div class="img-box">
+                    <img src="슈드용사/Assets/stages.jpg" alt="스테이지 배경 아티팩트">
+                </div>
+                <div class="card-meta">
+                    <h3>🏞️ 픽셀 던전 스테이지 파노라마</h3>
+                    <p>유니티 카메라 배경색 및 픽셀 파랄랙스 스크롤 연동용 레벨 디자인 파노라마</p>
+                    <div class="card-tags">
+                        <span class="tag">레벨 디자인</span>
+                        <span class="tag">배경 파노라마</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category 4: Title & Cover Art -->
+    <div class="category-section">
+        <div class="category-title">⚔️ 4. 타이틀 메인 화면 & 픽셀 커버 아티팩트</div>
+        <div class="gallery-grid">
+            <div class="sprite-card">
+                <div class="img-box">
+                    <img src="슈드용사/Assets/타이틀0.png" alt="인피니트 소드 메인 타이틀">
+                </div>
+                <div class="card-meta">
+                    <h3>⚔️ 슈드용사 메인 타이틀 키 아티팩트</h3>
+                    <p>인피니트 소드 마크, 픽셀 로고 타이포그래피 및 시작 버튼 픽셀 커버 그래픽</p>
+                    <div class="card-tags">
+                        <span class="tag">타이틀 화면</span>
+                        <span class="tag">픽셀 로고</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sprite-card">
+                <div class="img-box">
+                    <img src="슈드용사/Assets/title.png" alt="타이틀 배경">
+                </div>
+                <div class="card-meta">
+                    <h3>🌌 차원의 균열 레트로 배경 커버</h3>
+                    <p>용사 슈드의 성전을 알리는 고화질 픽셀 대륙 '아르카디아' 오프닝 타이틀 카트리지</p>
+                    <div class="card-tags">
+                        <span class="tag">커버 아트</span>
+                        <span class="tag">시놉시스</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,6 @@
+file 'f:\1인기업\google_flow_projects\empty_stomach_longform\temp_render\scene_1_mux.mp4'
+file 'f:\1인기업\google_flow_projects\empty_stomach_longform\temp_render\scene_2_mux.mp4'
+file 'f:\1인기업\google_flow_projects\empty_stomach_longform\temp_render\scene_3_mux.mp4'
+file 'f:\1인기업\google_flow_projects\empty_stomach_longform\temp_render\scene_4_mux.mp4'
+file 'f:\1인기업\google_flow_projects\empty_stomach_longform\temp_render\scene_5_mux.mp4'
+file 'f:\1인기업\google_flow_projects\empty_stomach_longform\temp_render\scene_6_mux.mp4'

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1350, initial-scale=1.0">
+<title>짠식이네 괴짜 4컷 만화 템플릿 - Non Overlapping</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700;900&family=Nanum+Gothic+Coding:wght@700&display=swap');
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        width: 1080px;
+        height: 1350px;
+        background-color: #0f172a;
+        font-family: 'Gothic A1', sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 24px;
+        overflow: hidden;
+    }
+
+    /* Webtoon Header */
+    .header-banner {
+        width: 100%;
+        height: 90px;
+        background: linear-gradient(135deg, #ff0055 0%, #ff5500 100%);
+        border: 4px solid #000000;
+        box-shadow: 6px 6px 0px #000000;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 28px;
+        margin-bottom: 24px;
+        flex-shrink: 0;
+    }
+
+    .header-title {
+        color: #ffffff;
+        font-size: 34px;
+        font-weight: 900;
+        text-shadow: 3px 3px 0px #000;
+        letter-spacing: -1px;
+    }
+
+    .header-sub {
+        background-color: #ffe600;
+        color: #000000;
+        font-size: 20px;
+        font-weight: 900;
+        padding: 6px 16px;
+        border-radius: 20px;
+        border: 3px solid #000;
+    }
+
+    /* Main Artwork Container - 100% clean, no text on top */
+    .artwork-container {
+        width: 100%;
+        height: 800px;
+        background-color: #ffffff;
+        border: 6px solid #000000;
+        border-radius: 16px;
+        box-shadow: 8px 8px 0px #000000;
+        overflow: hidden;
+        margin-bottom: 24px;
+        flex-shrink: 0;
+    }
+
+    .artwork-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* ensures the whole comic is visible without cropping */
+        background-color: #f1f5f9;
+    }
+
+    /* Dialogue Section - Below the artwork */
+    .dialogue-section {
+        width: 100%;
+        flex: 1;
+        background-color: #ffffff;
+        border: 5px solid #000000;
+        border-radius: 16px;
+        box-shadow: 6px 6px 0px #000000;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .dialogue-panel {
+        background-color: #f8fafc;
+        border: 3px dashed #cbd5e1;
+        border-radius: 12px;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        position: relative;
+    }
+
+    .panel-tag {
+        position: absolute;
+        top: -12px;
+        left: -12px;
+        background-color: #000;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 900;
+        padding: 4px 10px;
+        border-radius: 8px;
+    }
+
+    .speech {
+        margin-top: 12px;
+        font-size: 19px;
+        font-weight: 900;
+        line-height: 1.4;
+        color: #0f172a;
+    }
+
+    .char-name {
+        font-weight: 900;
+        color: #ff0055;
+    }
+    
+    .char-name.dad { color: #2563eb; }
+    .char-name.son { color: #16a34a; }
+    .char-name.dog { color: #d97706; }
+</style>
+</head>
+<body>
+
+    <div class="header-banner">
+        <div class="header-title">💥 짠식이네 괴짜일기 EP.1</div>
+        <div class="header-sub">카톡 답장 안 하는 남편 편</div>
+    </div>
+
+    <!-- Artwork Section: ZERO overlapping text -->
+    <div class="artwork-container">
+        <!-- The python script will replace this SRC -->
+        <img src="C:/Users/sude3/.gemini/antigravity-ide/brain/56530e97-1a0e-490c-892e-df0023440a6a/zzansik_ep1_4cut_younger_1788326821087.jpg" class="artwork-image" alt="웹툰 원화">
+    </div>
+
+    <!-- Dialogue Section: Separate from artwork -->
+    <div class="dialogue-section">
+        
+        <div class="dialogue-panel">
+            <div class="panel-tag"># 1컷</div>
+            <div class="speech"><span class="char-name">엄마(오지랖):</span> "여보 이거 봐봐, 답장 좀 해!!"</div>
+            <div class="speech"><span class="char-name dad">아빠(짠식이):</span> (게임하며) "응 봤어~"</div>
+        </div>
+
+        <div class="dialogue-panel">
+            <div class="panel-tag"># 2컷</div>
+            <div class="speech"><span class="char-name">엄마(오지랖):</span> "...읽씹이야?! 이런 게 제일 별로야!"</div>
+            <div class="speech"><span class="char-name son">아들(뭉치):</span> "엄마 단톡방도 300개 안 읽었던데?"</div>
+        </div>
+
+        <div class="dialogue-panel">
+            <div class="panel-tag"># 3컷</div>
+            <div class="speech"><span class="char-name">엄마(오지랖):</span> "알림음을 '여보야~♡'로 바꾸면 칼답하겠지?"</div>
+            <div class="speech"><span class="char-name dog">코기(만두):</span> "간식 소리다아아-!!" (침 질질)</div>
+        </div>
+
+        <div class="dialogue-panel">
+            <div class="panel-tag"># 4컷</div>
+            <div class="speech"><span class="char-name dad">아빠(짠식이):</span> "어?! 정보왕 아줌마 카톡이네?! (빛속성 타이핑)"</div>
+            <div class="speech"><span class="char-name son">아들(뭉치):</span> "아빠 정보왕 아줌마한테만 칼답하네..."</div>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐉 [슈드용사] Option 04 & 05 한글 도트 종합 마스터 시트 갤러리</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: #060913;
+            color: #f8fafc;
+            font-family: 'Pretendard', sans-serif;
+            min-height: 100vh;
+            padding: 24px;
+            background-image: radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.2), transparent 60%);
+        }
+
+        .header {
+            max-width: 1400px;
+            margin: 0 auto 24px auto;
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid #fbbf24;
+            border-radius: 18px;
+            padding: 20px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 35px rgba(251, 191, 36, 0.35);
+        }
+
+        .header-title h1 {
+            font-size: 1.7rem;
+            font-weight: 900;
+            color: #fbbf24;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .grid-layout {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+
+        .sheet-card {
+            background: rgba(15, 23, 42, 0.95);
+            border: 2px solid #334155;
+            border-radius: 18px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        .sheet-card-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #fbbf24;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px;
+        }
+
+        .img-box {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid #fbbf24;
+            background: #ffffff;
+            box-shadow: 0 0 25px rgba(0,0,0,0.5);
+        }
+
+        .img-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+            image-rendering: pixelated;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-title">
+            <h1>🐉 [슈드용사] Option 04 & 05 한글 도트 종합 마스터 시트</h1>
+        </div>
+        <div style="font-size: 0.9rem; color: #38bdf8; font-weight: 800;">
+            대표님 제출 양식 100% 동일 픽셀 아트 복제 완성
+        </div>
+    </div>
+
+    <!-- Grid Layout -->
+    <div class="grid-layout">
+
+        <!-- Option 04 -->
+        <div class="sheet-card">
+            <div class="sheet-card-title">
+                🐉 Option 04: 드래곤 템플러 (Royal Dragon Templar) 한글 종합 시트
+            </div>
+            <div class="img-box">
+                <img src="sude_option04_dragon_templar_full_sheet.png" alt="Option 04 Full Sheet">
+            </div>
+        </div>
+
+        <!-- Option 05 -->
+        <div class="sheet-card">
+            <div class="sheet-card-title">
+                🌌 Option 05: 아케인 소드마스터 (Arcane Swordmaster) 한글 종합 시트
+            </div>
+            <div class="img-box">
+                <img src="sude_option05_arcane_swordmaster_full_sheet.png" alt="Option 05 Full Sheet">
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

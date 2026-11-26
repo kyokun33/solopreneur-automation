@@ -1,0 +1,6 @@
+file 'f:/1인기업/google_flow_projects/empty_stomach_longform/scene1_master.wav'
+file 'f:/1인기업/google_flow_projects/empty_stomach_longform/scene2_master.wav'
+file 'f:/1인기업/google_flow_projects/empty_stomach_longform/scene3_master.wav'
+file 'f:/1인기업/google_flow_projects/empty_stomach_longform/scene4_master.wav'
+file 'f:/1인기업/google_flow_projects/empty_stomach_longform/scene5_master.wav'
+file 'f:/1인기업/google_flow_projects/empty_stomach_longform/scene6_master.wav'

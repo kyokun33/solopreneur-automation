@@ -1,0 +1,76 @@
+{
+  "1": {
+    "inputs": {
+      "ckpt_name": "v1-5-pruned.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "2": {
+    "inputs": {
+      "text": "2D pixel art character sprite sheet in 16-bit SNES JRPG style, Novice Hero Sude with blonde hair, red headband, green scarf, brown tunic armor, blue pants, shortsword and round shield, 4-direction walking frames and battle ready stance, plain white background, sharp clean pixel edges",
+      "clip": [
+        "1",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Positive Prompt - Antigravity API Mapping)"
+    }
+  },
+  "3": {
+    "inputs": {
+      "text": "blur, 3D render, realistic photo, low quality, noise, stat panels, borders, watermark",
+      "clip": [
+        "1",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Negative Prompt)"
+    }
+  },
+  "4": {
+    "inputs": {
+      "camera_mode": "Front_South_Facing",
+      "camera_fov": 45,
+      "stage_preset": "2D_Pixel_Sprite_Stage",
+      "acting_archetype": "Humanoid_Hero"
+    },
+    "class_type": "DirectingNode",
+    "_meta": {
+      "title": "Scene Camera Action (DirectingNode - Front Camera Direction)"
+    }
+  },
+  "5": {
+    "inputs": {
+      "prompt": "2D pixel art character sprite sheet in 16-bit SNES JRPG style, Novice Hero Sude, 4-direction walking and battle ready stance, clean white background, sharp pixel edges",
+      "api_key": "ANTIGRAVITY_API_KEY_LOCAL",
+      "base_url": "http://127.0.0.1:8188/v1",
+      "model_name": "gemini-3-pro-image",
+      "seed": 42109,
+      "control_after_generate": "randomize"
+    },
+    "class_type": "OpenAIImageGenerator",
+    "_meta": {
+      "title": "Antigravity API Nodes (OpenAIImageGenerator)"
+    }
+  },
+  "6": {
+    "inputs": {
+      "filename_prefix": "Sude_PixelArt_SpriteSheet",
+      "images": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  }
+}

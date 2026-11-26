@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👑 [슈드용사] 초고퀄리티 16/32-bit 도트 그래픽 마스터피스 갤러리</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #07090e;
+            color: #f8fafc;
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            min-height: 100vh;
+            padding: 30px;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.2), transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.15), transparent 50%);
+        }
+
+        .header {
+            max-width: 1300px;
+            margin: 0 auto 30px auto;
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid #fbbf24;
+            box-shadow: 0 0 35px rgba(251, 191, 36, 0.4);
+            border-radius: 20px;
+            padding: 24px 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(12px);
+        }
+
+        .header-title h1 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #fbbf24;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-subtitle {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-top: 6px;
+        }
+
+        .badge-hq {
+            background: linear-gradient(135deg, #d97706, #b45309);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.4);
+        }
+
+        .main-grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 28px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #fbbf24;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+
+        /* Portrait Showcase */
+        .portrait-img-box {
+            width: 100%;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 3px solid #fbbf24;
+            box-shadow: 0 0 25px rgba(251, 191, 36, 0.3);
+            background: #020617;
+        }
+
+        .portrait-img-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+            image-rendering: pixelated;
+            transition: transform 0.3s ease;
+        }
+
+        .portrait-img-box:hover img {
+            transform: scale(1.03);
+        }
+
+        .hero-specs {
+            margin-top: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            background: #1e293b;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .spec-val {
+            color: #38bdf8;
+            font-weight: 700;
+        }
+
+        /* Right Column Showcase */
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .img-display-box {
+            width: 100%;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 2px solid #334155;
+            background: #020617;
+            position: relative;
+        }
+
+        .img-display-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+            image-rendering: pixelated;
+        }
+
+        .tag-overlay {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid #fbbf24;
+            color: #fbbf24;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.65rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .desc-text {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-title">
+            <h1>🛡️ 슈드용사(Hero Sude) 도트 그래픽 마스터피스</h1>
+            <div class="header-subtitle">스퀘어 에닉스 스타일 16/32-Bit 고화질 도트 아트 & 스프라이트 시트</div>
+        </div>
+        <div class="badge-hq">
+            ULTRA HIGH-QUALITY PIXEL ART
+        </div>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="main-grid">
+        
+        <!-- Left: Hero Portrait Card -->
+        <div class="card">
+            <div class="card-title">
+                👤 용사 슈드 (Paladin V6) 전용 일러스트
+            </div>
+            <div class="portrait-img-box">
+                <img src="portrait.png" alt="Hero Sude Portrait">
+            </div>
+            <div class="hero-specs">
+                <div class="spec-item">
+                    <span>영웅명</span>
+                    <span class="spec-val">슈드 (Hero Sude)</span>
+                </div>
+                <div class="spec-item">
+                    <span>클래스</span>
+                    <span class="spec-val">팔라딘 V6 (Paladin V6)</span>
+                </div>
+                <div class="spec-item">
+                    <span>도트 해상도</span>
+                    <span class="spec-val">32-Bit HQ Pixel Art</span>
+                </div>
+                <div class="spec-item">
+                    <span>주요 무기</span>
+                    <span class="spec-val">신성 광휘검 & 윙드 실드</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Spritesheet & Battle Scene -->
+        <div class="right-column">
+            
+            <!-- Sprite Sheet Card -->
+            <div class="card">
+                <div class="card-title">
+                    🧩 4방향 (남/동/서/북) & 스킬 모션 정교 도트 스프라이트 시트
+                </div>
+                <div class="img-display-box">
+                    <span class="tag-overlay">SPRITE SHEET (4-DIR + SKILLS)</span>
+                    <img src="spritesheet.png" alt="Sprite Sheet">
+                </div>
+                <div class="desc-text">
+                    - <strong>정교한 도트 픽셀 디테일</strong>: 팔라딘 금빛 신성 갑옷, 천사 날개 헬멧, 4방향(남/동/서/북) 보행 컷 및 Holy Slash/Holy Shield 스킬 폼 완벽 구현.<br>
+                    - 유니티 2D Sprite Renderer 조립 및 12~24 FPS 아케이드 모션 최적화 완료.
+                </div>
+            </div>
+
+            <!-- Battle Scene Card -->
+            <div class="card">
+                <div class="card-title">
+                    ⚔️ 필살기 [신성한 강림 / 천사의 검] 실전 전투 액션 씬
+                </div>
+                <div class="img-display-box">
+                    <span class="tag-overlay">16-BIT BATTLE SCENE SIMULATION</span>
+                    <img src="battlescene.png" alt="Battle Scene">
+                </div>
+                <div class="desc-text">
+                    - <strong>전투 액션 씬 렌더링</strong>: 신성한 마법진과 빛의 기둥, 천사의 검 광역 필살기를 시전하는 대형 픽셀 아트 몬스터 토벌 장면 연출.
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

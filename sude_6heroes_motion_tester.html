@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ [슈드용사] 6대 영웅 실시간 HQ 도트 픽셀 아트 모션 테스트 베드</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            background-color: #04060d;
+            color: #f8fafc;
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.22), transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.15), transparent 50%);
+        }
+
+        /* Top HUD Navbar */
+        .hud-header {
+            max-width: 1400px;
+            margin: 0 auto 20px auto;
+            background: rgba(15, 23, 42, 0.92);
+            border: 2px solid #fbbf24;
+            border-radius: 16px;
+            padding: 16px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 35px rgba(251, 191, 36, 0.35);
+            backdrop-filter: blur(12px);
+        }
+
+        .hud-title h1 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #fbbf24;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+        }
+
+        .hero-selector-bar {
+            max-width: 1400px;
+            margin: 0 auto 20px auto;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
+        }
+
+        .sel-card {
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid #334155;
+            border-radius: 14px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .sel-card:hover {
+            border-color: #fbbf24;
+            transform: translateY(-3px);
+        }
+
+        .sel-card.active-sel {
+            border-color: #fbbf24;
+            background: rgba(251, 191, 36, 0.12);
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+        }
+
+        .sel-img-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1.5px solid #475569;
+            background: #020617;
+        }
+
+        .sel-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            image-rendering: pixelated;
+        }
+
+        .sel-name {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #e0f2fe;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        .sel-lock-tag {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            font-size: 0.65rem;
+            background: #dc2626;
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 800;
+        }
+
+        .sel-lock-tag.unlocked-tag {
+            background: #10b981;
+        }
+
+        /* Workspace Grid */
+        .workspace {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .workspace { grid-template-columns: 1fr; }
+        }
+
+        .stage-card {
+            background: rgba(15, 23, 42, 0.95);
+            border: 2px solid rgba(251, 191, 36, 0.4);
+            border-radius: 18px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .stage-title {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-weight: 700;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            background: #020617;
+            border: 3px solid #334155;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
+        }
+
+        canvas {
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            display: block;
+        }
+
+        .stage-hud-overlay {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid #fbbf24;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.65rem;
+            color: #fbbf24;
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Controls Panel */
+        .control-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .panel-card {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 18px;
+        }
+
+        .panel-card-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: #fbbf24;
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 6px;
+        }
+
+        /* 4-Directional Preview Strip */
+        .strip-grid {
+            max-width: 1400px;
+            margin: 20px auto 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 16px;
+        }
+
+        .strip-card {
+            background: #020617;
+            border: 1.5px solid #1e293b;
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .strip-card label {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: #fbbf24;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .action-btn {
+            background: #1e293b;
+            border: 1.5px solid #3b82f6;
+            color: #e0f2fe;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .action-btn:hover {
+            border-color: #fbbf24;
+            background: #2563eb;
+        }
+
+        .key-hint {
+            background: #334155;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 800;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HUD Header -->
+    <div class="hud-header">
+        <div class="hud-title">
+            <h1>⚔️ [슈드용사] 6대 영웅 실시간 HQ 픽셀 아트 모션 테스트 베드</h1>
+        </div>
+        <div style="font-size: 0.9rem; color: #38bdf8; font-weight: 700;">
+            선택된 영웅: <span id="currentHeroTitle" style="color: #fbbf24;">초심자 용사 슈드 (NOVICE SUDE V1)</span>
+        </div>
+    </div>
+
+    <!-- 6 Hero Selector Bar -->
+    <div class="hero-selector-bar">
+        <!-- Hero 0: Starter V1 -->
+        <div class="sel-card active-sel" id="sel0" onclick="switchHero(0)">
+            <span class="sel-lock-tag unlocked-tag">기본 무료</span>
+            <div class="sel-img-box"><img src="starter_v1.png" alt="Hero 0"></div>
+            <div class="sel-name">NOVICE V1 (기본)</div>
+        </div>
+        <!-- Hero 1: Opt 1 -->
+        <div class="sel-card" id="sel1" onclick="switchHero(1)">
+            <span class="sel-lock-tag" id="tag1">🔒 락온</span>
+            <div class="sel-img-box"><img src="opt1.png" alt="Hero 1"></div>
+            <div class="sel-name">Opt 01 성기사</div>
+        </div>
+        <!-- Hero 2: Opt 2 -->
+        <div class="sel-card" id="sel2" onclick="switchHero(2)">
+            <span class="sel-lock-tag" id="tag2">🔒 락온</span>
+            <div class="sel-img-box"><img src="opt2.png" alt="Hero 2"></div>
+            <div class="sel-name">Opt 02 흑영메카</div>
+        </div>
+        <!-- Hero 3: Opt 3 -->
+        <div class="sel-card" id="sel3" onclick="switchHero(3)">
+            <span class="sel-lock-tag" id="tag3">🔒 락온</span>
+            <div class="sel-img-box"><img src="opt3.png" alt="Hero 3"></div>
+            <div class="sel-name">Opt 03 천상발키리</div>
+        </div>
+        <!-- Hero 4: Opt 4 -->
+        <div class="sel-card" id="sel4" onclick="switchHero(4)">
+            <span class="sel-lock-tag" id="tag4">🔒 락온</span>
+            <div class="sel-img-box"><img src="opt4.png" alt="Hero 4"></div>
+            <div class="sel-name">Opt 04 드래곤</div>
+        </div>
+        <!-- Hero 5: Opt 5 -->
+        <div class="sel-card" id="sel5" onclick="switchHero(5)">
+            <span class="sel-lock-tag" id="tag5">🔒 락온</span>
+            <div class="sel-img-box"><img src="opt5.png" alt="Hero 5"></div>
+            <div class="sel-name">Opt 05 아케인</div>
+        </div>
+    </div>
+
+    <!-- Main Workspace -->
+    <div class="workspace">
+        
+        <!-- Stage Area -->
+        <div class="stage-card">
+            <div class="stage-title">
+                <span>🎥 360° 실시간 HQ 픽셀 아트 모션 인터랙티브 스테이지</span>
+                <span>키보드 [W,A,S,D] / 방향키로 이동</span>
+            </div>
+
+            <div class="canvas-wrapper">
+                <canvas id="mainCanvas" width="600" height="420"></canvas>
+                <div class="stage-hud-overlay">
+                    <span id="hudState">STATE: IDLE</span>
+                    <span id="hudDir">DIR: SOUTH (DOWN)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls Panel -->
+        <div class="control-panel">
+            
+            <!-- Hero Lock & Unlock Controls -->
+            <div class="panel-card">
+                <div class="panel-card-title">
+                    🔑 영웅 락온 & 해금 제어
+                </div>
+                <div id="unlockControlBox" style="font-size: 0.85rem; color: #cbd5e1;">
+                    <div style="color: #10b981; font-weight: 800; margin-bottom: 8px;">🔓 현재 영웅 해금 완료 상태</div>
+                    실제 픽셀 아트 이미지 컷을 크롭하여 4방향 모션 조작을 진행합니다.
+                </div>
+            </div>
+
+            <!-- Skill Action Controls -->
+            <div class="panel-card">
+                <div class="panel-card-title">
+                    ⚡ 고유 스킬 & 모션 발동
+                </div>
+                <div class="action-grid">
+                    <button class="action-btn" onclick="triggerSkill('slash')">⚔️ Holy Slash <span class="key-hint">Q</span></button>
+                    <button class="action-btn" onclick="triggerSkill('shield')">🛡️ Holy Shield <span class="key-hint">W</span></button>
+                    <button class="action-btn" onclick="triggerSkill('consecrate')">✨ Consecrate <span class="key-hint">E</span></button>
+                    <button class="action-btn" onclick="triggerSkill('blade')">👼 Angel Blade <span class="key-hint">R</span></button>
+                </div>
+                <button class="action-btn" style="width: 100%; margin-top: 8px; background: linear-gradient(135deg, #d97706, #b45309); border-color: #fbbf24;" onclick="triggerSkill('ultimate')">
+                    🔥 궁극기: 신성한 강림 <span class="key-hint">SPACE</span>
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 4-Directional Simultaneous Preview Strip -->
+    <div class="strip-grid">
+        <div class="strip-card">
+            <label>⬇️ WALK SOUTH (남쪽 / 정면)</label>
+            <canvas id="cvsSouth" width="120" height="120"></canvas>
+        </div>
+        <div class="strip-card">
+            <label>➡️ WALK EAST (동쪽 / 우측)</label>
+            <canvas id="cvsEast" width="120" height="120"></canvas>
+        </div>
+        <div class="strip-card">
+            <label>⬅️ WALK WEST (서쪽 / 좌측)</label>
+            <canvas id="cvsWest" width="120" height="120"></canvas>
+        </div>
+        <div class="strip-card">
+            <label>⬆️ WALK NORTH (북쪽 / 후면)</label>
+            <canvas id="cvsNorth" width="120" height="120"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Hero Database Definitions with Real Animation Sprite Sheets
+        const heroDB = [
+            { id: 0, name: "초심자 용사 슈드 (NOVICE SUDE V1)", unlocked: true, imgSrc: "starter_v1_perfect.png" },
+            { id: 1, name: "Option 01: 성기사 클래식", unlocked: false, imgSrc: "opt1.png" },
+            { id: 2, name: "Option 02: 흑영 메카 팔라딘", unlocked: false, imgSrc: "opt2.png" },
+            { id: 3, name: "Option 03: 천상 발키리", unlocked: false, imgSrc: "opt3.png" },
+            { id: 4, name: "Option 04: 드래곤 템플러", unlocked: false, imgSrc: "opt4_anim_sheet.png" },
+            { id: 5, name: "Option 05: 아케인 소드마스터", unlocked: false, imgSrc: "opt5_anim_sheet.png" }
+        ];
+
+        // Preload Images
+        const loadedImages = {};
+        heroDB.forEach(h => {
+            const img = new Image();
+            img.src = h.imgSrc;
+            loadedImages[h.id] = img;
+        });
+
+        let currentHeroId = 0;
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let heroX = 300;
+        let heroY = 210;
+        let direction = 'down';
+        let isMoving = false;
+        let frameIndex = 0;
+        let lastAnimTime = 0;
+        let currentSkill = null;
+        let skillTimer = 0;
+
+        const keys = {};
+
+        window.addEventListener('keydown', (e) => {
+            keys[e.key.toLowerCase()] = true;
+            if (['Space', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) e.preventDefault();
+            if (e.code === 'KeyQ') triggerSkill('slash');
+            if (e.code === 'KeyW') triggerSkill('shield');
+            if (e.code === 'KeyE') triggerSkill('consecrate');
+            if (e.code === 'KeyR') triggerSkill('blade');
+            if (e.code === 'Space') triggerSkill('ultimate');
+        });
+
+        window.addEventListener('keyup', (e) => { keys[e.key.toLowerCase()] = false; });
+
+        function switchHero(id) {
+            currentHeroId = id;
+            document.querySelectorAll('.sel-card').forEach(c => c.classList.remove('active-sel'));
+            document.getElementById(`sel${id}`).classList.add('active-sel');
+
+            const hero = heroDB[id];
+            document.getElementById('currentHeroTitle').innerText = hero.name;
+
+            const box = document.getElementById('unlockControlBox');
+            if (hero.unlocked) {
+                box.innerHTML = `<div style="color: #10b981; font-weight: 800; margin-bottom: 8px;">🔓 해금 완료 상태</div> 실제 픽셀 아트 이미지 컷 기반 4방향 이동 및 모션 조작을 진행합니다.`;
+            } else {
+                box.innerHTML = `
+                    <div style="color: #ef4444; font-weight: 800; margin-bottom: 8px;">🔒 영웅 락온 상태</div>
+                    해당 캐릭은 잠겨있습니다. 미션/결제로 락 해제 후 모션 조작이 가능합니다.<br>
+                    <button class="action-btn" style="margin-top: 10px; width: 100%; background: #10b981; color: #fff;" onclick="unlockHero(${id})">🔓 테스트용 즉시 락 해제하기</button>
+                `;
+            }
+        }
+
+        function unlockHero(id) {
+            heroDB[id].unlocked = true;
+            const tag = document.getElementById(`tag${id}`);
+            if (tag) {
+                tag.className = 'sel-lock-tag unlocked-tag';
+                tag.innerText = '🔓 해금';
+            }
+            switchHero(id);
+            alert(`🎉 [${heroDB[id].name}] 락 해제 완료! 실제 픽셀 아트 모션 조작이 가동됩니다.`);
+        }
+
+        function triggerSkill(type) {
+            if (!heroDB[currentHeroId].unlocked) {
+                alert('🔒 영웅이 잠겨있습니다. 락 해제 후 스킬 발동이 가능합니다!');
+                return;
+            }
+            currentSkill = type;
+            skillTimer = 25;
+        }
+
+        // Render Real Pixel Art Image Crop on Canvas
+        function drawRealPixelHero(targetCtx, x, y, scale, dir, step, hero) {
+            targetCtx.save();
+            targetCtx.translate(x, y);
+
+            const img = loadedImages[hero.id];
+
+            if (!hero.unlocked) {
+                targetCtx.globalAlpha = 0.45;
+            }
+
+            // Shadow
+            targetCtx.fillStyle = 'rgba(0,0,0,0.45)';
+            targetCtx.beginPath();
+            targetCtx.ellipse(0, 32 * scale, 24 * scale, 8 * scale, 0, 0, Math.PI * 2);
+            targetCtx.fill();
+
+            const bounce = (step % 2 === 1 && isMoving) ? -2 * scale : 0;
+
+            if (img && img.complete && img.naturalWidth > 0) {
+                // Crop & Draw Actual Pixel Art Image Sub-rectangle
+                const sw = img.naturalWidth / 4;
+                const sh = img.naturalHeight / 4;
+                let col = step % 4;
+                let row = 0;
+
+                if (dir === 'down') row = 0;
+                else if (dir === 'right') row = 1;
+                else if (dir === 'left') row = 2;
+                else if (dir === 'up') row = 3;
+
+                const drawW = 64 * scale;
+                const drawH = 72 * scale;
+
+                targetCtx.drawImage(
+                    img,
+                    col * sw, row * sh, sw, sh,
+                    -drawW / 2, -drawH / 2 + bounce, drawW, drawH
+                );
+            } else {
+                // Fallback while loading
+                targetCtx.fillStyle = '#fbbf24';
+                targetCtx.fillRect(-16 * scale, -24 * scale, 32 * scale, 48 * scale);
+            }
+
+            // Lock Overlay Banner
+            if (!hero.unlocked) {
+                targetCtx.fillStyle = '#ef4444';
+                targetCtx.font = `${18 * scale}px sans-serif`;
+                targetCtx.fillText('🔒', -12 * scale, 8 * scale);
+            }
+
+            // Skill Aura Effects
+            if (currentSkill === 'slash') {
+                targetCtx.strokeStyle = '#fbbf24';
+                targetCtx.lineWidth = 4;
+                targetCtx.beginPath();
+                targetCtx.arc(0, 0, 45 * scale, -Math.PI / 3, Math.PI / 3);
+                targetCtx.stroke();
+            } else if (currentSkill === 'shield') {
+                targetCtx.strokeStyle = '#38bdf8';
+                targetCtx.lineWidth = 4;
+                targetCtx.beginPath();
+                targetCtx.arc(0, 0, 40 * scale, 0, Math.PI * 2);
+                targetCtx.stroke();
+            }
+
+            targetCtx.restore();
+        }
+
+        function update(timestamp) {
+            const hero = heroDB[currentHeroId];
+
+            if (hero.unlocked) {
+                isMoving = false;
+                let dx = 0; let dy = 0;
+                if (keys['w'] || keys['arrowup']) { dy -= 1; direction = 'up'; isMoving = true; }
+                if (keys['s'] || keys['arrowdown']) { dy += 1; direction = 'down'; isMoving = true; }
+                if (keys['a'] || keys['arrowleft']) { dx -= 1; direction = 'left'; isMoving = true; }
+                if (keys['d'] || keys['arrowright']) { dx += 1; direction = 'right'; isMoving = true; }
+
+                if (dx !== 0 && dy !== 0) { dx *= 0.7071; dy *= 0.7071; }
+                heroX = Math.max(40, Math.min(canvas.width - 40, heroX + dx * 5));
+                heroY = Math.max(50, Math.min(canvas.height - 50, heroY + dy * 5));
+            }
+
+            if (timestamp - lastAnimTime > 110) {
+                lastAnimTime = timestamp;
+                frameIndex = (frameIndex + 1) % 4;
+            }
+
+            if (skillTimer > 0) {
+                skillTimer--;
+                if (skillTimer === 0) currentSkill = null;
+            }
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawRealPixelHero(ctx, heroX, heroY, 1.6, direction, frameIndex, hero);
+
+            // Sub Canvases (South, East, West, North simultaneous real pixel art strip)
+            renderSubCanvas('cvsSouth', 'down', hero);
+            renderSubCanvas('cvsEast', 'right', hero);
+            renderSubCanvas('cvsWest', 'left', hero);
+            renderSubCanvas('cvsNorth', 'up', hero);
+
+            document.getElementById('hudState').innerText = `STATE: ${currentSkill ? currentSkill.toUpperCase() : (isMoving ? 'WALKING' : 'IDLE')}`;
+            document.getElementById('hudDir').innerText = `DIR: ${direction.toUpperCase()}`;
+
+            requestAnimationFrame(update);
+        }
+
+        function renderSubCanvas(id, dir, hero) {
+            const cvs = document.getElementById(id);
+            const sCtx = cvs.getContext('2d');
+            sCtx.clearRect(0, 0, cvs.width, cvs.height);
+            drawRealPixelHero(sCtx, 60, 60, 1.2, dir, frameIndex, hero);
+        }
+
+        requestAnimationFrame(update);
+    </script>
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👑 [슈드용사] 5가지 캐릭터 커스텀 디자인 시안 비교 쇼케이스</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #060913;
+            color: #f8fafc;
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            min-height: 100vh;
+            padding: 30px;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.18), transparent 60%),
+                radial-gradient(circle at 80% 90%, rgba(168, 85, 247, 0.15), transparent 50%);
+        }
+
+        .header {
+            max-width: 1400px;
+            margin: 0 auto 32px auto;
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid #fbbf24;
+            box-shadow: 0 0 35px rgba(251, 191, 36, 0.35);
+            border-radius: 20px;
+            padding: 24px 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(12px);
+        }
+
+        .header-title h1 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #fbbf24;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-subtitle {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-top: 6px;
+        }
+
+        .badge-count {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        /* 5-Column Grid Layout */
+        .designs-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 1200px) {
+            .designs-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .designs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .option-card {
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid #334155;
+            border-radius: 18px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .option-card:hover {
+            border-color: #fbbf24;
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(251, 191, 36, 0.25);
+        }
+
+        .option-card.selected-card {
+            border-color: #38bdf8;
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.5);
+            background: rgba(14, 165, 233, 0.1);
+        }
+
+        .card-header-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid #fbbf24;
+            color: #fbbf24;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.6rem;
+            z-index: 2;
+        }
+
+        .img-wrapper {
+            width: 100%;
+            height: 240px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1.5px solid #1e293b;
+            background: #020617;
+            position: relative;
+        }
+
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            image-rendering: pixelated;
+            transition: transform 0.3s ease;
+        }
+
+        .option-card:hover .img-wrapper img {
+            transform: scale(1.05);
+        }
+
+        .opt-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #fbbf24;
+            margin-top: 4px;
+        }
+
+        .specs-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 0.8rem;
+        }
+
+        .spec-row {
+            display: flex;
+            justify-content: space-between;
+            background: #1e293b;
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+
+        .spec-label {
+            color: #94a3b8;
+            font-weight: 600;
+        }
+
+        .spec-val {
+            color: #e0f2fe;
+            font-weight: 700;
+        }
+
+        .pick-btn {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 1.5px solid #3b82f6;
+            color: #e0f2fe;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .pick-btn:hover {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-color: #fbbf24;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-title">
+            <h1>🎨 슈드용사(Hero Sude) 5대 캐릭터 커스텀 디자인 시안</h1>
+            <div class="header-subtitle">투구 / 갑옷 / 헤어스타일 컨셉 변경 5종 비교 쇼케이스</div>
+        </div>
+        <div class="badge-count">
+            5 DESIGN VARIANTS READY
+        </div>
+    </div>
+
+    <!-- 5-Column Grid -->
+    <div class="designs-grid">
+
+        <!-- Option 1 -->
+        <div class="option-card" id="optCard1">
+            <span class="card-header-badge">OPTION 01</span>
+            <div class="img-wrapper">
+                <img src="opt1.png" alt="Option 1">
+            </div>
+            <div class="opt-title">🦁 성기사 클래식 (Golden Lion)</div>
+            <div class="specs-list">
+                <div class="spec-row">
+                    <span class="spec-label">헤어</span>
+                    <span class="spec-val">금발 샤기 컷</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">투구</span>
+                    <span class="spec-val">사자 갈기 오픈 헬멧</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">갑옷</span>
+                    <span class="spec-val">라이온 문양 은빛 금장</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">컨셉</span>
+                    <span class="spec-val">정통 패왕 팔라딘</span>
+                </div>
+            </div>
+            <button class="pick-btn" onclick="selectOption(1)">👍 1번 시안 채택하기</button>
+        </div>
+
+        <!-- Option 2 -->
+        <div class="option-card" id="optCard2">
+            <span class="card-header-badge">OPTION 02</span>
+            <div class="img-wrapper">
+                <img src="opt2.png" alt="Option 2">
+            </div>
+            <div class="opt-title">🔮 흑영 메카 팔라딘 (Shadow Obsidian)</div>
+            <div class="specs-list">
+                <div class="spec-row">
+                    <span class="spec-label">헤어</span>
+                    <span class="spec-val">흑발 언더컷 투블럭</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">투구</span>
+                    <span class="spec-val">검은 뿔 룬 바이저</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">갑옷</span>
+                    <span class="spec-val">흑철 룬 플레이트</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">컨셉</span>
+                    <span class="spec-val">다크 룬 나이트</span>
+                </div>
+            </div>
+            <button class="pick-btn" onclick="selectOption(2)">👍 2번 시안 채택하기</button>
+        </div>
+
+        <!-- Option 3 -->
+        <div class="option-card" id="optCard3">
+            <span class="card-header-badge">OPTION 03</span>
+            <div class="img-wrapper">
+                <img src="opt3.png" alt="Option 3">
+            </div>
+            <div class="opt-title">🕊️ 천상 발키리 (Valkyrie Celestial)</div>
+            <div class="specs-list">
+                <div class="spec-row">
+                    <span class="spec-label">헤어</span>
+                    <span class="spec-val">실버 와일드 롱 헤어</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">투구</span>
+                    <span class="spec-val">발키리 날개 서클릿</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">갑옷</span>
+                    <span class="spec-val">백색 & 크리스탈 블루</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">컨셉</span>
+                    <span class="spec-val">신성 광휘 천사</span>
+                </div>
+            </div>
+            <button class="pick-btn" onclick="selectOption(3)">👍 3번 시안 채택하기</button>
+        </div>
+
+        <!-- Option 4 -->
+        <div class="option-card" id="optCard4">
+            <span class="card-header-badge">OPTION 04</span>
+            <div class="img-wrapper">
+                <img src="opt4.png" alt="Option 4">
+            </div>
+            <div class="opt-title">🐉 드래곤 템플러 (Royal Dragon)</div>
+            <div class="specs-list">
+                <div class="spec-row">
+                    <span class="spec-label">헤어</span>
+                    <span class="spec-val">붉은 포니테일</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">투구</span>
+                    <span class="spec-val">용비늘 풀 바이저</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">갑옷</span>
+                    <span class="spec-val">드래곤 스케일 황금갑</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">컨셉</span>
+                    <span class="spec-val">용기사 템플러</span>
+                </div>
+            </div>
+            <button class="pick-btn" onclick="selectOption(4)">👍 4번 시안 채택하기</button>
+        </div>
+
+        <!-- Option 5 -->
+        <div class="option-card" id="optCard5">
+            <span class="card-header-badge">OPTION 05</span>
+            <div class="img-wrapper">
+                <img src="opt5.png" alt="Option 5">
+            </div>
+            <div class="opt-title">🌌 아케인 소드마스터 (Arcane Knight)</div>
+            <div class="specs-list">
+                <div class="spec-row">
+                    <span class="spec-label">헤어</span>
+                    <span class="spec-val">블루 스트레이트 헤어</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">투구</span>
+                    <span class="spec-val">후드 룬 헤어밴드</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">갑옷</span>
+                    <span class="spec-val">아케인 경갑 & 마나 망토</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-label">컨셉</span>
+                    <span class="spec-val">마검사 소드마스터</span>
+                </div>
+            </div>
+            <button class="pick-btn" onclick="selectOption(5)">👍 5번 시안 채택하기</button>
+        </div>
+
+    </div>
+
+    <script>
+        function selectOption(idx) {
+            document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected-card'));
+            document.getElementById(`optCard${idx}`).classList.add('selected-card');
+            alert(`🎉 대표님께서 [Option 0${idx}] 디자인 시안을 최종 채택하셨습니다!`);
+        }
+    </script>
+</body>
+</html>

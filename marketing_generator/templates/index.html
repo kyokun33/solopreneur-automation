@@ -3,70 +3,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 마케팅 카피라이터 & 카드뉴스 자동 생성기</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <title>🎬 [Connect AI] AI 자동 숏츠 & 1초 마케팅 패키지 제작기 Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #05070e;
+            --card-bg: rgba(15, 23, 42, 0.95);
+            --primary: #fbbf24;
+            --secondary: #38bdf8;
+            --accent: #a855f7;
+            --text: #f8fafc;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text);
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            min-height: 100vh;
+            padding: 24px;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.22), transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.15), transparent 50%);
+        }
+
+        header {
+            max-width: 1300px;
+            margin: 0 auto 28px auto;
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid var(--primary);
+            border-radius: 18px;
+            padding: 20px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 35px rgba(251, 191, 36, 0.35);
+            backdrop-filter: blur(12px);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+        }
+
+        .grid {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 992px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: var(--secondary);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1.5px solid #334155;
+            background: #020617;
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(135deg, #fbbf24, #d97706);
+            color: #0f172a;
+            font-size: 1rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(251, 191, 36, 0.6);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            background: #1e293b;
+            border: 1px solid #475569;
+            color: #cbd5e1;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            background: var(--secondary);
+            border-color: #38bdf8;
+            color: #0f172a;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
+
+        .tab-content {
+            display: none;
+            background: #020617;
+            border: 1.5px solid #1e293b;
+            border-radius: 12px;
+            padding: 20px;
+            min-height: 380px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card-news-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .card-news-item {
+            background: #0f172a;
+            border: 1.5px solid #38bdf8;
+            border-radius: 10px;
+            padding: 14px;
+        }
+    </style>
 </head>
 <body>
+
+    <!-- Header -->
     <header>
-        <div class="logo">🎨 AI CopyWriter Pro</div>
-        <div>100% 무인 1인기업 마케팅 솔루션</div>
+        <div class="logo">🎬 [유튜브 레오] AI 자동 숏츠 & 마케팅 제작기</div>
+        <div style="font-size: 0.9rem; color: var(--secondary); font-weight: 800;">
+            Connect AI 1인기업 무인 수익화 파이프라인
+        </div>
     </header>
 
-    <main>
-        <div style="text-align: center; margin-bottom: 30px;">
-            <h1 style="font-size: 2.2rem; margin-bottom: 10px;">✨ 10초 만에 끝내는 마케팅 원고 & 카드뉴스 생성</h1>
-            <p style="color:var(--text-muted);">상품 정보만 입력하면 블로그 글, 인스타 캡션, 카드뉴스 대본이 동시에 완성됩니다.</p>
+    <main class="grid">
+        <!-- Input Form Card -->
+        <div class="card">
+            <h2 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 20px;">📌 10초 무인 마케팅 정보 입력</h2>
+            <form id="marketingForm">
+                <div class="form-group">
+                    <label>상품/서비스명</label>
+                    <input type="text" id="product_name" value="1인기업 AI 무인 자동화 템플릿" placeholder="예: 슈드용사 게임 패스" required>
+                </div>
+                <div class="form-group">
+                    <label>타겟 고객층</label>
+                    <input type="text" id="target_audience" value="1인 기업가 & 예비 창업자" placeholder="예: 게임 플레이어" required>
+                </div>
+                <div class="form-group">
+                    <label>핵심 혜택 / 강점</label>
+                    <input type="text" id="key_benefit" value="하루 4시간 업무 절감 & 24시간 자동 수익 생성" placeholder="예: 3초 만에 락온 해금" required>
+                </div>
+                <button type="submit" class="btn-submit" id="btnSubmit">🚀 30초 숏츠 & 마케팅 팩 자동 생성</button>
+            </form>
         </div>
 
-        <div class="grid">
-            <div class="card">
-                <h2 style="font-size: 1.2rem; margin-bottom: 20px;">📌 상품 정보 입력</h2>
-                <form id="marketingForm">
-                    <div class="form-group">
-                        <label>상품/서비스명</label>
-                        <input type="text" id="product_name" class="form-control" placeholder="예: AI 1인기업 프롬프트 팩" required>
-                    </div>
-                    <div class="form-group">
-                        <label>타겟 고객층</label>
-                        <input type="text" id="target_audience" class="form-control" placeholder="예: 1인 기업가, 예비 창업자" required>
-                    </div>
-                    <div class="form-group">
-                        <label>핵심 혜택/강점</label>
-                        <input type="text" id="key_benefit" class="form-control" placeholder="예: 업무시간 하루 4시간 단축" required>
-                    </div>
-                    <button type="submit" class="btn-submit" id="btnSubmit">🚀 10초 마케팅 세트 자동 생성</button>
-                </form>
+        <!-- Output Result Display Card -->
+        <div class="card">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('shorts')">🎬 자동 숏츠 대본 (30초)</button>
+                <button class="tab-btn" onclick="switchTab('blog')">📝 블로그 원고</button>
+                <button class="tab-btn" onclick="switchTab('insta')">📸 인스타그램 캡션</button>
+                <button class="tab-btn" onclick="switchTab('cardnews')">🖼️ 카드뉴스 (5장)</button>
             </div>
 
-            <div class="card">
-                <div class="tabs">
-                    <button class="tab-btn active" onclick="switchTab('blog')">📝 블로그 포스팅</button>
-                    <button class="tab-btn" onclick="switchTab('insta')">📸 인스타그램 캡션</button>
-                    <button class="tab-btn" onclick="switchTab('cardnews')">🖼️ 카드뉴스 대본 (5장)</button>
-                </div>
+            <div id="tab-shorts" class="tab-content active">
+                <p style="color:#64748b; text-align:center; margin-top:120px;">왼쪽 폼에 정보를 입력 후 [자동 생성] 버튼을 누르세요.</p>
+            </div>
 
-                <div id="tab-blog" class="tab-content active">
-                    <p style="color:#6b7280; text-align:center; margin-top:100px;">왼쪽 폼에 정보를 입력해 주세요.</p>
-                </div>
+            <div id="tab-blog" class="tab-content">
+                <p style="color:#64748b; text-align:center; margin-top:120px;">왼쪽 폼에 정보를 입력해 주세요.</p>
+            </div>
 
-                <div id="tab-insta" class="tab-content">
-                    <p style="color:#6b7280; text-align:center; margin-top:100px;">왼쪽 폼에 정보를 입력해 주세요.</p>
-                </div>
+            <div id="tab-insta" class="tab-content">
+                <p style="color:#64748b; text-align:center; margin-top:120px;">왼쪽 폼에 정보를 입력해 주세요.</p>
+            </div>
 
-                <div id="tab-cardnews" class="tab-content">
-                    <p style="color:#6b7280; text-align:center; margin-top:100px;">왼쪽 폼에 정보를 입력해 주세요.</p>
-                </div>
+            <div id="tab-cardnews" class="tab-content">
+                <p style="color:#64748b; text-align:center; margin-top:120px;">왼쪽 폼에 정보를 입력해 주세요.</p>
             </div>
         </div>
     </main>
 
     <script>
-        let currentResult = null;
-
         document.getElementById('marketingForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('btnSubmit');
-            btn.innerText = "⏳ 마케팅 콘텐츠 생성 중...";
+            btn.innerText = "⏳ 30초 숏츠 & 마케팅 팩 생성 중...";
             btn.disabled = true;
 
             const payload = {
@@ -82,19 +257,19 @@
                     body: JSON.stringify(payload)
                 });
                 const data = await res.json();
-                currentResult = data;
 
                 if(data.success) {
-                    document.getElementById('tab-blog').innerHTML = `<pre style="white-space:pre-wrap; font-family:inherit;">${data.blog_post}</pre>`;
-                    document.getElementById('tab-insta').innerHTML = `<pre style="white-space:pre-wrap; font-family:inherit;">${data.insta_caption}</pre>`;
+                    document.getElementById('tab-shorts').innerHTML = `<pre style="white-space:pre-wrap; font-family:inherit; color:#fbbf24; line-height:1.6;">${data.shorts_script}</pre>`;
+                    document.getElementById('tab-blog').innerHTML = `<pre style="white-space:pre-wrap; font-family:inherit; color:#e0f2fe; line-height:1.6;">${data.blog_post}</pre>`;
+                    document.getElementById('tab-insta').innerHTML = `<pre style="white-space:pre-wrap; font-family:inherit; color:#e0f2fe; line-height:1.6;">${data.insta_caption}</pre>`;
                     
                     let cardHtml = '<div class="card-news-grid">';
                     data.card_news.forEach(item => {
                         cardHtml += `
                             <div class="card-news-item">
-                                <div style="font-size:0.8rem; color:#60a5fa; margin-bottom:6px;">Slide ${item.slide}</div>
-                                <div style="font-weight:700; margin-bottom:8px;">${item.title}</div>
-                                <div style="font-size:0.85rem; color:#d1d5db;">${item.content}</div>
+                                <div style="font-size:0.75rem; color:#60a5fa; margin-bottom:4px;">Slide ${item.slide}</div>
+                                <div style="font-weight:700; color:#fbbf24; margin-bottom:6px;">${item.title}</div>
+                                <div style="font-size:0.85rem; color:#cbd5e1;">${item.content}</div>
                             </div>
                         `;
                     });
@@ -102,9 +277,9 @@
                     document.getElementById('tab-cardnews').innerHTML = cardHtml;
                 }
             } catch(e) {
-                alert("생성 실패");
+                alert("생성 중 에러가 발생했습니다.");
             } finally {
-                btn.innerText = "🚀 10초 마케팅 세트 자동 생성";
+                btn.innerText = "🚀 30초 숏츠 & 마케팅 팩 자동 생성";
                 btn.disabled = false;
             }
         });

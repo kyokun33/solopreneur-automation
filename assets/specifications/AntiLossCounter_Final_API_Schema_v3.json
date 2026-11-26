@@ -1,0 +1,58 @@
+{
+  "schemaName": "AntiLossFunnelCalculator",
+  "description": "사용자의 잠재적 손실액(Time-Loss + Risk-Cost)을 실시간으로 계산하고 시각화하는 Anti-Loss Funnel 위젯의 최종 API 스펙.",
+  "version": "3.0",
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/api/v1/calculate_loss",
+      "description": "사용자 입력 변수를 받아 총 손실액 및 세부 Breakdown을 계산합니다.",
+      "requestBody": {
+        "type": "object",
+        "required": ["estimated_hours", "time_value_per_hour"],
+        "properties": {
+          "user_id": {"type": "string", "description": "세션별 고유 사용자 ID (추적 목적)"},
+          "estimated_hours": {
+            "type": "number",
+            "format": "float",
+            "description": "사용자가 현재 겪고 있는 문제 해결에 소요되었다고 추정되는 시간(시간 단위). [근거: Self-RAG - UI 연동 가이드]"
+          },
+          "time_value_per_hour": {
+            "type": "number",
+            "format": "float",
+            "description": "사용자의 전문성을 고려한 시간당 가치 (예: 55.0). [근거: 지난 의사결정 로그]"
+          },
+          "risk_cost_multiplier": {
+            "type": "number",
+            "format": "float",
+            "description": "외부 리스크(기회비용, 인플레이션 등) 반영 계수 (예: 0.3). (선택 사항)"
+          }
+        }
+      },
+      "responseSchema": {
+        "type": "object",
+        "required": ["total_loss_amount", "loss_breakdown"],
+        "properties": {
+          "calculation_status": {"type": "string", "enum": ["SUCCESS", "ERROR"]},
+          "total_loss_amount": {
+            "type": "number",
+            "format": "float",
+            "description": "최종 계산된 총 손실액 (Time-Loss + Risk Cost). [근거: Self-RAG - 투명성 확보]"
+          },
+          "loss_breakdown": {
+            "type": "object",
+            "required": ["time_loss_amount", "risk_cost_amount"],
+            "properties": {
+              "time_loss_amount": {"type": "number", "format": "float", "description": "시간 손실분 (estimated_hours * time_value_per_hour)."},
+              "risk_cost_amount": {"type": "number", "format": "float", "description": "리스크 비용분 (계산된 리스크 계수 기반)." }
+            }
+          },
+          "suggested_cta_message": {
+             "type": "string",
+             "description": "사용자의 손실액을 바탕으로 동적 생성되는 CTA 문구. 예: '시간 확보 25시간 돌려받기'."
+          }
+        }
+      }
+    }
+  ]
+}

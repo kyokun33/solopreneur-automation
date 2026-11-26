@@ -1,0 +1,4 @@
+file 'f:/1인기업/google_flow_projects/hair_loss_foods/scene1_여성탈모_음식3가지_자연여성아나운서.mp4.mp3'
+file 'f:/1인기업/google_flow_projects/hair_loss_foods/scene2_여성탈모_음식3가지_자연여성아나운서.mp4.mp3'
+file 'f:/1인기업/google_flow_projects/hair_loss_foods/scene3_여성탈모_음식3가지_자연여성아나운서.mp4.mp3'
+file 'f:/1인기업/google_flow_projects/hair_loss_foods/scene4_여성탈모_음식3가지_자연여성아나운서.mp4.mp3'

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌋 [슈드용사] 은발 흑철 마검사 8방향 7종 스프라이트 시트 라이브 쇼케이스</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+        body {
+            background-color: #04060d;
+            color: #f8fafc;
+            font-family: 'Pretendard', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(239, 68, 68, 0.25), transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(251, 191, 36, 0.15), transparent 50%);
+        }
+
+        .header {
+            max-width: 1400px;
+            margin: 0 auto 20px auto;
+            background: rgba(15, 23, 42, 0.92);
+            border: 2px solid #ef4444;
+            border-radius: 18px;
+            padding: 18px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 35px rgba(239, 68, 68, 0.35);
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: #fbbf24;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .workspace {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .workspace { grid-template-columns: 1fr; }
+        }
+
+        .stage-card {
+            background: rgba(15, 23, 42, 0.95);
+            border: 2px solid rgba(239, 68, 68, 0.5);
+            border-radius: 18px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            background: #020617;
+            border: 3px solid #ef4444;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: inset 0 0 50px rgba(239, 68, 68, 0.3);
+        }
+
+        canvas { image-rendering: pixelated; display: block; }
+
+        .stage-hud {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid #ef4444;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.65rem;
+            color: #fbbf24;
+            display: flex;
+            gap: 12px;
+        }
+
+        .panel-card {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .panel-title {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #fbbf24;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px;
+        }
+
+        .dir-wheel {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            width: 100%;
+        }
+
+        .dir-btn {
+            background: #1e293b;
+            border: 1.5px solid #475569;
+            color: #e2e8f0;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .dir-btn.active {
+            background: #ef4444;
+            border-color: #fbbf24;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+        }
+
+        .skill-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .skill-btn {
+            background: #0f172a;
+            border: 1.5px solid #3b82f6;
+            color: #f8fafc;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .skill-btn.active {
+            border-color: #fbbf24;
+            background: linear-gradient(135deg, #b91c1c, #991b1b);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🌋 [슈드용사] 은발 흑철 마검사 8방향 7종 스프라이트 라이브 쇼케이스</h1>
+        <div style="font-size: 0.85rem; color: #38bdf8; font-weight: 800;" id="statusText">
+            ✅ 이미지 로딩 준비 중...
+        </div>
+    </div>
+
+    <div class="workspace">
+        
+        <div class="stage-card">
+            <div style="width: 100%; display: flex; justify-content: space-between; margin-bottom: 12px; font-weight: 700; color: #94a3b8; font-size: 0.85rem;">
+                <span>🎥 360° 8방향 7가지 모션 실시간 스테이지</span>
+                <span>키보드 [1~7] / 8방향 휠 조작</span>
+            </div>
+
+            <div class="canvas-wrapper">
+                <canvas id="mainCanvas" width="600" height="440"></canvas>
+                <div class="stage-hud">
+                    <span id="hudMotion">MOTION: 1. 정지상태</span>
+                    <span id="hudDir">DIR: S (남쪽)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-card">
+            
+            <!-- 8-Direction Wheel -->
+            <div>
+                <div class="panel-title">🧩 8방향 각도 회전 선택</div>
+                <div class="dir-wheel">
+                    <button class="dir-btn" onclick="setDir(5)">NW (북서)</button>
+                    <button class="dir-btn" onclick="setDir(4)">N (북/뒷모습)</button>
+                    <button class="dir-btn" onclick="setDir(3)">NE (북동)</button>
+                    <button class="dir-btn" onclick="setDir(6)">W (서)</button>
+                    <button class="dir-btn active" id="btnS" onclick="setDir(0)">S (남/정면)</button>
+                    <button class="dir-btn" onclick="setDir(2)">E (동)</button>
+                    <button class="dir-btn" onclick="setDir(7)">SW (남서)</button>
+                    <button class="dir-btn" onclick="setDir(0)">S (남)</button>
+                    <button class="dir-btn" onclick="setDir(1)">SE (남동)</button>
+                </div>
+            </div>
+
+            <!-- 7 Motion Selection -->
+            <div>
+                <div class="panel-title">⚔️ 7가지 스킬 & 모션 발동</div>
+                <div class="skill-grid">
+                    <button class="skill-btn active" id="m0" onclick="setMotion(0)"><span>1. 🛑 정지상태 (Idle)</span> <span>키 [1]</span></button>
+                    <button class="skill-btn" id="m1" onclick="setMotion(1)"><span>2. 🏃 이동 (Move)</span> <span>키 [2]</span></button>
+                    <button class="skill-btn" id="m2" onclick="setMotion(2)"><span>3. ⚔️ 기본공격 (Attack)</span> <span>키 [3]</span></button>
+                    <button class="skill-btn" id="m3" onclick="setMotion(3)"><span>4. ⚡ 스킬 1 대쉬공격</span> <span>키 [4]</span></button>
+                    <button class="skill-btn" id="m4" onclick="setMotion(4)"><span>5. 🌊 스킬 2 원거리공격</span> <span>키 [5]</span></button>
+                    <button class="skill-btn" id="m5" onclick="setMotion(5)"><span>6. 🌀 스킬 3 360도 회전</span> <span>키 [6]</span></button>
+                    <button class="skill-btn" id="m6" onclick="setMotion(6)" style="background: linear-gradient(135deg, #dc2626, #991b1b); border-color: #fbbf24;"><span>7. 🔥 필살기 (점프 내려찍기)</span> <span>키 [7]</span></button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        const motionList = [
+            { name: "1. 정지상태", file: "01_idle_8dir.png", frames: 4 },
+            { name: "2. 이동", file: "02_move_8dir.png", frames: 4 },
+            { name: "3. 기본공격", file: "03_basic_attack_8dir.png", frames: 4 },
+            { name: "4. 스킬 1 대쉬공격", file: "04_dash_attack_8dir.png", frames: 4 },
+            { name: "5. 스킬 2 원거리공격", file: "05_ranged_sword_wave_8dir.png", frames: 4 },
+            { name: "6. 스킬 3 360도 회전", file: "06_whirlwind_360_8dir.png", frames: 4 },
+            { name: "7. 필살기 점프 내려찍기", file: "07_ultimate_ground_slam_8dir.png", frames: 6 }
+        ];
+
+        const dirs = ["S (남/정면)", "SE (남동)", "E (동)", "NE (북동)", "N (북/뒷모습)", "NW (북서)", "W (서)", "SW (남서)"];
+
+        // Multi-Path Fallback Image Preloader
+        const loadedImgs = [];
+        let loadedCount = 0;
+
+        const pathPrefixes = [
+            "",
+            "슈드용사/스프라이트인미지/",
+            "슈드용사/스프라이트이미지/",
+            "슈드용사/Assets/Sprites/스프라이트인미지/",
+            "슈드용사/Assets/Sprites/스프라이트이미지/",
+            "Media_Input/"
+        ];
+
+        motionList.forEach((m, idx) => {
+            const img = new Image();
+            
+            function tryLoadPath(pIdx) {
+                if (pIdx >= pathPrefixes.length) {
+                    console.warn("Failed to load image:", m.file);
+                    return;
+                }
+                const targetUrl = pathPrefixes[pIdx] + m.file;
+                img.src = targetUrl;
+            }
+
+            img.onload = () => {
+                loadedCount++;
+                document.getElementById('statusText').innerText = `✅ 8방향 시트 로드 완비 (${loadedCount}/${motionList.length})`;
+            };
+
+            img.onerror = () => {
+                // Try next fallback path
+                const currentP = pathPrefixes.findIndex(p => img.src.includes(p));
+                tryLoadPath(currentP + 1);
+            };
+
+            tryLoadPath(0);
+            loadedImgs.push(img);
+        });
+
+        let currentMotionIdx = 0;
+        let currentDirIdx = 0;
+        let frameIdx = 0;
+        let lastTime = 0;
+
+        const canvas = document.getElementById('mainCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function setDir(idx) {
+            currentDirIdx = idx;
+            document.querySelectorAll('.dir-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('hudDir').innerText = `DIR: ${dirs[idx]}`;
+        }
+
+        function setMotion(idx) {
+            currentMotionIdx = idx;
+            frameIdx = 0;
+            document.querySelectorAll('.skill-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(`m${idx}`).classList.add('active');
+            document.getElementById('hudMotion').innerText = `MOTION: ${motionList[idx].name}`;
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key >= '1' && e.key <= '7') {
+                setMotion(parseInt(e.key) - 1);
+            }
+        });
+
+        function update(timestamp) {
+            if (timestamp - lastTime > 110) {
+                lastTime = timestamp;
+                frameIdx = (frameIdx + 1) % motionList[currentMotionIdx].frames;
+            }
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Stage Grid Ground
+            ctx.strokeStyle = 'rgba(239, 68, 68, 0.15)';
+            ctx.lineWidth = 1;
+            for(let x=0; x<600; x+=40) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,440); ctx.stroke(); }
+            for(let y=0; y<440; y+=40) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(600,y); ctx.stroke(); }
+
+            // Center Stage Shadow
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            ctx.beginPath();
+            ctx.ellipse(300, 310, 50, 18, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            const img = loadedImgs[currentMotionIdx];
+            if (img && img.complete && img.naturalWidth > 0) {
+                const curMotion = motionList[currentMotionIdx];
+                const sw = img.naturalWidth / curMotion.frames;
+                const sh = img.naturalHeight / 8;
+
+                ctx.save();
+                ctx.translate(300, 220);
+
+                // Draw Crop Frame
+                ctx.drawImage(
+                    img,
+                    frameIdx * sw, currentDirIdx * sh, sw, sh,
+                    -90, -110, 180, 180
+                );
+
+                ctx.restore();
+            } else {
+                // Fallback Drawing if Image is Loading
+                ctx.fillStyle = '#fbbf24';
+                ctx.font = '16px Pretendard';
+                ctx.textAlign = 'center';
+                ctx.fillText(`⚡ [${motionList[currentMotionIdx].name}] 캐릭터 모션 렌더링 중...`, 300, 220);
+            }
+
+            requestAnimationFrame(update);
+        }
+
+        requestAnimationFrame(update);
+    </script>
+</body>
+</html>

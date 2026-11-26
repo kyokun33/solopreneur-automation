@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 [Connect AI] ComfyUI 공식 및 ComfyUI-Manager 통합 연동 센터</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #030611;
+            --card-bg: rgba(15, 23, 42, 0.94);
+            --primary: #fbbf24;
+            --secondary: #38bdf8;
+            --accent: #a855f7;
+            --text: #f8fafc;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text);
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            min-height: 100vh;
+            padding: 24px;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(251, 191, 36, 0.22), transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(56, 189, 248, 0.15), transparent 50%);
+        }
+
+        header {
+            max-width: 1300px;
+            margin: 0 auto 24px auto;
+            background: rgba(15, 23, 42, 0.92);
+            border: 2px solid var(--primary);
+            border-radius: 18px;
+            padding: 20px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 35px rgba(251, 191, 36, 0.35);
+            backdrop-filter: blur(12px);
+        }
+
+        .header-title h1 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .grid-layout {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 992px) {
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .card-header {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #1e293b;
+            border: 1.5px solid #38bdf8;
+            color: #f8fafc;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .link-btn:hover {
+            border-color: var(--primary);
+            background: #2563eb;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(56, 189, 248, 0.4);
+        }
+
+        .badge {
+            background: #10b981;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 800;
+        }
+
+        .badge-manager {
+            background: #a855f7;
+        }
+
+        /* Full Width Script Card */
+        .full-card {
+            max-width: 1300px;
+            margin: 24px auto 0 auto;
+            background: rgba(15, 23, 42, 0.92);
+            border: 1.5px solid rgba(251, 191, 36, 0.4);
+            border-radius: 20px;
+            padding: 24px;
+        }
+
+        .code-box {
+            background: #020617;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 16px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.85rem;
+            color: #38bdf8;
+            white-space: pre-wrap;
+            margin-top: 12px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-title">
+            <h1>🎨 [Connect AI] ComfyUI 공식 및 ComfyUI-Manager 통합 연동 센터</h1>
+        </div>
+        <div style="font-size: 0.9rem; color: #38bdf8; font-weight: 800;">
+            ComfyUI v0.3+ & Manager 원클릭 통합
+        </div>
+    </header>
+
+    <!-- Grid Layout -->
+    <div class="grid-layout">
+
+        <!-- 1. 공식 사이트 및 다운로드 -->
+        <div class="card">
+            <div class="card-header">
+                🌐 1. ComfyUI 공식 홈페이지 & 다운로드
+            </div>
+            <div class="card-desc">
+                ComfyUI 공식 웹사이트입니다. ComfyUI 개요, 공식 설치 가이드, 데스크톱 전용 앱 다운로드 및 클라우드 서비스(Comfy Cloud) 정보를 종합 제공합니다.
+            </div>
+            <div class="btn-group">
+                <a href="https://www.comfy.org/" target="_blank" class="link-btn">
+                    <span>🏠 ComfyUI 공식 홈페이지 (comfy.org)</span>
+                    <span class="badge">공식 사이트</span>
+                </a>
+                <a href="https://www.comfy.org/download" target="_blank" class="link-btn">
+                    <span>💻 ComfyUI 데스크톱 앱 다운로드</span>
+                    <span class="badge">원클릭 설치</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- 2. ComfyUI GitHub 저장소 -->
+        <div class="card">
+            <div class="card-header">
+                📦 2. ComfyUI 공식 GitHub 저장소
+            </div>
+            <div class="card-desc">
+                ComfyUI 오픈소스 코어 라이브러리 및 설치 가이드입니다. Windows 포터블 버전(Direct standalone zip), 맥/리눅스 수동 설치 스크립트 및 최신 릴리스 소스를 제공합니다.
+            </div>
+            <div class="btn-group">
+                <a href="https://github.com/comfyanonymous/ComfyUI" target="_blank" class="link-btn">
+                    <span>🐙 ComfyUI 공식 GitHub 저장소</span>
+                    <span class="badge">오픈소스 메인</span>
+                </a>
+                <a href="https://github.com/comfyanonymous/ComfyUI/releases" target="_blank" class="link-btn">
+                    <span>💾 Windows 포터블 버전 (Direct Zip) 다운로드</span>
+                    <span class="badge">Windows 포터블</span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Full Width ComfyUI-Manager Card -->
+    <div class="full-card">
+        <div class="card-header">
+            ⚡ 3. ComfyUI-Manager 확장 기능 & 원클릭 커스텀 노드 관리자
+        </div>
+        <div class="card-desc">
+            ComfyUI-Manager는 다양한 커스텀 노드(Custom Nodes) 및 모델을 편리하게 검색하고 원클릭으로 설치·업데이트·관리할 수 있는 **ComfyUI 필수 1위 확장 프로그램**입니다.
+        </div>
+        
+        <div style="display: flex; gap: 12px; margin-top: 14px;">
+            <a href="https://github.com/ltdrdata/ComfyUI-Manager" target="_blank" class="link-btn" style="flex: 1;">
+                <span>🚀 ComfyUI-Manager GitHub 저장소 바로가기</span>
+                <span class="badge badge-manager">필수 확장 프로그램</span>
+            </a>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <h4 style="color: #fbbf24; font-size: 0.95rem; margin-bottom: 8px;">🛠️ ComfyUI-Manager 원클릭 수동 설치 명령 (custom_nodes 폴더):</h4>
+            <div class="code-box">cd custom_nodes
+git clone https://github.com/ltdrdata/ComfyUI-Manager.git</div>
+        </div>
+    </div>
+
+</body>
+</html>

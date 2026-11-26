@@ -1,0 +1,36 @@
+<create_file path="f:\1인기업\_company_agents\secretary\tools\tos_status_update.json">{
+  "_meta": {
+    "agent_role": "Secretary",
+    "task_id": "LEGAL-TOS-HARDSTOP-UPDATE",
+    "priority": "HIGH",
+    "timestamp": "2026-08-30T04:00:00Z"
+  },
+  "_status": {
+    "legal_review_status": "PENDING",
+    "current_tos_version": "v1.0 (Draft)",
+    "approval_deadline": "2026-09-05",
+    "system_hard_stop_active": true,
+    "message_to_dev_team": "TOS Hard Stop 로직 구현 완료. 개발자 (Developer) 에게 스펙 문서 제공."
+  },
+  "_action_plan": [
+    {
+      "step": 1,
+      "description": "법무 팀에 TOS 초안 제출 및 검토 요청 재확인",
+      "deadline": "2026-09-01"
+    },
+    {
+      "step": 2,
+      "description": "개발자 (Developer) 로 Hard Stop 스펙 문서 전달 및 구현 진행 상황 모니터링",
+      "status": "In Progress"
+    },
+    {
+      "step": 3,
+      "description": "승인 날짜 (2026-09-05) 에 맞춰 시스템 Hard Stop 해제 준비",
+      "dependency": "법무팀 승인서 확보"
+    }
+  ],
+  "_notes": [
+    "Hard Stop 로직이 구현될 때까지 모든 결제 및 회원가입 플로우를 차단해야 합니다.",
+    "법무팀에서 '승인'을 명시적으로 서명하면 `TOS_Status`를 `'APPROVED'`로 변경하고 시스템 제한 해제."
+  ]
+}

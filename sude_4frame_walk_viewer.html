@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ [슈드용사] 32-Bit HD 고화질 정면 걷기 4프레임 라이브 뷰어</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+        body {
+            background-color: #030712;
+            color: #f3f4f6;
+            font-family: 'Pretendard', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 20%, rgba(56, 189, 248, 0.15), transparent 70%),
+                radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.15), transparent 70%),
+                linear-gradient(180deg, #030712 0%, #0b1329 100%);
+        }
+
+        .header {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            border: 2px solid #fbbf24;
+            border-radius: 16px;
+            padding: 16px 28px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 0 35px rgba(251, 191, 36, 0.35);
+        }
+
+        .header h1 {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 1.1rem;
+            color: #fbbf24;
+        }
+
+        .stage-card {
+            background: rgba(15, 23, 42, 0.95);
+            border: 2px solid #38bdf8;
+            border-radius: 20px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            background: #020617;
+            border: 3px solid #fbbf24;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.9);
+        }
+
+        canvas { image-rendering: pixelated; display: block; }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .btn {
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+            border: 1.5px solid #fbbf24;
+            color: #fff;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
+            border-color: #38bdf8;
+        }
+
+        .badge {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #38bdf8;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.75rem;
+            color: #fbbf24;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>⚔️ [32-Bit HD 고화질] 정면 걷기 모션 4프레임 라이브 뷰어</h1>
+        <span style="font-size:0.8rem; color:#38bdf8; font-weight:800;">[2048x512 HD RGBA 100% 매칭]</span>
+    </div>
+
+    <div class="stage-card">
+        <div class="canvas-wrapper">
+            <canvas id="stageCanvas" width="560" height="500"></canvas>
+        </div>
+
+        <div class="controls">
+            <div class="badge" id="frameHud">FRAME: 1 / 4</div>
+            <button class="btn" onclick="togglePlay()">⏯️ 재생 / 일시정지</button>
+            <button class="btn" onclick="changeSpeed()">⚡ 속도 조절</button>
+        </div>
+
+        <div style="font-size:0.8rem; color:#94a3b8; font-weight:700;">
+            🖼️ 32비트 HD 스프라이트 경로: sude_walk_4frames_hd32bit.png (512x512 4셀)
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('stageCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const sheetImg = new Image();
+        sheetImg.src = 'sude_walk_4frames_hd32bit.png?' + new Date().getTime();
+
+        let frameIdx = 0;
+        let isPlaying = true;
+        let speedMs = 140;
+        let lastTime = 0;
+
+        function togglePlay() { isPlaying = !isPlaying; }
+        function changeSpeed() {
+            speedMs = speedMs === 140 ? 90 : (speedMs === 90 ? 200 : 140);
+        }
+
+        function render(timestamp) {
+            if (isPlaying && timestamp - lastTime > speedMs) {
+                lastTime = timestamp;
+                frameIdx = (frameIdx + 1) % 4;
+                document.getElementById('frameHud').innerText = `FRAME: ${frameIdx + 1} / 4`;
+            }
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Ground Grid
+            ctx.strokeStyle = 'rgba(56, 189, 248, 0.12)';
+            ctx.lineWidth = 1;
+            for(let x=0; x<560; x+=40) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,500); ctx.stroke(); }
+            for(let y=0; y<500; y+=40) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(560,y); ctx.stroke(); }
+
+            // Shadow
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            ctx.beginPath();
+            ctx.ellipse(280, 420, 70, 20, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            if (sheetImg.complete && sheetImg.naturalWidth > 0) {
+                ctx.save();
+                ctx.translate(280, 250);
+                const cellW = sheetImg.naturalWidth / 4;
+                const cellH = sheetImg.naturalHeight;
+                ctx.drawImage(
+                    sheetImg,
+                    frameIdx * cellW, 0, cellW, cellH,
+                    -170, -210, 340, 340
+                );
+                ctx.restore();
+            } else {
+                ctx.fillStyle = '#fbbf24';
+                ctx.font = '14px Pretendard';
+                ctx.textAlign = 'center';
+                ctx.fillText('⚡ 32-Bit HD 고화질 스프라이트 시트 로딩 중...', 280, 250);
+            }
+
+            requestAnimationFrame(render);
+        }
+
+        requestAnimationFrame(render);
+    </script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Google Flow Studio - 20대 초반 귀여운 여성 보이스 (기계음 0% 제거)</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0b0f17;
+      color: #f0f4f8;
+      font-family: 'Malgun Gothic', -apple-system, BlinkMacSystemFont, sans-serif;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .sidebar {
+      width: 430px;
+      background: #111827;
+      border-right: 1px solid #1f2937;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: auto;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18.5px;
+      font-weight: 800;
+      color: #f472b6;
+    }
+    .badge {
+      background: rgba(244, 114, 182, 0.15);
+      color: #f472b6;
+      border: 1px solid rgba(244, 114, 182, 0.45);
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+    .voice-box {
+      background: #1a2035;
+      border: 1px solid #f472b6;
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .voice-box-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #fbcfe8;
+    }
+    .voice-btn {
+      background: #1f2937;
+      color: #f9fafb;
+      border: 1px solid #374151;
+      padding: 8px 11px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s;
+    }
+    .voice-btn:hover {
+      border-color: #f472b6;
+      background: #283147;
+    }
+    .voice-btn.active {
+      background: #831843;
+      border-color: #f472b6;
+      color: #ffffff;
+    }
+    .scene-card {
+      background: #172033;
+      border: 1px solid #28354f;
+      border-radius: 10px;
+      padding: 9px 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .scene-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #f9a8d4;
+    }
+    .scene-desc {
+      font-size: 11.5px;
+      color: #d1d5db;
+      line-height: 1.4;
+      word-break: keep-all;
+    }
+    .main-stage {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: radial-gradient(circle at center, #231630 0%, #090d14 100%);
+    }
+    .player-wrap {
+      height: 82vh;
+      aspect-ratio: 9 / 16;
+      background: #000;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.75), 0 0 0 2px rgba(244,114,182,0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .top-bar {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: #fbcfe8;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="brand">
+      <span>💖 Google Flow Studio</span>
+      <span class="badge">기계음 0% 제거</span>
+    </div>
+
+    <div class="voice-box">
+      <div class="voice-box-title">✨ AI 성우 보이스 원클릭 비교 (기계음 보코더 변조 0% 차단)</div>
+      <button id="btn_20s_1" class="voice-btn active" onclick="switchVideo('여성탈모_음식3가지_20대초반귀여운여성_무기계음.mp4', 'btn_20s_1', '20대 초반 귀여운 여성 (보코더 왜곡 0% · 순수 아날로그 리샘플링 💖)')">
+        💖 1. 20대 초반 귀여운 여성 (기계음 0% 제거 · 기본 표준!)<br/>
+        <span style="font-size:11px;color:#fbcfe8;font-weight:400;">서버 피치 보코더(기계음 원인) 완전 차단 + 아날로그 1.055x 실크 튜닝</span>
+      </button>
+      <button id="btn_20s_2" class="voice-btn" onclick="switchVideo('여성탈모_음식3가지_20대초반_Ava멀티링구얼.mp4', 'btn_20s_2', '20대 초반 차세대 다국어 여성 (Ava Multilingual · 0Hz 순정)')">
+        ✨ 2. 20대 초반 차세대 AI 여성 (Ava Multilingual)<br/>
+        <span style="font-size:11px;color:#fde68a;font-weight:400;">2세대 다국어 신경망 20대 초반 여성 순정 성대 (0Hz 무변조)</span>
+      </button>
+      <button id="btn1" class="voice-btn" onclick="switchVideo('여성탈모_음식3가지_현수아나운서.mp4', 'btn1', '차세대 다큐 남성 아나운서 (현수 Multilingual)')">
+        ⭐ 3. 차세대 다큐 남성 아나운서 (현수 Multilingual)<br/>
+        <span style="font-size:11px;color:#a7f3d0;font-weight:400;">호흡·억양이 가장 사람 같은 최신 다국어 남성 모델</span>
+      </button>
+      <button id="btn2" class="voice-btn" onclick="switchVideo('여성탈모_음식3가지_자연여성아나운서.mp4', 'btn2', '차분한 성인 여성 아나운서 (무보정 0Hz 자연톤)')">
+        🎙️ 4. 차분한 성인 여성 아나운서 (무보정 0Hz)<br/>
+        <span style="font-size:11px;color:#d1d5db;font-weight:400;">신뢰감 있는 정통 건강 정보 여성 아나운서 톤</span>
+      </button>
+    </div>
+
+    <div class="scene-card">
+      <div class="scene-head"><span>SCENE 01 · 20대 초반 다정한 대본</span><span>오프닝 훅</span></div>
+      <div class="scene-desc">“머리 감을 때마다 한 움큼씩 빠져서 속상하셨죠? 검은콩 말고, 이 음식 세 가지 꼭 챙겨보세요!”</div>
+    </div>
+    <div class="scene-card">
+      <div class="scene-head"><span>SCENE 02 · 소고기 (철분·단백질)</span><span>70.3% 결핍 예방</span></div>
+      <div class="scene-desc">“첫 번째는 소고기예요. 여성 탈모 70%가 겪는 철분 부족을, 흡수 잘 되는 헴철로 든든하게 채워준답니다.”</div>
+    </div>
+    <div class="scene-card">
+      <div class="scene-head"><span>SCENE 03 · 굴 (천연 아연)</span><span>39.4% 결핍 예방</span></div>
+      <div class="scene-desc">“두 번째는 싱싱한 굴이에요. 모발 단백질 합성에 꼭 필요한 아연이 풍부해서, 머리카락을 탄탄하게 지켜줘요.”</div>
+    </div>
+    <div class="scene-card">
+      <div class="scene-head"><span>SCENE 04 · 고등어 (오메가-3)</span><span>89.9% 빠짐 감소</span></div>
+      <div class="scene-desc">“세 번째는 고소한 고등어예요. 오메가-3가 두피 염증은 줄이고 모발 밀도는 높여서, 머리카락이 훨씬 덜 빠진답니다!”</div>
+    </div>
+  </div>
+  <div class="main-stage">
+    <div class="top-bar" id="statusText">
+      🔊 현재 재생 중: 20대 초반 귀여운 여성 (보코더 왜곡 0% · 순수 아날로그 리샘플링 💖)
+    </div>
+    <div class="player-wrap">
+      <video id="vid" src="여성탈모_음식3가지_20대초반귀여운여성_무기계음.mp4" controls autoplay loop playsinline></video>
+    </div>
+  </div>
+
+  <script>
+    function switchVideo(src, btnId, label) {
+      const v = document.getElementById('vid');
+      v.src = src;
+      v.play().catch(()=>{});
+      document.querySelectorAll('.voice-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(btnId).classList.add('active');
+      document.getElementById('statusText').innerText = '🔊 현재 재생 중: ' + label;
+    }
+  </script>
+</body>
+</html>
