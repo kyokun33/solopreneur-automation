@@ -1,71 +1,81 @@
-import React, { useState, useMemo } from 'react';
-import './LossScorecard.css'; // CSS 파일을 분리하여 스타일링합니다.
+/**
+ * @description Loss Scorecard의 시각적 표현을 담당하는 컴포넌트입니다.
+ * 핵심 로직은 useLossScorecard 훅에 위임하여 Pure Component로 유지합니다.
+ */
+import React from 'react';
+import { UseLossScorecardHook } from '../hooks/useLossScorecard';
 
-// 1. 타입 정의 (TypeScript Strictness)
-interface LossData {
-  lossAmount: number; // 손실 총액 (예: $50,000)
-  riskLevel: 'low' | 'medium' | 'high'; // 리스크 레벨
+interface LossScorecardProps {
+    initialData: Partial<{ timeElapsedHours: number, dataIntegrityRiskPoints: number, legalComplianceIssueDetected: boolean }>;
 }
 
-/**
- * Loss Scorecard 컴포넌트. 데이터 주입 및 상태 변화에 따른 UI 전환을 시뮬레이션합니다.
- * @param initialData - 외부에서 주입되는 초기 손실 데이터를 받습니다.
- */
-const LossScorecard: React.FC<{ data: LossData }> = ({ data }) => {
-  // 2. 핵심 로직: 현재 상태(State) 결정 (Memoization 활용)
-  const currentState = useMemo(() => {
-    if (data.lossAmount >= 100000 || data.riskLevel === 'high') {
-      return 'critical'; // 임계점 초과 또는 최고 리스크
-    } else if (data.lossAmount >= 20000 || data.riskLevel === 'medium') {
-      return 'warning'; // 경고 구간 진입
-    } else {
-      return 'normal'; // 정상 상태
+const LossScorecard: React.FC<LossScorecardProps> = ({ initialData }) => {
+    // 훅을 통해 상태 로직 관리
+    const { scorecard, history, isLoading, onInputChange } = useLossScorecard(initialData);
+
+    if (isLoading && !scorecard) {
+        return <div className="loading-state">⚙️ 스코어카드 데이터 분석 중... 잠시만 기다려 주세요.</div>;
     }
-  }, [data]);
 
-  // 3. Red Warning Overlay 관리 로직
-  const isWarningActive = currentState !== 'normal';
-  
-  // CSS 클래스에 따라 동적으로 스타일을 적용할 변수들
-  const cardClass = `scorecard-container ${currentState}`;
+    if (!scorecard) {
+         // 초기 로딩 후에도 결과가 없을 경우의 Fallback UI
+        return <div className="error-state">데이터를 불러올 수 없습니다. 설정을 확인해 주세요.</div>;
+    }
 
-  return (
-    <div className="loss-wrapper">
-      {/* Red Warning/Glitch 필터 오버레이 레이어 */}
-      {isWarningActive && (
-        <div className="red-warning-overlay" data-state={currentState}>
-          {/* 실제 구현에서는 여기에 Glitch Effect CSS Animation을 적용합니다. */}
-          <p className="glitch-message">⚠️ WARNING: Critical Loss Detected!</p> 
+    const { currentLossState, totalEstimatedLossUSD, explanationMessage } = scorecard;
+
+    // 상태에 따른 동적 스타일링 (Red Warning / Glitch Effect 시뮬레이션)
+    const stateClass = `state-${currentLossState.toLowerCase()}`;
+    const isCritical = currentLossState === 'Critical';
+
+    return (
+        <div className={`scorecard-container ${stateClass} ${isCritical ? 'glitch-active' : ''}`}>
+            {/* 1. 핵심 지표: Loss Counter 위젯 */}
+            <div className="loss-counter">
+                <h2 className="main-title">{`예상 손실액:`}</h2>
+                <p className={`total-loss ${isCritical ? 'critical' : ''}`}>
+                    ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(totalEstimatedLossUSD)}
+                </p>
+            </div>
+
+            {/* 2. 현재 상태 및 경고 메시지 */}
+            <div className="status-alert">
+                <h3>현재 리스크 레벨: <span className={`state-${currentLossState.toLowerCase()}`}>{currentLossState}</span></h3>
+                <p className="explanation">{explanationMessage}</p>
+                {/* 이 부분에 Red Warning Filter와 Glitch Effect를 시각적으로 적용합니다. */}
+            </div>
+
+            {/* 3. 상세 손실 Breakdown (시각화 요소) */}
+            <div className="loss-breakdown">
+                <h4>손실 원인 분석 (Loss Breakdown)</h4>
+                <p>시간적 위험: ${totalEstimatedLossUSD * 0.4} | 데이터 리스크: ${totalEstimatedLossUSD * 0.3} | 법적 책임: ${totalEstimatedLossUSD * 0.3}</p>
+            </div>
+
+             {/* 4. 상태 전이 시뮬레이션 버튼 (테스트 용) */}
+            <div className="input-control">
+                <h4>시나리오 테스트</h4>
+                <button onClick={() => onInputChange({ timeElapsedHours: 20, dataIntegrityRiskPoints: 50, legalComplianceIssueDetected: true })}>
+                    [Max Risk] 최대 리스크 시뮬레이션 (Critical)
+                </button>
+                 <button onClick={() => onInputChange({ timeElapsedHours: 3, dataIntegrityRiskPoints: 10, legalComplianceIssueDetected: false })}>
+                    [Low Risk] 최소 리스크 시뮬레이션 (Apathy)
+                </button>
+            </div>
+
+             {/* 5. 상태 전이 이력 */}
+            <div className="history-log">
+                <h5>최근 스코어카드 변화 로그 ({history.length}회 기록):</h5>
+                <ul>
+                    {history.slice(-3).map((item, index) => (
+                        <li key={index}>
+                            [{item.timestamp.toLocaleTimeString()}] {item.prevState} $\\rightarrow$ <strong>{item.currentState}</strong> ({item.triggerEvent})
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
         </div>
-      )}
-
-      {/* 메인 스코어카드 컨테이너 */}
-      <div className={cardClass}>
-        <h2 className="scorecard-title">당신의 잠재적 손실 점수</h2>
-        
-        {/* 핵심 위젯: Loss Counter 시뮬레이션 */}
-        <div className="loss-counter-widget">
-          <span className="amount">${data.lossAmount.toLocaleString()}</span>
-          <span className="unit">예상 손실액 (Estimated Cost)</span>
-        </div>
-
-        {/* 리스크 분석 결과 요약 */}
-        <div className="risk-summary">
-            <p>진단된 리스크 레벨: <strong className={`level-${data.riskLevel}`}>{data.riskLevel.toUpperCase()}</strong></p>
-            <button className={`cta-button cta-${currentState}`}>
-                {currentState === 'critical' ? '🚨 즉시 전문 진단 보고서 요청하기' : '✅ 상세 리포트 확인 및 행동 계획 받기'}
-            </button>
-        </div>
-
-        {/* 상태별 안내 메시지 (UX 목표 반영) */}
-        <p className="status-guide">
-          {currentState === 'normal' && "현재는 안정적이지만, 놓치고 있는 잠재 리스크가 있습니다."}
-          {currentState === 'warning' && "경고: 현재 활동으로 인해 손실이 발생하기 시작했습니다. 즉각적인 점검이 필요합니다."}
-          {currentState === 'critical' && "CRITICAL LOSS! 심각한 수준의 손실 위험에 직면했습니다. 전문 컨설팅 없이는 회복 불가 예측됩니다."}
-        </p>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default LossScorecard;

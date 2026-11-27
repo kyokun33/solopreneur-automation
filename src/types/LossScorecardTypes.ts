@@ -1,51 +1,61 @@
 /**
- * @fileoverview Loss Scorecard 시스템 전체에 사용되는 핵심 데이터 타입 및 API Contract 정의.
- * [근거: 2026-11-27T05:57] - 백엔드 개발은 정의된 API 계약(Contract)을 유일한 진실의 원천으로 사용한다.
+ * Loss Scorecard State Machine API 명세서 (TypeScript Interface)
+ * @description 핵심 상태 전이 및 데이터 구조를 강제하여 타입 안정성을 확보합니다.
  */
 
-/**
- * @typedef {Object} RawUserInputData
- * @description 사용자로부터 입력받는 비구조화된 리스크 데이터 묶음.
- * @param {string} rawUserInputData.userIdentifier - 고유 사용자 ID (예: UUID).
- * @param {number} rawUserInputData.dataIntegrityRiskScore - 데이터 무결성 관련 점수 (0~100).
- * @param {number} rawUserInputData.complianceViolationCount - 규정 위반 횟수 (Count).
- * @param {string} rawUserInputData.industrySector - 산업 섹터 (예: Finance, HealthTech 등).
- */
+// 1. 핵심 상태 정의
+export type ScorecardState = 'Apathy' | 'Warning' | 'Critical';
 
 /**
- * @typedef {Object} LossBreakdownItem
- * @description 손실 점수를 구성하는 개별 항목의 상세 정보.
- * @property {string} metricName - 측정 지표 이름 (예: "Data Integrity Risk", "Compliance Violation").
- * @property {number} scoreValue - 해당 지표가 기여한 점수 값.
- * @property {string} explanation - 이 점수가 왜 높은지 설명하는 카피라이팅(Writer Copy 활용).
+ * LossScorecardInputData: 사용자의 행동이나 환경 변화로 인해 점수 산출에 필요한 원시 데이터입니다.
+ * @param {number} timeElapsedHours - 서비스 이용 시간 (시간 단위).
+ * @param {number} dataIntegrityRiskPoints - 사용자 데이터 무결성 위험 포인트.
+ * @param {boolean} legalComplianceIssueDetected - 법적 리스크 이슈 감지 여부 (Boolean).
  */
+export interface LossScorecardInputData {
+    timeElapsedHours: number;
+    dataIntegrityRiskPoints: number;
+    legalComplianceIssueDetected: boolean;
+}
 
 /**
- * @typedef {Object} LossScoreResult
- * @description 손실 정량화의 최종 결과물. Unit Test의 목표 객체.
- * @property {number} totalLossScore - 계산된 총 손실 점수 (소수점 2자리까지 허용).
- * @property {string} lossDescription - 사용자가 이해하기 쉬운 요약 문구 (예: "매우 높은 수준의 리스크 감지").
- * @property {LossBreakdownItem[]} breakdown - LossScore를 구성하는 상세 Breakdown 목록.
- * @property {number} calculatedOnTimestamp - 점수 산출 시점 타임스탬프.
+ * LossScorecardResult: 스코어링 API 호출 후 반환되는 최종 결과 데이터 구조입니다.
  */
+export interface LossScorecardResult {
+    currentLossState: ScorecardState; // 현재 상태 (Apathy, Warning, Critical 중 하나)
+    totalEstimatedLossUSD: number;  // 총 예상 손실 금액 ($ 단위)
+    riskBreakdown: {
+        timeImpact: number;          // 시간적 영향 손실 금액
+        dataRiskImpact: number;      // 데이터 무결성 위험 손실 금액
+        legalImpact: number;         // 법적 책임 리스크 손실 금액
+    };
+    explanationMessage: string;   // 현재 상태에 대한 경고 메시지 (예: "경각심이 필요합니다.")
+}
 
 /**
- * @typedef {Object} ReportRequestPayload
- * @description 진단 보고서 요청을 위한 API 요청 페이로드.
- * @param {string} userIdentifier - 요청하는 사용자 ID.
- * @param {string} reportType - 원하는 보고서 종류 (예: 'Basic', 'Premium').
+ * ScorecardTransitionHistory: 사용자에게 보여줄 전환 이력 데이터입니다.
  */
+export interface ScorecardTransitionHistory {
+    timestamp: Date;
+    prevState: ScorecardState;
+    currentState: ScorecardState;
+    triggerEvent: string; // 상태 변화를 유발한 이벤트 (예: 'Data Upload Failure', 'Long Time Gap')
+}
 
-/**
- * @typedef {Object} ReportResponse
- * @description 결제 게이트웨이를 거쳐 발행된 진단 보고서 응답.
- * @property {boolean} paymentSuccess - 결제 성공 여부.
- * @property {string | null} reportId - 발급된 보고서의 고유 ID (성공 시).
- * @property {string} message - 상태 메시지 (성공/실패 이유 포함).
- */
+// 2. API 명세서 타입 정의 (Mocking the backend API call)
+export interface IScorecardService {
+    /**
+     * @description 입력 데이터를 기반으로 Loss Scorecard의 상태와 금액을 계산합니다.
+     * @param data - LossScorecardInputData 객체.
+     * @returns Promise<LossScorecardResult> - 비동기적으로 결과를 반환합니다.
+     */
+    calculate(data: LossScorecardInputData): Promise<LossScorecardResult>;
 
-/**
- * API Contract: LossScoreCalculationService
- * Input: RawUserInputData
- * Output: Promise<LossScoreResult>
- */
+    /**
+     * @description 시간 경과에 따른 누적 손실액을 업데이트하고 상태 변화를 추적합니다.
+     * @param previousState - 이전 스코어카드 상태.
+     * @param newTimeElapsedHours - 새로운 이용 시간.
+     * @returns Promise<{result: LossScorecardResult, history: ScorecardTransitionHistory}>
+     */
+    trackProgress(previousState: ScorecardState, newTimeElapsedHours: number): Promise<{ result: LossScorecardResult; history: ScorecardTransitionHistory }>;
+}
