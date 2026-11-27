@@ -1,0 +1,123 @@
+/* CSS 파일은 Red Warning과 Glitch 효과를 시뮬레이션하는 데 집중합니다. */
+
+.loss-wrapper {
+    position: relative; /* 오버레이 기준점 설정 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+/* --- Red Warning Overlay (핵심 시각 효과) --- */
+.red-warning-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(204, 51, 51, 0.3); /* #CC3333 투명도 */
+    backdrop-filter: blur(1px); /* 약간의 왜곡 효과 추가 */
+    z-index: 10; /* 다른 요소 위에 표시되도록 높은 z-index 설정 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    opacity: 0; /* 초기에는 숨김 */
+    animation: overlay-fade-in 0.5s forwards; /* 애니메이션으로 나타남 */
+}
+
+@keyframes overlay-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.glitch-message {
+    font-size: 2rem;
+    color: #ffdddd;
+    text-shadow: 0 0 5px rgba(204, 51, 51, 0.8);
+    animation: glitch-flash 0.2s infinite alternate; /* 깜빡임 효과 시뮬레이션 */
+}
+
+@keyframes glitch-flash {
+    from { transform: translate(0); }
+    to { transform: translate(-2px, 2px); opacity: 0.9; }
+}
+
+
+/* --- Scorecard Container (기본 스타일) --- */
+.scorecard-container {
+    position: relative; /* 오버레이 뒤에 위치하도록 설정 */
+    z-index: 1; /* 오버레이보다 낮은 z-index */
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 700px;
+    text-align: center;
+    transition: all 0.5s ease-in-out; /* 상태 변화에 따른 부드러운 전환 */
+}
+
+/* --- State Specific Styling (상태별 시각적 차이) --- */
+/* Critical 상태일 때 전체적인 디자인을 더욱 위협적으로 만듦 */
+.scorecard-container.critical {
+    border: 3px solid #CC3333;
+    box-shadow: 0 15px 40px rgba(204, 51, 51, 0.4);
+}
+
+/* Warning 상태일 때 약간의 불안정성을 표현 */
+.scorecard-container.warning {
+    border: 3px solid #ffc107;
+    box-shadow: 0 15px 30px rgba(255, 193, 7, 0.4);
+}
+
+/* --- 위젯 스타일링 --- */
+.loss-counter-widget {
+    margin: 30px 0;
+    padding: 20px;
+    background: #f8f8ff;
+    border-radius: 15px;
+}
+
+.amount {
+    font-size: 4rem;
+    font-weight: 700;
+    display: block;
+    color: #333; /* 기본색 */
+}
+
+/* 상태별 금액 색상 조정 (Critical 시 빨간색으로 강조) */
+.scorecard-container.critical .amount {
+    color: #CC3333; 
+}
+
+/* --- CTA 버튼 스타일링 --- */
+.cta-button {
+    padding: 14px 30px;
+    border: none;
+    border-radius: 12px; /* Squircles 적용 */
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    margin-top: 20px;
+}
+
+/* 상태별 CTA 색상 및 메시지 강조 */
+.cta-normal {
+    background-color: #4CAF50; /* 녹색 계열 (안정) */
+    color: white;
+}
+.cta-warning {
+    background-color: #ffc107; /* 노란색 계열 (주의) */
+    color: #333;
+}
+.cta-critical {
+    background-color: #CC3333; /* 빨간색 계열 (위험!) */
+    color: white;
+}
+
+/* --- 리스크 레벨 표시 --- */
+.level-low { color: green; }
+.level-medium { color: orange; }
+.level-high { color: red; font-weight: 700;}
