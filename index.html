@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고고플랙스 | Anti-Loss Scorecard - 초기 진단</title>
+    <!-- Pretendard 폰트 사용 권장 -->
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@100..900&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===================================== */
+        /* CSS Variables & Global Reset (Designer Spec 준수) */
+        /* ===================================== */
+        :root {
+            --color-text-default: #1D1D1F; /* 진한 회색 */
+            --color-background: #FFFFFF;
+            --color-primary-accent: #0066CC; /* 해결책 제시 색상 */
+            --color-loss-warning: #CC3333; /* 손실 경고 색상 (CRITICAL) */
+            --font-family: 'Pretendard', sans-serif;
+            --transition-speed: 0.3s ease-in-out;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            color: var(--color-text-default);
+            background-color: #F9F9F9; /* 약간의 배경 분리 */
+            line-height: 1.6;
+        }
+
+        /* ===================================== */
+        /* Red Warning Overlay (핵심 기능) */
+        /* ===================================== */
+        #warning-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(204, 51, 51, 0.3); /* Red Loss Accent */
+            backdrop-filter: blur(2px);
+            pointer-events: none; /* 기본적으로는 클릭 가능하게 유지 */
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 9999; /* 모든 요소 위에 오버레이 */
+        }
+
+        /* Glitch 효과 시뮬레이션 (CSS Filter 사용) */
+        body.glitched #warning-overlay {
+             opacity: 1;
+             pointer-events: all; /* 활성화되면 클릭 방지 */
+        }
+
+
+        /* ===================================== */
+        /* Layout & Component Styling (Mobile First) */
+        /* ===================================== */
+
+        .container {
+            max-width: 90%;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* H1 (Hero Headline) */
+        .hero h1 {
+            font-size: clamp(1.8rem, 5vw, 3.5rem); /* 반응형 크기 조절 */
+            line-height: 1.2;
+            margin-bottom: 15px;
+            color: var(--color-text-default);
+        }
+
+        /* Loss Counter Widget (가장 중요) */
+        #loss-counter-widget {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px 0 50px;
+            padding: 20px;
+            background-color: #FFF8F8; /* Warning 배경 */
+            border: 2px solid var(--color-loss-warning);
+            border-radius: 12px;
+        }
+
+        #loss-label {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-right: 30px;
+        }
+
+        #total-loss-amount {
+            font-size: clamp(2.5rem, 8vw, 4rem); /* 매우 크게 */
+            font-weight: 700;
+            color: var(--color-loss-warning);
+            transition: color var(--transition-speed);
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 18px 20px; /* 충분한 여백 확보 (Designer Spec 준수) */
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            border-radius: 12px; /* Squircles 적용 */
+            transition: background-color var(--transition-speed), transform 0.1s;
+        }
+
+        /* Warning State Button (초기 상태) */
+        #initial-cta {
+            background-color: #CCCCCC; /* 비활성화된 회색 */
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        /* Active CTA Button (클릭 가능, 해결책 제시 시) */
+        #final-cta {
+            background-color: var(--color-primary-accent); /* Primary Accent로 전환 */
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
+        }
+
+        /* ===================================== */
+        /* Diagnosis Form Section (마지막 전환점) */
+        /* ===================================== */
+        #diagnosis-form {
+            padding: 50px 0;
+            text-align: center;
+            background-color: var(--color-background);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--color-text-default);
+        }
+
+        input[type="email"], input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color var(--transition-speed);
+        }
+
+        input[type="email"]:focus, input[type="text"]:focus {
+            border-color: var(--color-primary-accent); /* 포커스 시 강조 */
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2);
+        }
+
+        /* ===================================== */
+        /* JavaScript/Interactivity Styling (Glitch Effect) */
+        /* ===================================== */
+        @keyframes glitch {
+            0% { transform: translate(0), scaleY(1); }
+            20% { transform: translate(-4px, 3px) scaleY(1.02); opacity: 0.9; }
+            40% { transform: translate(5px, -2px) scaleY(0.98); opacity: 1; }
+            60% { transform: translate(-3px, 1px) scaleY(1.01); opacity: 0.95; }
+            80%, 100% { transform: translate(0), scaleY(1); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Red Warning Overlay (시각적 경고 필터) -->
+    <div id="warning-overlay"></div>
+
+    <!-- Header Section -->
+    <header class="container">
+        <h2 style="font-size: 1.2rem; color: #666;">고고플랙스 Anti-Loss Funnel v2.0</h2>
+    </header>
+
+    <!-- Hero Section (위기감 조성) -->
+    <section class="container hero">
+        <h1>🚨 당신의 AI 비즈니스, 지금 이 순간도 '미확인 리스크'에 노출되어 있습니다.</h1>
+        <p style="font-size: 1.2rem; margin-bottom: 40px;">막연한 걱정은 이제 그만. 손실액으로 숫자로 보여드립니다.</p>
+
+        <!-- Loss Counter Widget (Loss Scorecard 핵심) -->
+        <div id="loss-counter-widget">
+            <div id="loss-label">예상 누적 금전 손실 위험</div>
+            <div id="total-loss-amount">₩0원</div>
+        </div>
+
+        <p style="text-align: center; margin-bottom: 30px;">
+            AI 학습 과정에서의 IP 유출, 알고리즘 편향성 등 눈에 보이지 않던 위험들을 **'손실 점수(Loss Score)'**라는 단 하나의 숫자로 경보합니다.
+        </p>
+
+        <!-- CTA Button (초기 상태) -->
+        <button id="initial-cta" class="cta-button">
+            [무료 진단 보고서 요청] - 🚨 지금은 데이터 분석이 필요합니다.
+        </button>
+    </section>
+
+    <!-- 중간 내용 섹션 (진단 체크리스트 시뮬레이션) -->
+    <section id="diagnosis-area" class="container">
+        <h2>🔍 당신의 비즈니스가 놓치고 있는 3가지 핵심 리스크</h2>
+        <div style="margin-top: 30px;">
+            <!-- Researcher가 제공한 내용을 기반으로 간략하게 구성 -->
+            <p><strong>1. 데이터 주권 침해 (IP Leakage):</strong> 규제 위반 시 최소 수천만 원의 과징금이 부과됩니다.</p>
+            <p><strong>2. 알고리즘 편향성:</strong> 특정 그룹에 대한 차별은 법적 소송으로 이어집니다.</p>
+            <p><strong>3. 설명 가능성(XAI) 부재:</strong> 근거를 제시하지 못하는 의사결정은 신뢰도를 0으로 만듭니다.</p>
+        </div>
+    </section>
+
+    <!-- Diagnosis Form Section (최종 액션 유도) -->
+    <section id="diagnosis-form">
+        <h2>✅ 손실 점수 진단 완료. 이제 전문적인 해결책이 필요합니다.</h2>
+        <p style="margin-bottom: 30px; font-size: 1.1rem;">무료 진단 보고서를 요청하시면, 저희 전문가가 귀사의 핵심 취약점을 분석하여 맞춤형 리스크 매트릭스를 제공해 드립니다.</p>
+
+        <!-- Form Group -->
+        <form id="report-request-form" style="max-width: 450px; margin: 0 auto;">
+            <div class="form-group">
+                <label for="name">회사명 / 담당자 이름</label>
+                <input type="text" id="name" placeholder="예) 고고플랙스 / 홍길동 (필수)" required>
+            </div>
+            <div class="form-group">
+                <label for="email">이메일 주소</label>
+                <input type="email" id="email" placeholder="example@company.com (연락처 확인용)" required>
+            </div>
+
+            <!-- 최종 CTA 버튼 -->
+            <button id="final-cta" class="cta-button" type="submit">
+                [무료 진단 보고서 요청] - 💡 전문 컨설팅 리포트 받기
+            </button>
+        </form>
+    </section>
+
+
+    <!-- ===================================== -->
+    <!-- JavaScript Logic (상호작용 시뮬레이션) -->
+    <!-- ===================================== -->
+    <script>
+        // 전역 변수 및 DOM 요소 캐싱
+        const initialCtaButton = document.getElementById('initial-cta');
+        const finalCtaButton = document.getElementById('final-cta');
+        const totalLossAmountElement = document.getElementById('total-loss-amount');
+        const bodyElement = document.body;
+        const overlay = document.getElementById('warning-overlay');
+
+        // --- 1. Loss Counter 로직 ---
+        /**
+         * 숫자를 부드럽게 카운트업하여 표시하는 함수 (UX 핵심)
+         * @param {number} finalValue - 최종적으로 도달해야 할 숫자 값
+         */
+        function animateCounter(finalValue, elementId) {
+            const element = document.getElementById(elementId);
+            let currentCount = 0;
+            const duration = 2500; // 2.5초에 걸쳐 카운트업
+            let startTimestamp = null;
+
+            function step(timestamp) {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const elapsed = timestamp - startTimestamp;
+                const progress = Math.min(elapsed / duration, 1); // 0에서 1 사이의 진행률
+                
+                // 부드러운 곡선 함수 적용 (Ease-in-out 효과 시뮬레이션)
+                const easedProgress = 0.5 - Math.cos((progress * Math.PI) * 0.5) / 2;
+
+                currentCount = Math.floor(finalValue * easedProgress);
+                element.innerText = `₩${currentCount.toLocaleString()}원`;
+
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    // 최종 값 고정 및 스타일 업데이트
+                    element.innerText = `₩${finalValue.toLocaleString()}원`;
+                    totalLossAmountElement.style.color = '#333'; // Red Warning 해제 후 색상 변화 시뮬레이션
+                }
+            }
+            window.requestAnimationFrame(step);
+        }
+
+        // --- 2. 상태 관리 및 흐름 제어 (Anti-Loss Funnel) ---
+        /**
+         * 초기 진단 데이터를 받으면 Loss Counter를 구동하고 UI를 '경고' 상태로 변경합니다.
+         * @param {number} lossAmount - 측정된 총 손실액 (예: 50,000,000)
+         */
+        function triggerLossDetection(lossAmount) {
+            // 1. Red Warning 필터 발동
+            bodyElement.classList.add('glitched');
+
+            // 2. Loss Counter 애니메이션 시작
+            animateCounter(lossAmount, 'total-loss-amount');
+
+            // 3. CTA 버튼 상태 변경 (비활성 -> 경고)
+            initialCtaButton.style.cursor = 'pointer';
+            initialCtaButton.disabled = false;
+            initialCtaButton.innerText = `[필수] 무료 진단 보고서 요청 (⚠️ 데이터 분석 필요)`;
+            initialCtaButton.style.backgroundColor = '#D9534F'; // Warning Red 계열로 변경
+
+             // 4. 이벤트 리스너 업데이트: 이제는 클릭을 유도해야 함
+            initialCtaButton.onclick = () => {
+                triggerFunnelCompletion();
+            };
+        }
+
+        /**
+         * Funnel의 마지막 단계, 보고서 요청 페이지로 전환합니다. (UX 목표 달성)
+         */
+        function triggerFunnelCompletion() {
+             // 1. Red Warning 필터 해제 및 신뢰도 확보 시뮬레이션
+            bodyElement.classList.remove('glitched');
+            overlay.style.opacity = '0';
+
+            // 2. CTA 버튼 상태 변경 (경고 -> 해결책 제시)
+            initialCtaButton.innerText = `진단 완료! 전문 컨설팅 리포트 받기`;
+            initialCtaButton.onclick = null; // 이벤트 제거
+            finalCtaButton.style.display = 'block'; // 최종 폼의 버튼 노출
+
+             // 스크롤을 아래 폼으로 부드럽게 이동 (User Flow 유도)
+            document.getElementById('diagnosis-form').scrollIntoView({ behavior: 'smooth' });
+        }
+
+
+        // --- 3. 이벤트 리스너 초기화 및 시뮬레이션 실행 ---
+
+        // [시뮬레이션 값] - Researcher가 제공한 최대 범위 내에서 임의로 높은 손실액을 설정합니다.
+        const SIMULATED_LOSS = 50000000; // 5천만원 가정 (최소 리스크를 반영)
+
+        window.onload = () => {
+            // 초기 로드 시, 데이터가 '수신되었다'는 가정을 하고 함수 실행
+            console.log("Loss Scorecard Prototype: Initializing...");
+            triggerLossDetection(SIMULATED_LOSS);
+
+             // 폼 제출 이벤트 리스너 (실제 백엔드 전송은 안함)
+            document.getElementById('report-request-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert("✅ [성공] 진단 보고서 요청이 접수되었습니다.\n곧 전문가가 분석한 '고고플랙스 손실 리스크 매트릭스'를 이메일로 보내드리겠습니다.");
+                // 실제 환경에서는 여기서 API 호출 로직이 들어갑니다.
+            });
+        };
+
+    </script>
+
+</body>
+</html>
