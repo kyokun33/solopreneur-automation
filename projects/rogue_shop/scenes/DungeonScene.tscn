@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/scenes/DungeonScene.gd" id="1_dg"]
+[ext_resource type="Texture2D" path="res://assets/sprites/hero_idle.png" id="2_hero"]
+
+[node name="DungeonScene" type="Node2D"]
+script = ExtResource("1_dg")
+
+[node name="Bg" type="ColorRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+color = Color(0.0705882, 0.0666667, 0.109804, 1)
+
+[node name="Arena" type="ColorRect" parent="."]
+offset_left = 120.0
+offset_top = 120.0
+offset_right = 1160.0
+offset_bottom = 640.0
+color = Color(0.141176, 0.12549, 0.188235, 1)
+
+[node name="Player" type="Node2D" parent="."]
+position = Vector2(640, 380)
+
+[node name="Sprite" type="Sprite2D" parent="Player"]
+scale = Vector2(0.55, 0.55)
+texture = ExtResource("2_hero")
+
+[node name="HintLabel" type="Label" parent="."]
+offset_left = 140.0
+offset_top = 75.0
+offset_right = 1140.0
+offset_bottom = 115.0
+text = "🗡️ [무한 던전 Stage 1] 이동: WASD / 방향키  |  검기 공격(pixelfx): Space 또는 좌클릭"
+horizontal_alignment = 1
