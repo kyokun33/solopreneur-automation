@@ -1,0 +1,131 @@
+0000000000000000000000000000000000000000 4bd4a562e1e7d3fdebd74166b39dd409af3e1b03 kyokun33 <sude3333333@gmail.com> 1786006216 +0900	commit (initial): Deploy 1in-company sales portal to Render
+4bd4a562e1e7d3fdebd74166b39dd409af3e1b03 0000000000000000000000000000000000000000 kyokun33 <sude3333333@gmail.com> 1786006383 +0900	Branch: renamed refs/heads/main to refs/heads/main
+4bd4a562e1e7d3fdebd74166b39dd409af3e1b03 4bd4a562e1e7d3fdebd74166b39dd409af3e1b03 kyokun33 <sude3333333@gmail.com> 1786006383 +0900	Branch: renamed refs/heads/main to refs/heads/main
+4bd4a562e1e7d3fdebd74166b39dd409af3e1b03 6ead8537b39b313b02d0160a1b912078a3d5ea82 kyokun33 <sude3333333@gmail.com> 1786007825 +0900	commit: Update to AI Business Report Generator SaaS app
+6ead8537b39b313b02d0160a1b912078a3d5ea82 45eb9603760b56cfe26ad4fc03bc3f063c35fe05 kyokun33 <sude3333333@gmail.com> 1786008002 +0900	commit: Deploy production-ready AI Business Report Generator SaaS app
+45eb9603760b56cfe26ad4fc03bc3f063c35fe05 a2bab87baff264e26680e2567896c14ca24a3a95 kyokun33 <sude3333333@gmail.com> 1786008060 +0900	commit: Add Kmong buyer guide PDF and automation kit
+a2bab87baff264e26680e2567896c14ca24a3a95 b17ce8b93fe7a974bfac584c6dd7cb4bea032e9a kyokun33 <sude3333333@gmail.com> 1786008278 +0900	commit: Replace sales_portal.py with AI Business Report Generator SaaS
+b17ce8b93fe7a974bfac584c6dd7cb4bea032e9a 49abb3469bb8e630ea735508ee49af37bfae0915 kyokun33 <sude3333333@gmail.com> 1786009145 +0900	commit: Fix Render build error with render.yaml and runtime.txt
+49abb3469bb8e630ea735508ee49af37bfae0915 07dd30e728ca72297e487dfdfc0f98df98e4060d kyokun33 <sude3333333@gmail.com> 1786010059 +0900	commit: Implement 1-time access key authorization & consumption system
+07dd30e728ca72297e487dfdfc0f98df98e4060d 12f96b9468faab91028313b781c1828507f7c281 kyokun33 <sude3333333@gmail.com> 1786010928 +0900	commit: Enable dynamic Kmong Order ID auto-verification and CS tracking
+12f96b9468faab91028313b781c1828507f7c281 6b70cb91b68f085775198b13b90619d77429c1ec kyokun33 <sude3333333@gmail.com> 1786011147 +0900	commit: Release v1.00 - Solopreneur AI Business Report Generator SaaS
+6b70cb91b68f085775198b13b90619d77429c1ec 78a4239d8070816d083896c6c732b7358a02596d kyokun33 <sude3333333@gmail.com> 1786011272 +0900	commit: Register 3분시리즈 프로젝트 1 branding mapping
+78a4239d8070816d083896c6c732b7358a02596d 4bc572d3456ab32a5fc79b69d590e8c4649b4a4c kyokun33 <sude3333333@gmail.com> 1786011998 +0900	commit: Patch v1.01: Restore budget input field in index.html
+4bc572d3456ab32a5fc79b69d590e8c4649b4a4c c27d4a3df7836ebc5f464df06d08618d742bd618 kyokun33 <sude3333333@gmail.com> 1786012440 +0900	commit: Upgrade v1.10: Implement Smart Domain Classifier for F&B, E-commerce, Services and IT tailored reports
+c27d4a3df7836ebc5f464df06d08618d742bd618 fe38501112bb736214b4e9948fb46deb76e6029b kyokun33 <sude3333333@gmail.com> 1786012968 +0900	commit: Upgrade v1.20: Integrate Expert System Prompt and Live OpenAI GPT LLM Engine
+fe38501112bb736214b4e9948fb46deb76e6029b 83dda01b069f8006016fb95fb3e604c41c0e1cff kyokun33 <sude3333333@gmail.com> 1786013233 +0900	commit: Release v2.00: Integrate Official K-Startup PSST Business Plan Framework
+83dda01b069f8006016fb95fb3e604c41c0e1cff 110d09941c3451f352cb845e05b5be4b6bff0db9 kyokun33 <sude3333333@gmail.com> 1786013348 +0900	commit: Set release status to v0.90 Beta (Awaiting Kmong Approval)
+110d09941c3451f352cb845e05b5be4b6bff0db9 a5d1b639063422ea458d1ff24b0be2f7f77115ed kyokun33 <sude3333333@gmail.com> 1786013569 +0900	commit: Upgrade v0.95 Beta: Integrate Quantitative 4-Step PSST Logical Framework
+a5d1b639063422ea458d1ff24b0be2f7f77115ed cdf0f3c6518878313e6129bc924f8a518b3bec45 kyokun33 <sude3333333@gmail.com> 1786013777 +0900	commit: Upgrade v0.99 Beta: Integrate 1-Page Summary, 5 Program Sizing, and 7-Proofing Documents Checklist
+cdf0f3c6518878313e6129bc924f8a518b3bec45 6bcffef22e735061aa84bbf6b2f8033b2df62a37 kyokun33 <sude3333333@gmail.com> 1786013930 +0900	commit: Upgrade v0.99b Beta: Integrate 5 Domain Focus Points and Excluded Industry Check
+6bcffef22e735061aa84bbf6b2f8033b2df62a37 9cfb8719dda3c9416375d29de95c7b11f5bac2d9 kyokun33 <sude3333333@gmail.com> 1786014364 +0900	commit: Upgrade v0.99c Beta: Add OpenAI API Key Guide Modal and Security Assurance Card
+9cfb8719dda3c9416375d29de95c7b11f5bac2d9 f62b534a4607de6013aa4b6edac8e7e49982aa61 kyokun33 <sude3333333@gmail.com> 1786014796 +0900	commit: Upgrade v0.99d Beta: Expand to Full Multi-Page PSST Report and Fix MD Download
+f62b534a4607de6013aa4b6edac8e7e49982aa61 355bfa6c8624e11f526fc3ea43375b79e16fe107 kyokun33 <sude3333333@gmail.com> 1786014811 +0900	commit: Upgrade v0.99e Beta: Fix Latin-1 HTTP Header encoding bug and guarantee Full Multi-Page PSST Report
+355bfa6c8624e11f526fc3ea43375b79e16fe107 c52aab34f1619dbe73764d34431d6e9b1cb52c5a kyokun33 <sude3333333@gmail.com> 1786015371 +0900	commit: Upgrade v0.99f Beta: Implement Program Dynamic Sizing Engine and R&D 25-Page Ultra-Deep Module
+c52aab34f1619dbe73764d34431d6e9b1cb52c5a d8f4462853054dab1080f0dc84bdbe7f699dd31d kyokun33 <sude3333333@gmail.com> 1786016144 +0900	commit: Release v1.00: Full 25-Combination Matrix Verified and ReportLab Dynamic Table Layout Synchronized
+d8f4462853054dab1080f0dc84bdbe7f699dd31d a0af0c18a7e4c22dae67cd58348e2968a15396d8 kyokun33 <sude3333333@gmail.com> 1786016490 +0900	commit: Upgrade v1.10: Synchronize HWP/Word Standard 10.5pt and Margins, Expand R&D 25p to 11.3K Chars
+a0af0c18a7e4c22dae67cd58348e2968a15396d8 c58fec77892b60e3ad49179e93af4abbf97c0a05 kyokun33 <sude3333333@gmail.com> 1786016939 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+c58fec77892b60e3ad49179e93af4abbf97c0a05 68dd9a673fa20b1cc7a95354c627a33a2ccd4350 kyokun33 <sude3333333@gmail.com> 1786017123 +0900	commit: Upgrade v1.20: Simplify Form UX and Add Business Plan Guidance Notice Card
+68dd9a673fa20b1cc7a95354c627a33a2ccd4350 ed8bd75bae411b050d67669ac106fa8f3379b5cd kyokun33 <sude3333333@gmail.com> 1786017576 +0900	commit: Upgrade v1.21: Add UNLIMITED_DEMO_KEYS exception handling for DEMO-FREE-2026
+ed8bd75bae411b050d67669ac106fa8f3379b5cd 1b1d3c95ad2403811ecf0315fd20563680c1987d kyokun33 <sude3333333@gmail.com> 1786017747 +0900	commit: Upgrade v1.22: Update report footer branding to 고고플렉스 AI 연구소
+1b1d3c95ad2403811ecf0315fd20563680c1987d ce04d0b4a493974f23843b656e55b0077fd57f47 kyokun33 <sude3333333@gmail.com> 1786018465 +0900	commit: Upgrade v1.30: Separate Appendix to PageBreak and Fix HWP/Word UTF-8 BOM Korean Encoding
+ce04d0b4a493974f23843b656e55b0077fd57f47 386a0331efd941b79a123d07933598eb8c078b16 kyokun33 <sude3333333@gmail.com> 1786019266 +0900	commit: Upgrade v1.40: Implement KeepTogether for Table split protection, remove all emojis, and consolidate Appendix to 1 page
+386a0331efd941b79a123d07933598eb8c078b16 c9da2841a58ae019687bef2342e66e4bca354ac3 kyokun33 <sude3333333@gmail.com> 1786020018 +0900	commit: Upgrade v1.50: Refine domain detection for pet/eco/hardware items and enforce 1-page KeepTogether Appendix integration
+c9da2841a58ae019687bef2342e66e4bca354ac3 872145982e7ea6fd6765147e41126cb24965f21d kyokun33 <sude3333333@gmail.com> 1786020582 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+872145982e7ea6fd6765147e41126cb24965f21d 86d26e9669aae3e39a0873b6b77c1afd4b5e168b kyokun33 <sude3333333@gmail.com> 1786020870 +0900	commit: Upgrade v1.60: Add dedicated pet food subscription domain detection and guarantee 100% compact 1-page Appendix integration
+86d26e9669aae3e39a0873b6b77c1afd4b5e168b d8edcb9eec12f22fbe40cbbed43a7191774fb6a6 kyokun33 <sude3333333@gmail.com> 1786021057 +0900	commit: Upgrade v2.00: Implement Official K-Startup 10-Domain Taxonomy Engine
+d8edcb9eec12f22fbe40cbbed43a7191774fb6a6 73322bc0e99cb0cfd32e20269673228adaf04ede kyokun33 <sude3333333@gmail.com> 1786022340 +0900	commit: Upgrade v2.10: Completely separate Appendix from main report with PageBreak and compact into single Page 7 table
+73322bc0e99cb0cfd32e20269673228adaf04ede aaca712b959c9cfc20b3ef7caa03f20ff28a1a28 kyokun33 <sude3333333@gmail.com> 1786023061 +0900	commit: Upgrade v2.20: Implement 100% exact match for user provided sample PDF last page style and layout
+aaca712b959c9cfc20b3ef7caa03f20ff28a1a28 461486f2916faef1b6a0b54a62d2764d06e14250 kyokun33 <sude3333333@gmail.com> 1786023247 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+461486f2916faef1b6a0b54a62d2764d06e14250 c32c9e316ef1a6928e8b5ba561d3d761cd51475e kyokun33 <sude3333333@gmail.com> 1786023737 +0900	commit: Upgrade v2.30: Fix markdown HTML parsing issue on last page and guarantee 100% single page appendix layout
+c32c9e316ef1a6928e8b5ba561d3d761cd51475e 6971f0c254dfc667eb88d4fc2a218e9aaa999a89 kyokun33 <sude3333333@gmail.com> 1786024150 +0900	commit: Upgrade v2.40: Implement direct inline PDF viewing and printing from web UI
+6971f0c254dfc667eb88d4fc2a218e9aaa999a89 07ac0bec18218cb4ca8a9efc9a20cfdb6fd9d446 kyokun33 <sude3333333@gmail.com> 1786024716 +0900	commit: Upgrade v2.50: Completely resolve HTTP 500 error on PDF inline viewing endpoint
+07ac0bec18218cb4ca8a9efc9a20cfdb6fd9d446 cc4caa19f0411bd6ef5e05091b73bc97f4435b6d kyokun33 <sude3333333@gmail.com> 1786025570 +0900	commit: Upgrade v2.60: Clean up markdown symbols, apply 10.5pt body font, and fit appendix into 1 full page perfectly
+cc4caa19f0411bd6ef5e05091b73bc97f4435b6d e7ad0e6f63e3e4dd42818d2a970f2aefb55bd3db kyokun33 <sude3333333@gmail.com> 1786025851 +0900	commit: Upgrade v2.70: Completely remove backtick code block formatting from report output
+e7ad0e6f63e3e4dd42818d2a970f2aefb55bd3db bd70723b91a125ac1fb8bc89a05580bdc20bb828 kyokun33 <sude3333333@gmail.com> 1786026657 +0900	commit: Upgrade v3.00: 100% sync Web UI live preview and PDF export layout and design boxes
+bd70723b91a125ac1fb8bc89a05580bdc20bb828 9690bec1c2c2d0050a7d6273cb35d2669a5b6fbb kyokun33 <sude3333333@gmail.com> 1786070458 +0900	commit: Auto-sync local brain
+9690bec1c2c2d0050a7d6273cb35d2669a5b6fbb 58783dcbffd32e61830d3dc528fb1e89fdbfa94c kyokun33 <sude3333333@gmail.com> 1786079734 +0900	commit: Auto-sync local brain
+58783dcbffd32e61830d3dc528fb1e89fdbfa94c d2c589e9e50171e712fbac35ea267008879813fb kyokun33 <sude3333333@gmail.com> 1786116431 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+d2c589e9e50171e712fbac35ea267008879813fb 784a3409e7a714aa360a45e982794e5eda1ed5b7 kyokun33 <sude3333333@gmail.com> 1786117903 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+784a3409e7a714aa360a45e982794e5eda1ed5b7 b8eb8e914eb6e93d17898a10bf59ccf7f4857234 kyokun33 <sude3333333@gmail.com> 1786118828 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+b8eb8e914eb6e93d17898a10bf59ccf7f4857234 5a9225f327e4a79cc55e43fb2e1c35ef1705466d kyokun33 <sude3333333@gmail.com> 1786125023 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+5a9225f327e4a79cc55e43fb2e1c35ef1705466d 37ea460d2fe1f27b4082dbbd228e71e0af95f792 kyokun33 <sude3333333@gmail.com> 1786168710 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+37ea460d2fe1f27b4082dbbd228e71e0af95f792 0d41fe1b8564a3983156bf1e87166a5585c3439e kyokun33 <sude3333333@gmail.com> 1786169601 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+0d41fe1b8564a3983156bf1e87166a5585c3439e fea2dcf885ba6063984fa15a47eb9292a229bce6 kyokun33 <sude3333333@gmail.com> 1786169677 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+fea2dcf885ba6063984fa15a47eb9292a229bce6 a392ea1901c36c91d46b420437025e2d2b13113b kyokun33 <sude3333333@gmail.com> 1786172230 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+a392ea1901c36c91d46b420437025e2d2b13113b 25597400faf18a3fa8f6f9345b3d26391bf0909b kyokun33 <sude3333333@gmail.com> 1786172276 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+25597400faf18a3fa8f6f9345b3d26391bf0909b 8ea5909c1f209f48bb650d10a464a3f96ff75abf kyokun33 <sude3333333@gmail.com> 1786172500 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+8ea5909c1f209f48bb650d10a464a3f96ff75abf 0982375b6d8759803fa431a777ff3b3a22f51e58 kyokun33 <sude3333333@gmail.com> 1786175107 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+0982375b6d8759803fa431a777ff3b3a22f51e58 815df05113011d1a504014d6a6f68ca0ffd8b880 kyokun33 <sude3333333@gmail.com> 1786175237 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+815df05113011d1a504014d6a6f68ca0ffd8b880 3a845fd768de287c5d20a9635ca663596d8986bb kyokun33 <sude3333333@gmail.com> 1786177665 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+3a845fd768de287c5d20a9635ca663596d8986bb 52a0356d6c417bbb29c29228635f727dd79523b5 kyokun33 <sude3333333@gmail.com> 1795667379 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+52a0356d6c417bbb29c29228635f727dd79523b5 655b9b699e1e0686e03c6e27d911f1377a6eb07e kyokun33 <sude3333333@gmail.com> 1795669781 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+655b9b699e1e0686e03c6e27d911f1377a6eb07e f2fc7271f1b3dc3d387fd60d1834372e62fd35a7 kyokun33 <sude3333333@gmail.com> 1795671817 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+f2fc7271f1b3dc3d387fd60d1834372e62fd35a7 c4ab5d39a40a654a5f4c24e152034a65d755dd56 kyokun33 <sude3333333@gmail.com> 1795675461 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+c4ab5d39a40a654a5f4c24e152034a65d755dd56 e19e99880c55474d65c22714738595df89f896cb kyokun33 <sude3333333@gmail.com> 1795686039 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+e19e99880c55474d65c22714738595df89f896cb 8bcfcaa43891859aa808744c9c6f3b417e727ef3 kyokun33 <sude3333333@gmail.com> 1795686258 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+8bcfcaa43891859aa808744c9c6f3b417e727ef3 ccf9615a670ed57676a9ddf3bc0a8447d1f8626c kyokun33 <sude3333333@gmail.com> 1795688032 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+ccf9615a670ed57676a9ddf3bc0a8447d1f8626c adb4aedf293c25a2010ff2d91dbddb3175bcabbd kyokun33 <sude3333333@gmail.com> 1795694360 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+adb4aedf293c25a2010ff2d91dbddb3175bcabbd 08199ec505ead4ccc81e77675d7a36a9b026cfff kyokun33 <sude3333333@gmail.com> 1795694394 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+08199ec505ead4ccc81e77675d7a36a9b026cfff 4e9a1380d3ea7612d32f313354393c3998b4d78a kyokun33 <sude3333333@gmail.com> 1795695227 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+4e9a1380d3ea7612d32f313354393c3998b4d78a 9a5bb65a9762c6e7e7adf59a792a6855627d21ce kyokun33 <sude3333333@gmail.com> 1795697036 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+9a5bb65a9762c6e7e7adf59a792a6855627d21ce 27fb0b8d5ccae38684a45b62f4a2aed07519ab63 kyokun33 <sude3333333@gmail.com> 1795699759 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+27fb0b8d5ccae38684a45b62f4a2aed07519ab63 2f67f21a0d866ea3b0891a18f919b624ae2c29f1 kyokun33 <sude3333333@gmail.com> 1795700630 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+2f67f21a0d866ea3b0891a18f919b624ae2c29f1 ab0c35d212dec36c03b759b091a911e80fecc256 kyokun33 <sude3333333@gmail.com> 1795704191 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+ab0c35d212dec36c03b759b091a911e80fecc256 6d5d4128d5030e6ef4645faa279dfab492b8af40 kyokun33 <sude3333333@gmail.com> 1795704253 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+6d5d4128d5030e6ef4645faa279dfab492b8af40 4014e3ae54031937fefef722479390e0b0c7927b kyokun33 <sude3333333@gmail.com> 1795710511 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+4014e3ae54031937fefef722479390e0b0c7927b 16f96dc383dca11821e2e473bbe6977c39de9a1f kyokun33 <sude3333333@gmail.com> 1795710570 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+16f96dc383dca11821e2e473bbe6977c39de9a1f bc178c917ff6323c1539dff8051b02f2c05cf71d kyokun33 <sude3333333@gmail.com> 1795712301 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+bc178c917ff6323c1539dff8051b02f2c05cf71d 4a847393ff1188cc87dedc19fb32198369a2ba01 kyokun33 <sude3333333@gmail.com> 1795714099 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+4a847393ff1188cc87dedc19fb32198369a2ba01 108969b7667f379c68d042d308bd3d92a4caab51 kyokun33 <sude3333333@gmail.com> 1795717705 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+108969b7667f379c68d042d308bd3d92a4caab51 a4ad8c48e9e639d61e90f07eec5a320ede180613 kyokun33 <sude3333333@gmail.com> 1795726762 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+a4ad8c48e9e639d61e90f07eec5a320ede180613 66f6b8b46f14a0b875bafaca27c3d5a282cce344 kyokun33 <sude3333333@gmail.com> 1795736354 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+66f6b8b46f14a0b875bafaca27c3d5a282cce344 f636a0322bc851b91ebd4bdd029e9dc510b4f75b kyokun33 <sude3333333@gmail.com> 1795738432 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+f636a0322bc851b91ebd4bdd029e9dc510b4f75b 7e6d75a3bc90a0eec684dcc0441aba29ebff6fc6 kyokun33 <sude3333333@gmail.com> 1795739312 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+7e6d75a3bc90a0eec684dcc0441aba29ebff6fc6 aeb093c719942c8da09baefd40a7b913224306e2 kyokun33 <sude3333333@gmail.com> 1795740236 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+aeb093c719942c8da09baefd40a7b913224306e2 786c10fd7a79657c7d6f232b227618e4d7731b14 kyokun33 <sude3333333@gmail.com> 1795740307 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+786c10fd7a79657c7d6f232b227618e4d7731b14 5abc63ca221b7b4bfb4753a6d56fbc311274a288 kyokun33 <sude3333333@gmail.com> 1795743863 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+5abc63ca221b7b4bfb4753a6d56fbc311274a288 1b998a1a6ae7a564acc26fa034c3d72272963b99 kyokun33 <sude3333333@gmail.com> 1795743943 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+1b998a1a6ae7a564acc26fa034c3d72272963b99 ce90722aff1302ef43dd20aa7d662e89dfd2fe63 kyokun33 <sude3333333@gmail.com> 1795755541 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+ce90722aff1302ef43dd20aa7d662e89dfd2fe63 6fdb1ce093e29a86bb466da5c5cd64617456b7a0 kyokun33 <sude3333333@gmail.com> 1795755594 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+6fdb1ce093e29a86bb466da5c5cd64617456b7a0 a78edba2e5451d62281448078dac236f75593471 kyokun33 <sude3333333@gmail.com> 1795756479 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+a78edba2e5451d62281448078dac236f75593471 70c7301096fe952aaa3a036628fa5930a6a2316e kyokun33 <sude3333333@gmail.com> 1795757303 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+70c7301096fe952aaa3a036628fa5930a6a2316e 186803b880fbc590e7692c044d846a263343dcc1 kyokun33 <sude3333333@gmail.com> 1795759154 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+186803b880fbc590e7692c044d846a263343dcc1 4b95f4c77081cd83853abd59a7c2416f8552cc1a kyokun33 <sude3333333@gmail.com> 1795759193 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+4b95f4c77081cd83853abd59a7c2416f8552cc1a d20054477f9d896c3da6bba531b61fc4791b2911 kyokun33 <sude3333333@gmail.com> 1795760954 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+d20054477f9d896c3da6bba531b61fc4791b2911 b041d53b443f116fdd061cc7209e87bdde2f899b kyokun33 <sude3333333@gmail.com> 1795764536 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+b041d53b443f116fdd061cc7209e87bdde2f899b 7ac1bf5c3cbc6443b80548e394bdce933307a65b kyokun33 <sude3333333@gmail.com> 1795770815 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+7ac1bf5c3cbc6443b80548e394bdce933307a65b 97486a47e899c29e472e0dcd04210dca65a1f838 kyokun33 <sude3333333@gmail.com> 1795775308 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+97486a47e899c29e472e0dcd04210dca65a1f838 ead1c41c12d580729e44df503ed3462be9633a2e kyokun33 <sude3333333@gmail.com> 1795776267 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+ead1c41c12d580729e44df503ed3462be9633a2e 64c2214e4495ee019cccedbd60a8306bff33348c kyokun33 <sude3333333@gmail.com> 1795779804 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+64c2214e4495ee019cccedbd60a8306bff33348c bfc81b032332131444bda01ac41b593d26299135 kyokun33 <sude3333333@gmail.com> 1795779843 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+bfc81b032332131444bda01ac41b593d26299135 6b16daa31be6564da52e422dc3022006e21b2ef0 kyokun33 <sude3333333@gmail.com> 1795788813 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+6b16daa31be6564da52e422dc3022006e21b2ef0 3a9ae58461046d5095c3cb30e4bdd704627c94fc kyokun33 <sude3333333@gmail.com> 1795796075 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+3a9ae58461046d5095c3cb30e4bdd704627c94fc 53d3a7d0371011249d74b37d7ba17db69a1a47ec kyokun33 <sude3333333@gmail.com> 1795798799 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+53d3a7d0371011249d74b37d7ba17db69a1a47ec 9f03ecfa9c87c0e5ec81abf5a2f99144ba5b04a2 kyokun33 <sude3333333@gmail.com> 1795805069 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+9f03ecfa9c87c0e5ec81abf5a2f99144ba5b04a2 74d3bc760c2e95b479aec692cf439e45af154005 kyokun33 <sude3333333@gmail.com> 1795805907 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+74d3bc760c2e95b479aec692cf439e45af154005 fb267ea65fbeb5660243a492672bd025cce1d7e9 kyokun33 <sude3333333@gmail.com> 1795805959 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+fb267ea65fbeb5660243a492672bd025cce1d7e9 133920b4328c10e64c0abcf570b95aa984474883 kyokun33 <sude3333333@gmail.com> 1795807716 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+133920b4328c10e64c0abcf570b95aa984474883 490f90a3527406884f4b7428973b6c4496b6cdb3 kyokun33 <sude3333333@gmail.com> 1795808680 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+490f90a3527406884f4b7428973b6c4496b6cdb3 12aa25e5e96058e6d68a2e27ece70078985cdabc kyokun33 <sude3333333@gmail.com> 1795810413 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+12aa25e5e96058e6d68a2e27ece70078985cdabc 4d8b0a75c8d509fb103bf433bdb8d06bf649fc97 kyokun33 <sude3333333@gmail.com> 1795811322 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+4d8b0a75c8d509fb103bf433bdb8d06bf649fc97 bd0d26ca406130d5d041709e6c8397a6ecafb163 kyokun33 <sude3333333@gmail.com> 1795812237 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+bd0d26ca406130d5d041709e6c8397a6ecafb163 f051ba47b406bd6e2ddda6e0af713f584115bd59 kyokun33 <sude3333333@gmail.com> 1795813107 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+f051ba47b406bd6e2ddda6e0af713f584115bd59 8e6ec21595706120252ada82a9023ee7867376ff kyokun33 <sude3333333@gmail.com> 1795814025 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+8e6ec21595706120252ada82a9023ee7867376ff 8baf450772fa952f79675431ffe777b5a163b8c4 kyokun33 <sude3333333@gmail.com> 1795814911 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+8baf450772fa952f79675431ffe777b5a163b8c4 e4cc58363371fa6d3b37e4d1ce4455d7da4622b0 kyokun33 <sude3333333@gmail.com> 1795815812 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+e4cc58363371fa6d3b37e4d1ce4455d7da4622b0 f3ff3c95d24392abc1dac527fad37277cf1ef59a kyokun33 <sude3333333@gmail.com> 1795819441 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+f3ff3c95d24392abc1dac527fad37277cf1ef59a 5a2e16ad0bd31a5a62b0dc8480f86e3ab18fe72b kyokun33 <sude3333333@gmail.com> 1795819482 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+5a2e16ad0bd31a5a62b0dc8480f86e3ab18fe72b b97a4bda3ce9fdaf1fa6b1e70eee04523fd202d7 kyokun33 <sude3333333@gmail.com> 1795828419 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+b97a4bda3ce9fdaf1fa6b1e70eee04523fd202d7 a178bede5bc2a1b937b29091c0efeb73540afcda kyokun33 <sude3333333@gmail.com> 1795832004 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+a178bede5bc2a1b937b29091c0efeb73540afcda e2f329f3815d5a18f86776a3143871f41b490a58 kyokun33 <sude3333333@gmail.com> 1795838346 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+e2f329f3815d5a18f86776a3143871f41b490a58 1921c8902b71b7e39f632f5eab76a75f01685933 kyokun33 <sude3333333@gmail.com> 1795839335 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+1921c8902b71b7e39f632f5eab76a75f01685933 121025c54589b516a24421b967297952168c4424 kyokun33 <sude3333333@gmail.com> 1795848212 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+121025c54589b516a24421b967297952168c4424 e3b4d978d68307b099d4e8f8ab0d8ac9fb74c7e3 kyokun33 <sude3333333@gmail.com> 1795852712 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+e3b4d978d68307b099d4e8f8ab0d8ac9fb74c7e3 845111f40ec284cd33a4099bc926d150c52aee39 kyokun33 <sude3333333@gmail.com> 1795852836 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+845111f40ec284cd33a4099bc926d150c52aee39 45c9a98ae7b1f006dbc16b51ebc14dc3452bdf2e kyokun33 <sude3333333@gmail.com> 1795853607 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+45c9a98ae7b1f006dbc16b51ebc14dc3452bdf2e 920a6011a325611773f8528fcbdff96534b18f59 kyokun33 <sude3333333@gmail.com> 1795855408 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+920a6011a325611773f8528fcbdff96534b18f59 ce671af35c4a7b2bffe874c1acac2a757414b311 kyokun33 <sude3333333@gmail.com> 1795857241 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+ce671af35c4a7b2bffe874c1acac2a757414b311 67e8e609b6a9243534f89d910036c1c381251e24 kyokun33 <sude3333333@gmail.com> 1795857291 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+67e8e609b6a9243534f89d910036c1c381251e24 ef34316b7ce5d627b12b7345068b9bcca2d4a4f4 kyokun33 <sude3333333@gmail.com> 1795859940 +0900	commit: [P-Reinforce] Auto-synced structured knowledge
+ef34316b7ce5d627b12b7345068b9bcca2d4a4f4 690328e8b23669ade9ec2ea58c29735c04b56872 kyokun33 <sude3333333@gmail.com> 1795861760 +0900	commit: [P-Reinforce] Auto-synced structured knowledge

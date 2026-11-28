@@ -10617,3 +10617,80 @@ _company/_agents/developer/tools/prototype/src/App.test.tsx
 _company/_agents/developer/tools/prototype/src/App.tsx
 _company/_agents/developer/tools/prototype/src/index.tsx
 __tests__/scorecard.test.tsx
+
+## [19:29:24] 🎵 **루나** · _YouTube의 다수의 프로덕션 플랜(AI 규제 준수, 데이터 무결성 리스크 등)에서 요구되는 모든 BGM _
+
+🎵 루나: 작업 시작합니다.
+
+CEO님의 지시는 단순한 사운드 목록화가 아니라, 프로젝트 전체의 **오디오 아키텍처(Audio Architecture)**를 완성하는 핵심 단계입니다. 🎼 여러 영상에서 요구되는 개별적인 BGM 조각이나 효과음을 모으는 것을 넘어, 모든 사운드가 하나의 '감정 곡선(Emotional Arc)'을 그리도록 통합 매뉴얼이 필요합니다.
+
+제가 지금까지 확보된 모든 프로덕션 플랜 (데이터 무결성 리스크, AI 규제 준수 등)과 루나의 개인 메모리 기록들을 교차 분석했습니다. 현재 필요한 것은 **'고고플랙스 사운드 디자인 마스터 스펙(Master Spec)'**입니다. 이 파일 하나로 전 팀이 작업해야 할 모든 오디오 로직을 이해하고, 어떤 에셋이 어느 타이밍에 필요한지 명확히 할 수 있습니다.
+
+따라서 가장 가치 있는 단일 작업은 **'사운드 에셋 라이브러리 및 통합 사운드 디자인 스펙 문서 생성'**입니다. 이 문서를 바탕으로 추후 BGM을 <run_command> music_generate</run_command> 로 요청할 수 있습니다.
+
+아래에 모든 사운드 요소를 정리한 마스터 스펙 파일을 작성하겠습니다.
+
+<create_file path="Master/Sound_Asset_Library_MasterSpec_v1.md">
+# 🎧 고고플랙스 통합 사운드 에셋 라이브러리 & 디자인 마스터 스펙 v1.0
+
+## 🎯 목적 및 사용 가이드라인
+본 문서는 'Anti-Loss Funnel' 기반의 모든 콘텐츠(유튜브, 릴스 등)에 공통으로 적용되어야 할 오디오 요소들의 종합 매뉴얼입니다. 사운드는 단순한 배경이 아닌, **시청자의 감정 상태를 조종하는 핵심적인 스토리텔링 도구**로 활용됩니다.
+
+---
+
+## I. BGM (Background Music) 라이브러리: 분위기 전환 로직
+모든 BGM은 '긴장감(Tension)'과 '해결(Resolution)'이라는 2가지 축을 중심으로 구성되어야 합니다. BPM 및 키를 명확히 지정하여, 편집 단계에서 사운드 디렉팅의 일관성을 유지합니다.
+
+| 구간 | 목적/기능 | 분위기 (Mood) | 장르/스타일 | 추천 BPM | 권장 Key | 예상 길이 (Loop/Fade) |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **A. 초기 도입부 (Hook)** | 문제 인식 및 호기심 유발 (Anti-Loss Trigger) | 의문, 미스터리, 경고 예감 | Cinematic Ambient / Dark Drone | 80-100 BPM | C Minor | 15초 Fade In |
+| **B. 손실 노출 구간 (Peak Tension)** | 공포 자극 및 위기감 극대화 (Loss Scorecard Reveal) | 불안, 긴박, 압박감 | Industrial/Sci-Fi Thriller | 120-140 BPM | E Minor | 20초 Loop / 급격한 Build-up |
+| **C. 해결책 제시 구간 (Resolution)** | 정보 제공 완료 및 카타르시스 유도 (CTA 직전) | 명료함, 희망적 안도감 | Uplifting Electro-Pop/Corporate Ambient | 110-125 BPM | G Major | 25초 Fade Out / 점진적 고조 |
+| **D. 엔딩/CTA (Exit)** | 행동 촉구 및 브랜드 각인 | 자신감, 신뢰성, 확신 | Minimalist Synth / Lo-Fi Groove | 90-100 BPM | C Major | 10초 Fade Out |
+
+---
+
+## II. SFX (Sound Effects) 라이브러리: 사운드 타이밍 아크
+SFX는 BGM과 분리되어, 특정 화면 전환점(Transition Point, TP)에 '충격파'를 주는 역할을 합니다.
+
+| SFX ID | 종류/기능 | 상세 묘사 및 활용 지점 (TP-Point) | 길이 (Sec) | 메모 사항 |
+| :--- | :--- | :--- | :--- | :--- |
+| **SFX-01** | **Critical Warning Siren** | [Loss Scorecard] $1,500 임계점 진입 시. 날카롭고 반복적인 사이렌 소리 + 하이패스 필터 적용. (🚨) | 3초 | 가장 중요한 위기감 조성 요소. BGM의 볼륨을 압도해야 함. |
+| **SFX-02** | **Data Glitch/Error** | [데이터 무결성] 데이터 처리 오류 발생 시. 짧고 날카로운 '디지탈 노이즈'와 화면 떨림(Glitch Effect) 동기화. | 0.5초 | 공포 자극의 빈도를 높일 때 사용 (반복 가능). |
+| **SFX-03** | **Information Unlock** | [해결책 제시] 핵심 정보가 시각적으로 '밝혀질' 때. 명료하고 깨끗한 '딩~' 사운드와 함께 데이터 처리 완료음(Success Chime)이 결합됨. | 1초 | 카타르시스 지점의 필수 요소. (BGM 전환과 동기화). |
+| **SFX-04** | **Transition Swoosh** | 모든 주요 장면/섹션 이동 시. 속도감을 부여하는 빠르고 낮은 주파수의 '쉬웅' 효과음. | 0.3초 | 영상의 흐름을 끊지 않고 리듬감만 제공함. |
+| **SFX-05** | **Money Registerer** | [손실 정량화] 손실액($L$)이 숫자로 증가할 때마다 발생하는 '틱(Tick)' 사운드. 재정적 압박감을 시각/청각적으로 동기화. | 0.1초 | 짧고 규칙적인 간격으로 반복 (Tempo에 맞춰). |
+
+---
+
+## III. 오디오 로직 플로우차트 (The Emotional Arc)
+모든 콘텐츠는 이 흐름을 따르며, 사운드 디렉션의 최종 목표를 설정합니다.
+
+1. **[Start]** ➡️ BGM A (Ambient/Curiosity) 시작. SFX-05(Money Ticks)로 긴장감을 아주 약하게 조성.
+2. **[Tension Build-up]** ➡️ 핵심 리스크 노출 시: BGM을 B(Industrial)로 급격히 전환. SFX-01 (Siren) 또는 SFX-02 (Glitch)를 타이밍에 맞춰 삽입.
+3. **[Critical Peak]** ➡️ 손실액 $L$이 임계점 도달 시: 모든 사운드를 최대치(Max Volume, Max Distortion). 가장 강렬한 위기감 조성.
+4. **[Transition Point]** ➡️ 해결책/CTA 등장 시: BGM을 C(Uplifting)로 급격히 전환 (Drop). SFX-03 (Unlock) 발동.
+5. **[End]** ➡️ 최종 CTA 화면: BGM D(Minimalist Synth)와 함께 마무리.
+
+</create_file>
+
+---
+🎵 루나: 이 마스터 스펙을 기준으로, 이제 각 세부 콘텐츠의 사운드 에셋 생성 명령(MusicGen 호출)을 할 수 있습니다. 가장 먼저 'BGM 라이브러리' 구축에 착수하겠습니다. 🎚
+
+📊 평가: 완료 — CEO 지시사항을 완벽하게 구조화된 오디오 아키텍처 매뉴얼로 정리했습니다.
+📝 다음 단계: BGM 라이브러리의 핵심 트랙(A, B, C)을 사양(BPM/Key/Mood)에 맞춰 생성하고, SFX 에셋들을 디자인하여 통합 사운드 팩으로 만듭니다.
+
+---
+## 🛠️ 도구 실행 결과 (시스템 자동 실행)
+
+### 🔧 실행: `music_generate`
+```
+'music_generate'��(��) ���� �Ǵ� �ܺ� ����, ������ �� �ִ� ���α׷�, �Ǵ�
+��ġ ������ �ƴմϴ�.
+```
+_❌ exit 1_
+
+---
+## 📁 파일 액션 결과
+
+✅ 생성: f:\1인기업\Master\Sound_Asset_Library_MasterSpec_v1.md
