@@ -1,34 +1,76 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://scripts/scenes/DungeonScene.gd" id="1_dg"]
-[ext_resource type="Texture2D" path="res://assets/sprites/hero_idle.png" id="2_hero"]
 
 [node name="DungeonScene" type="Node2D"]
 script = ExtResource("1_dg")
 
-[node name="Bg" type="ColorRect" parent="."]
-offset_right = 1280.0
-offset_bottom = 720.0
-color = Color(0.0705882, 0.0666667, 0.109804, 1)
+[node name="BgSprite" type="Sprite2D" parent="."]
+position = Vector2(640, 360)
 
-[node name="Arena" type="ColorRect" parent="."]
-offset_left = 120.0
-offset_top = 120.0
-offset_right = 1160.0
-offset_bottom = 640.0
-color = Color(0.141176, 0.12549, 0.188235, 1)
+[node name="Entities" type="Node2D" parent="."]
 
-[node name="Player" type="Node2D" parent="."]
-position = Vector2(640, 380)
+[node name="Player" type="Node2D" parent="Entities"]
+position = Vector2(640, 480)
 
-[node name="Sprite" type="Sprite2D" parent="Player"]
-scale = Vector2(0.55, 0.55)
-texture = ExtResource("2_hero")
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 5
 
-[node name="HintLabel" type="Label" parent="."]
-offset_left = 140.0
-offset_top = 75.0
-offset_right = 1140.0
-offset_bottom = 115.0
-text = "🗡️ [무한 던전 Stage 1] 이동: WASD / 방향키  |  검기 공격(pixelfx): Space 또는 좌클릭"
+[node name="FloorPanel" type="PanelContainer" parent="HUD"]
+offset_left = 20.0
+offset_top = 64.0
+offset_right = 520.0
+offset_bottom = 132.0
+
+[node name="VBox" type="VBoxContainer" parent="HUD/FloorPanel"]
+layout_mode = 2
+
+[node name="FloorLabel" type="Label" parent="HUD/FloorPanel/VBox"]
+layout_mode = 2
+text = "🗡️ 무한 던전 Stage 1 / 6 (일반 구역)"
+
+[node name="HpLabel" type="Label" parent="HUD/FloorPanel/VBox"]
+layout_mode = 2
+text = "❤️ HP: 100 / 100  |  ⚔️ ATK: 22  |  탐험골드: +0G"
+
+[node name="ControlsLabel" type="Label" parent="HUD"]
+offset_left = 420.0
+offset_top = 675.0
+offset_right = 1260.0
+offset_bottom = 710.0
+text = "이동: WASD/방향키 | 검기: Space/좌클릭 | 대시: Shift | 포획(HP 40%↓): E"
+horizontal_alignment = 2
+
+[node name="ClearOverlay" type="PanelContainer" parent="HUD"]
+visible = false
+offset_left = 360.0
+offset_top = 200.0
+offset_right = 920.0
+offset_bottom = 470.0
+
+[node name="VBox" type="VBoxContainer" parent="HUD/ClearOverlay"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Title" type="Label" parent="HUD/ClearOverlay/VBox"]
+layout_mode = 2
+text = "✨ 스테이지 클리어!"
 horizontal_alignment = 1
+
+[node name="Summary" type="Label" parent="HUD/ClearOverlay/VBox"]
+layout_mode = 2
+text = "전리품 획득 완료!"
+horizontal_alignment = 1
+
+[node name="BtnNext" type="Button" parent="HUD/ClearOverlay/VBox"]
+layout_mode = 2
+text = "➡️ 다음 층으로 진입"
+
+[node name="BtnGamble" type="Button" parent="HUD/ClearOverlay/VBox"]
+layout_mode = 2
+text = "🎲 도박 제단: 탐험 골드 베팅 (성공 시 2배!)"
+
+[node name="BtnReturn" type="Button" parent="HUD/ClearOverlay/VBox"]
+layout_mode = 2
+text = "🏪 상점으로 귀환 (전리품·포획 몬스터 챙겨가기)"

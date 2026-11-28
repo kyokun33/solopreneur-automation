@@ -22,7 +22,7 @@ theme_override_constants/separation = 16
 
 [node name="TitleLabel" type="Label" parent="HUD/TopBar/HBox"]
 layout_mode = 2
-text = "  ⚔️ 은퇴한 전설의 용사: 던전 앞 만물상 (Phase 0)"
+text = "  ⚔️ 은퇴한 전설의 용사: 던전 앞 만물상"
 
 [node name="StatsLabel" type="Label" parent="HUD/TopBar/HBox"]
 layout_mode = 2

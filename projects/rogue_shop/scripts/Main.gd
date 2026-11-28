@@ -21,7 +21,7 @@ func _ready() -> void:
 	EventBus.scene_requested.connect(switch_scene)
 	EventBus.gold_changed.connect(func(_v): _refresh_hud())
 	EventBus.day_changed.connect(func(_v): _refresh_hud())
-	EventBus.craft_skill_changed.connect(func(_v): _refresh_hud())
+	EventBus.craft_skill_changed.connect(func(_lv, _xp): _refresh_hud())
 	_refresh_hud()
 	switch_scene("shop")
 

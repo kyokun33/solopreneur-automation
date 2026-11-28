@@ -1,6 +1,8 @@
 extends AnimatedSprite2D
 class_name PixelFxPlayer
 
+const Loader := preload("res://scripts/core/AssetLoader.gd")
+
 @export var fx_name: String = "torch"
 @export var auto_play: bool = true
 @export var free_on_finish: bool = false
@@ -15,12 +17,17 @@ func _ready() -> void:
 func load_pixelfx(name_id: String) -> bool:
 	var png_path := "res://assets/vfx/%s.png" % name_id
 	var json_path := "res://assets/vfx/%s.json" % name_id
-	if not ResourceLoader.exists(png_path) or not FileAccess.file_exists(json_path):
-		push_warning("PixelFx missing: " + name_id)
+	var tex := Loader.load_tex(png_path)
+	if tex == null:
+		push_warning("PixelFx texture missing: " + png_path)
 		return false
 
-	var tex: Texture2D = load(png_path)
-	var file := FileAccess.open(json_path, FileAccess.READ)
+	var abs_json := ProjectSettings.globalize_path(json_path)
+	if not FileAccess.file_exists(abs_json):
+		push_warning("PixelFx json missing: " + json_path)
+		return false
+
+	var file := FileAccess.open(abs_json, FileAccess.READ)
 	var data = JSON.parse_string(file.get_as_text())
 	file.close()
 	if typeof(data) != TYPE_DICTIONARY:

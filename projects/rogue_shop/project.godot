@@ -19,6 +19,7 @@ config/features=PackedStringArray("4.7", "Forward Plus")
 EventBus="*res://scripts/autoload/EventBus.gd"
 GameState="*res://scripts/autoload/GameState.gd"
 SaveSystem="*res://scripts/autoload/SaveSystem.gd"
+SfxManager="*res://scripts/autoload/SfxManager.gd"
 
 [display]
 
