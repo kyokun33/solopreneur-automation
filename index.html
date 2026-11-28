@@ -3,358 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>고고플랙스 | Anti-Loss Scorecard - 초기 진단</title>
-    <!-- Pretendard 폰트 사용 권장 -->
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@100..900&display=swap" rel="stylesheet">
-
+    <title>Loss Scorecard Simulation - 고고플랙스</title>
     <style>
-        /* ===================================== */
-        /* CSS Variables & Global Reset (Designer Spec 준수) */
-        /* ===================================== */
-        :root {
-            --color-text-default: #1D1D1F; /* 진한 회색 */
-            --color-background: #FFFFFF;
-            --color-primary-accent: #0066CC; /* 해결책 제시 색상 */
-            --color-loss-warning: #CC3333; /* 손실 경고 색상 (CRITICAL) */
-            --font-family: 'Pretendard', sans-serif;
-            --transition-speed: 0.3s ease-in-out;
-        }
+        /* =============================== */
+        /* 🎨 CSS: Apple-Style Minimalist & State Definition */
+        /* =============================== */
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        :root {
+            --color-text-default: #1D1D1F; /* 진한 회색 본문 텍스트 */
+            --color-bg-light: #FFFFFF;
+            --color-accent-primary: #007AFF; /* Apple Blue, CTA 버튼 기본 색상 */
+            /* 상태별 컬러 정의 (Self-RAG 기반) */
+            --color-safe: #5CB85C; /* 녹색 계열 (안전/정상) */
+            --color-warning: #FFCC00; /* 노란색/주황색 (경고/위험) */
+            --color-panic: #CC3333; /* 빨간색 (패닉/최대 위험) */
         }
 
         body {
-            font-family: var(--font-family);
-            color: var(--color-text-default);
-            background-color: #F9F9F9; /* 약간의 배경 분리 */
-            line-height: 1.6;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--color-bg-light);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
-
-        /* ===================================== */
-        /* Red Warning Overlay (핵심 기능) */
-        /* ===================================== */
-        #warning-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(204, 51, 51, 0.3); /* Red Loss Accent */
-            backdrop-filter: blur(2px);
-            pointer-events: none; /* 기본적으로는 클릭 가능하게 유지 */
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            z-index: 9999; /* 모든 요소 위에 오버레이 */
-        }
-
-        /* Glitch 효과 시뮬레이션 (CSS Filter 사용) */
-        body.glitched #warning-overlay {
-             opacity: 1;
-             pointer-events: all; /* 활성화되면 클릭 방지 */
-        }
-
-
-        /* ===================================== */
-        /* Layout & Component Styling (Mobile First) */
-        /* ===================================== */
 
         .container {
-            max-width: 90%;
-            margin: 0 auto;
-            padding: 20px 0;
-        }
-
-        header {
-            text-align: center;
-            padding: 40px 0 20px;
-            border-bottom: 1px solid #eee;
-        }
-
-        /* H1 (Hero Headline) */
-        .hero h1 {
-            font-size: clamp(1.8rem, 5vw, 3.5rem); /* 반응형 크기 조절 */
-            line-height: 1.2;
-            margin-bottom: 15px;
-            color: var(--color-text-default);
-        }
-
-        /* Loss Counter Widget (가장 중요) */
-        #loss-counter-widget {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 30px 0 50px;
-            padding: 20px;
-            background-color: #FFF8F8; /* Warning 배경 */
-            border: 2px solid var(--color-loss-warning);
-            border-radius: 12px;
-        }
-
-        #loss-label {
-            font-size: 1.5rem;
-            font-weight: 400;
-            margin-right: 30px;
-        }
-
-        #total-loss-amount {
-            font-size: clamp(2.5rem, 8vw, 4rem); /* 매우 크게 */
-            font-weight: 700;
-            color: var(--color-loss-warning);
-            transition: color var(--transition-speed);
-        }
-
-        /* CTA Button */
-        .cta-button {
-            display: block;
+            max-width: 800px;
             width: 100%;
-            padding: 18px 20px; /* 충분한 여백 확보 (Designer Spec 준수) */
-            font-size: 1.1rem;
-            font-weight: 700;
-            text-align: center;
-            cursor: pointer;
-            border: none;
-            border-radius: 12px; /* Squircles 적용 */
-            transition: background-color var(--transition-speed), transform 0.1s;
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
         }
 
-        /* Warning State Button (초기 상태) */
-        #initial-cta {
-            background-color: #CCCCCC; /* 비활성화된 회색 */
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
-        /* Active CTA Button (클릭 가능, 해결책 제시 시) */
-        #final-cta {
-            background-color: var(--color-primary-accent); /* Primary Accent로 전환 */
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
-        }
-
-        /* ===================================== */
-        /* Diagnosis Form Section (마지막 전환점) */
-        /* ===================================== */
-        #diagnosis-form {
-            padding: 50px 0;
-            text-align: center;
-            background-color: var(--color-background);
-        }
-
-        .form-group {
+        h1 {
+            font-size: 2.5rem;
             margin-bottom: 20px;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
             color: var(--color-text-default);
+            line-height: 1.3;
         }
 
-        input[type="email"], input[type="text"] {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color var(--transition-speed);
+        /* --- Loss Scorecard Widget Core --- */
+        #loss-scorecard {
+            background-color: #f9f9fb;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.5s ease-in-out; /* 상태 변화의 부드러운 전환 */
+            border: 1px solid #eee;
         }
 
-        input[type="email"]:focus, input[type="text"]:focus {
-            border-color: var(--color-primary-accent); /* 포커스 시 강조 */
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2);
+        /* ============================= */
+        /* STATE CHANGE VISUAL EFFECTS (핵심) */
+        /* ============================= */
+
+        /* 🚨 경고 상태 (Warning State - $1,500 초과) */
+        .warning-state {
+            border-color: var(--color-warning) !important;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.3); /* 은은한 노란색 발광 */
         }
 
-        /* ===================================== */
-        /* JavaScript/Interactivity Styling (Glitch Effect) */
-        /* ===================================== */
+        /* 🔥 패닉 상태 (Panic State - $2,500 초과) */
+        .panic-state {
+            border-color: var(--color-panic) !important;
+            box-shadow: 0 0 30px rgba(204, 51, 51, 0.6); /* 강한 빨간색 발광 및 경고 */
+        }
+
+        /* 시각적 충격 효과 (애니메이션) */
         @keyframes glitch {
-            0% { transform: translate(0), scaleY(1); }
-            20% { transform: translate(-4px, 3px) scaleY(1.02); opacity: 0.9; }
-            40% { transform: translate(5px, -2px) scaleY(0.98); opacity: 1; }
-            60% { transform: translate(-3px, 1px) scaleY(1.01); opacity: 0.95; }
-            80%, 100% { transform: translate(0), scaleY(1); }
+            0% { transform: translate(-2px, -2px); opacity: 1; }
+            50% { transform: translate(2px, 2px); opacity: 0.9; }
+            100% { transform: translate(-2px, 2px); opacity: 1; }
         }
 
+        /* 패닉 상태에서 적용되는 깜빡임 효과 (빨간 필터 시뮬레이션) */
+        .panic-state::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(204, 51, 51, 0.1); /* 빨간 투명 필터 */
+            animation: glitch 0.1s infinite alternate;
+            pointer-events: none;
+        }
+
+        /* 손실 카운터 스타일링 */
+        #loss-counter {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--color-panic); /* 기본적으로 가장 중요한 색상으로 설정 */
+            transition: color 0.5s ease;
+        }
+
+        /* Breakdown Chart Placeholder */
+        #breakdown-chart {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #eee;
+            border-radius: 8px;
+            min-height: 150px;
+            text-align: center;
+        }
+
+        /* CTA 버튼 스타일 */
+        .cta-button {
+            display: inline-block;
+            padding: 14px 32px;
+            margin-top: 40px;
+            background-color: var(--color-accent-primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .cta-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Red Warning Overlay (시각적 경고 필터) -->
-    <div id="warning-overlay"></div>
+<div class="container">
+    <h1>🚨 당신의 기업은 안전한가요?</h1>
+    <h2>데이터 무결성 실패로 인한 잠재적 재무 손실 시뮬레이터</h2>
+    <p style="margin-bottom: 30px; color: #666;">(시간이 지남에 따라 발생하는 가상의 리스크를 체험해보세요.)</p>
 
-    <!-- Header Section -->
-    <header class="container">
-        <h2 style="font-size: 1.2rem; color: #666;">고고플랙스 Anti-Loss Funnel v2.0</h2>
-    </header>
+    <!-- 핵심 인터랙티브 위젯 -->
+    <div id="loss-scorecard">
+        <h3>🔥 누적 예상 손실액 (Estimated Loss)</h3>
+        <p style="font-size: 1.2rem; margin-bottom: 20px;">🚨 현재 리스크 지수:</p>
+        <div id="loss-counter">$0</div>
+    </div>
 
-    <!-- Hero Section (위기감 조성) -->
-    <section class="container hero">
-        <h1>🚨 당신의 AI 비즈니스, 지금 이 순간도 '미확인 리스크'에 노출되어 있습니다.</h1>
-        <p style="font-size: 1.2rem; margin-bottom: 40px;">막연한 걱정은 이제 그만. 손실액으로 숫자로 보여드립니다.</p>
+    <!-- 손실 Breakdown 섹션 -->
+    <h3 style="margin-top: 40px;">📊 손실 구성 분석 (Loss Breakdown)</h3>
+    <div id="breakdown-chart">
+        [여기에 데이터 시각화 차트가 로드됩니다. 시간/규제 미준수 비율을 보여줍니다.]
+    </div>
 
-        <!-- Loss Counter Widget (Loss Scorecard 핵심) -->
-        <div id="loss-counter-widget">
-            <div id="loss-label">예상 누적 금전 손실 위험</div>
-            <div id="total-loss-amount">₩0원</div>
-        </div>
+    <!-- CTA -->
+    <button class="cta-button" onclick="alert('전문 진단 페이지로 이동합니다. (CTA)')">
+        즉시 리스크 무료 점검 받기 (Click to Save)
+    </button>
+</div>
 
-        <p style="text-align: center; margin-bottom: 30px;">
-            AI 학습 과정에서의 IP 유출, 알고리즘 편향성 등 눈에 보이지 않던 위험들을 **'손실 점수(Loss Score)'**라는 단 하나의 숫자로 경보합니다.
-        </p>
+<script>
+    // ===============================
+    // 💻 JavaScript: Loss Scorecard 로직 정의 (State Machine)
+    // ===============================
 
-        <!-- CTA Button (초기 상태) -->
-        <button id="initial-cta" class="cta-button">
-            [무료 진단 보고서 요청] - 🚨 지금은 데이터 분석이 필요합니다.
-        </button>
-    </section>
+    const $lossCounter = document.getElementById('loss-counter');
+    const $scoreCard = document.getElementById('loss-scorecard');
+    const TIME_INTERVAL = 1500; // 1.5초마다 리스크 계산 및 업데이트
+    let currentLoss = 0;
 
-    <!-- 중간 내용 섹션 (진단 체크리스트 시뮬레이션) -->
-    <section id="diagnosis-area" class="container">
-        <h2>🔍 당신의 비즈니스가 놓치고 있는 3가지 핵심 리스크</h2>
-        <div style="margin-top: 30px;">
-            <!-- Researcher가 제공한 내용을 기반으로 간략하게 구성 -->
-            <p><strong>1. 데이터 주권 침해 (IP Leakage):</strong> 규제 위반 시 최소 수천만 원의 과징금이 부과됩니다.</p>
-            <p><strong>2. 알고리즘 편향성:</strong> 특정 그룹에 대한 차별은 법적 소송으로 이어집니다.</p>
-            <p><strong>3. 설명 가능성(XAI) 부재:</strong> 근거를 제시하지 못하는 의사결정은 신뢰도를 0으로 만듭니다.</p>
-        </div>
-    </section>
+    // 임계점 정의 (지난 의사결정 로그 기반)
+    const THRESHOLD = {
+        WARNING: 1500, // $1,500 초과 시 경고
+        PANIC: 2500   // $2,500 초과 시 패닉 상태
+    };
 
-    <!-- Diagnosis Form Section (최종 액션 유도) -->
-    <section id="diagnosis-form">
-        <h2>✅ 손실 점수 진단 완료. 이제 전문적인 해결책이 필요합니다.</h2>
-        <p style="margin-bottom: 30px; font-size: 1.1rem;">무료 진단 보고서를 요청하시면, 저희 전문가가 귀사의 핵심 취약점을 분석하여 맞춤형 리스크 매트릭스를 제공해 드립니다.</p>
+    /**
+     * @function calculateLoss - 손실액을 누적하고 리스크를 계산합니다.
+     */
+    function calculateLoss() {
+        // 시뮬레이션 로직: 시간에 비례하여 손실 발생 (단순화)
+        const lossIncrease = Math.floor(Math.random() * 50) + 10; // 10 ~ 60 달러 증가
+        currentLoss += lossIncrease;
 
-        <!-- Form Group -->
-        <form id="report-request-form" style="max-width: 450px; margin: 0 auto;">
-            <div class="form-group">
-                <label for="name">회사명 / 담당자 이름</label>
-                <input type="text" id="name" placeholder="예) 고고플랙스 / 홍길동 (필수)" required>
-            </div>
-            <div class="form-group">
-                <label for="email">이메일 주소</label>
-                <input type="email" id="email" placeholder="example@company.com (연락처 확인용)" required>
-            </div>
+        console.log(`[Logic] Loss increased by ${lossIncrease}. Total: $${Math.round(currentLoss)}`);
+    }
 
-            <!-- 최종 CTA 버튼 -->
-            <button id="final-cta" class="cta-button" type="submit">
-                [무료 진단 보고서 요청] - 💡 전문 컨설팅 리포트 받기
-            </button>
-        </form>
-    </section>
+    /**
+     * @function updateUI - 현재 손실액에 따라 UI의 상태를 업데이트하고 시각적 효과를 적용합니다. (핵심)
+     */
+    function updateUI() {
+        // 1. 카운터 업데이트 (Smooth Counter Up Effect 구현 대신, 간결성을 위해 바로 할당)
+        $lossCounter.textContent = `$${Math.round(currentLoss).toLocaleString()} (${Math.round(currentLoss / 1000)}k)`;
 
+        let state = 'safe'; // 기본 상태
+        let message = '현재 리스크는 관리 가능한 범위 내에 있습니다.';
+        let color = '#333';
 
-    <!-- ===================================== -->
-    <!-- JavaScript Logic (상호작용 시뮬레이션) -->
-    <!-- ===================================== -->
-    <script>
-        // 전역 변수 및 DOM 요소 캐싱
-        const initialCtaButton = document.getElementById('initial-cta');
-        const finalCtaButton = document.getElementById('final-cta');
-        const totalLossAmountElement = document.getElementById('total-loss-amount');
-        const bodyElement = document.body;
-        const overlay = document.getElementById('warning-overlay');
-
-        // --- 1. Loss Counter 로직 ---
-        /**
-         * 숫자를 부드럽게 카운트업하여 표시하는 함수 (UX 핵심)
-         * @param {number} finalValue - 최종적으로 도달해야 할 숫자 값
-         */
-        function animateCounter(finalValue, elementId) {
-            const element = document.getElementById(elementId);
-            let currentCount = 0;
-            const duration = 2500; // 2.5초에 걸쳐 카운트업
-            let startTimestamp = null;
-
-            function step(timestamp) {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const elapsed = timestamp - startTimestamp;
-                const progress = Math.min(elapsed / duration, 1); // 0에서 1 사이의 진행률
-                
-                // 부드러운 곡선 함수 적용 (Ease-in-out 효과 시뮬레이션)
-                const easedProgress = 0.5 - Math.cos((progress * Math.PI) * 0.5) / 2;
-
-                currentCount = Math.floor(finalValue * easedProgress);
-                element.innerText = `₩${currentCount.toLocaleString()}원`;
-
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                } else {
-                    // 최종 값 고정 및 스타일 업데이트
-                    element.innerText = `₩${finalValue.toLocaleString()}원`;
-                    totalLossAmountElement.style.color = '#333'; // Red Warning 해제 후 색상 변화 시뮬레이션
-                }
-            }
-            window.requestAnimationFrame(step);
+        // 2. State Change 로직 실행
+        if (currentLoss >= THRESHOLD.PANIC) {
+            state = 'panic';
+            message = '🔥 경고: 치명적 리스크 도달! 즉각적인 프로세스 점검이 필요합니다.';
+            color = 'var(--color-panic)'; // 빨간색 패닉 색상
+        } else if (currentLoss >= THRESHOLD.WARNING) {
+            state = 'warning';
+            message = '⚠️ 주의: 데이터 무결성 위협 감지! 손실을 막기 위한 대응이 필요합니다.';
+            color = 'var(--color-warning)'; // 노란색 경고 색상
         }
 
-        // --- 2. 상태 관리 및 흐름 제어 (Anti-Loss Funnel) ---
-        /**
-         * 초기 진단 데이터를 받으면 Loss Counter를 구동하고 UI를 '경고' 상태로 변경합니다.
-         * @param {number} lossAmount - 측정된 총 손실액 (예: 50,000,000)
-         */
-        function triggerLossDetection(lossAmount) {
-            // 1. Red Warning 필터 발동
-            bodyElement.classList.add('glitched');
-
-            // 2. Loss Counter 애니메이션 시작
-            animateCounter(lossAmount, 'total-loss-amount');
-
-            // 3. CTA 버튼 상태 변경 (비활성 -> 경고)
-            initialCtaButton.style.cursor = 'pointer';
-            initialCtaButton.disabled = false;
-            initialCtaButton.innerText = `[필수] 무료 진단 보고서 요청 (⚠️ 데이터 분석 필요)`;
-            initialCtaButton.style.backgroundColor = '#D9534F'; // Warning Red 계열로 변경
-
-             // 4. 이벤트 리스너 업데이트: 이제는 클릭을 유도해야 함
-            initialCtaButton.onclick = () => {
-                triggerFunnelCompletion();
-            };
+        // 3. DOM 상태 클래스 변경 (State Change 반영)
+        $scoreCard.className = ''; // 기존 클래스 초기화
+        if (state === 'panic') {
+             $scoreCard.classList.add('panic-state');
+        } else if (state === 'warning') {
+            $scoreCard.classList.add('warning-state');
         }
 
-        /**
-         * Funnel의 마지막 단계, 보고서 요청 페이지로 전환합니다. (UX 목표 달성)
-         */
-        function triggerFunnelCompletion() {
-             // 1. Red Warning 필터 해제 및 신뢰도 확보 시뮬레이션
-            bodyElement.classList.remove('glitched');
-            overlay.style.opacity = '0';
+        // 4. 카운터 색상 및 메시지 업데이트
+        $lossCounter.style.color = color;
+        document.querySelector('#loss-scorecard h3').textContent = `🔥 누적 예상 손실액 (Estimated Loss) - ${message}`;
 
-            // 2. CTA 버튼 상태 변경 (경고 -> 해결책 제시)
-            initialCtaButton.innerText = `진단 완료! 전문 컨설팅 리포트 받기`;
-            initialCtaButton.onclick = null; // 이벤트 제거
-            finalCtaButton.style.display = 'block'; // 최종 폼의 버튼 노출
+    }
 
-             // 스크롤을 아래 폼으로 부드럽게 이동 (User Flow 유도)
-            document.getElementById('diagnosis-form').scrollIntoView({ behavior: 'smooth' });
-        }
+    /**
+     * @function initializeSimulation - 전체 시뮬레이션을 시작합니다.
+     */
+    function initializeSimulation() {
+        console.log("Loss Scorecard Simulation Initialized.");
+        // 초기 UI 상태 설정
+        updateUI(); 
+        // 주기적으로 손실 계산 및 UI 업데이트 실행 (자동화 루틴)
+        setInterval(() => {
+            calculateLoss();
+            updateUI();
+        }, TIME_INTERVAL);
+    }
 
+    // 페이지 로드 시 자동 실행
+    window.onload = initializeSimulation;
 
-        // --- 3. 이벤트 리스너 초기화 및 시뮬레이션 실행 ---
-
-        // [시뮬레이션 값] - Researcher가 제공한 최대 범위 내에서 임의로 높은 손실액을 설정합니다.
-        const SIMULATED_LOSS = 50000000; // 5천만원 가정 (최소 리스크를 반영)
-
-        window.onload = () => {
-            // 초기 로드 시, 데이터가 '수신되었다'는 가정을 하고 함수 실행
-            console.log("Loss Scorecard Prototype: Initializing...");
-            triggerLossDetection(SIMULATED_LOSS);
-
-             // 폼 제출 이벤트 리스너 (실제 백엔드 전송은 안함)
-            document.getElementById('report-request-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                alert("✅ [성공] 진단 보고서 요청이 접수되었습니다.\n곧 전문가가 분석한 '고고플랙스 손실 리스크 매트릭스'를 이메일로 보내드리겠습니다.");
-                // 실제 환경에서는 여기서 API 호출 로직이 들어갑니다.
-            });
-        };
-
-    </script>
+</script>
 
 </body>
 </html>
