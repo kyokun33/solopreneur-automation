@@ -2,6 +2,7 @@ extends Node2D
 
 const Loader := preload("res://scripts/core/AssetLoader.gd")
 const PixelFxScript := preload("res://scripts/vfx/PixelFxPlayer.gd")
+const AmbientScript := preload("res://scripts/vfx/AmbientWorldFX.gd")
 const ItemDBScript := preload("res://scripts/data/ItemDB.gd")
 const RecipeDBScript := preload("res://scripts/data/RecipeDB.gd")
 
@@ -15,6 +16,11 @@ const RecipeDBScript := preload("res://scripts/data/RecipeDB.gd")
 func _ready() -> void:
 	bg_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	bg_sprite.texture = Loader.load_tex("res://assets/bg/workshop_bg.png")
+
+	var ambient := Node2D.new()
+	ambient.set_script(AmbientScript)
+	ambient.setup("workshop")
+	add_child(ambient)
 
 	var fire := AnimatedSprite2D.new()
 	fire.set_script(PixelFxScript)
@@ -62,7 +68,6 @@ func _refresh_all() -> void:
 
 	for c in monster_list.get_children():
 		c.queue_free()
-	# Show captured monsters visually in the taming pens!
 	for child in world.get_children():
 		if child.has_meta("pen_mon"):
 			child.queue_free()

@@ -2,6 +2,8 @@ extends Node2D
 
 const Loader := preload("res://scripts/core/AssetLoader.gd")
 const PixelFxScript := preload("res://scripts/vfx/PixelFxPlayer.gd")
+const HeroAnimScript := preload("res://scripts/entities/HeroAnimator.gd")
+const AmbientScript := preload("res://scripts/vfx/AmbientWorldFX.gd")
 const EnemyClass := preload("res://scripts/entities/DungeonEnemy.gd")
 
 const MOVE_SPEED := 265.0
@@ -19,16 +21,15 @@ const MAX_FLOOR := 6
 @onready var btn_gamble: Button = $HUD/ClearOverlay/VBox/BtnGamble
 @onready var btn_return: Button = $HUD/ClearOverlay/VBox/BtnReturn
 
-var player_sprite: Sprite2D
+var player_anim: AnimatedSprite2D
 var current_floor: int = 1
 var hp: int = 100
 var max_hp: int = 100
-var facing_right: bool = true
+var aim_dir: Vector2 = Vector2.DOWN
 var attack_cd: float = 0.0
 var dash_cd: float = 0.0
 var hitstop_timer: float = 0.0
 var shake_timer: float = 0.0
-var walk_time: float = 0.0
 var enemies: Array = []
 var floor_cleared: bool = false
 var run_gold: int = 0
@@ -37,18 +38,23 @@ var portal_vfx: AnimatedSprite2D = null
 func _ready() -> void:
 	bg_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	bg_sprite.texture = Loader.load_tex("res://assets/bg/dungeon_bg.png")
+	bg_sprite.scale = Vector2(1.04, 1.04)
+
+	var ambient := Node2D.new()
+	ambient.set_script(AmbientScript)
+	ambient.setup("dungeon")
+	add_child(ambient)
 
 	var sh := ColorRect.new()
-	sh.size = Vector2(46, 14)
-	sh.position = Vector2(-23, 34)
+	sh.size = Vector2(54, 14)
+	sh.position = Vector2(-27, -6)
 	sh.color = Color(0, 0, 0, 0.5)
 	player.add_child(sh)
 
-	player_sprite = Sprite2D.new()
-	player_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	player_sprite.texture = Loader.load_tex("res://assets/sprites/hero_idle.png")
-	player_sprite.scale = Vector2(0.42, 0.42)
-	player.add_child(player_sprite)
+	player_anim = AnimatedSprite2D.new()
+	player_anim.set_script(HeroAnimScript)
+	player_anim.scale = Vector2(0.88, 0.88)
+	player.add_child(player_anim)
 
 	# 4 corner dungeon torches
 	for pos in [Vector2(190, 95), Vector2(1090, 95), Vector2(90, 520), Vector2(1190, 520)]:
@@ -131,23 +137,25 @@ func _process(delta: float) -> void:
 
 	var dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if dir != Vector2.ZERO:
+		aim_dir = dir.normalized()
 		var spd := MOVE_SPEED
 		if Input.is_key_pressed(KEY_SHIFT) and dash_cd <= 0.0:
 			spd = MOVE_SPEED * 3.0
 			dash_cd = GameState.hero_dash_cd
-			_spawn_vfx("collect-burst", player.position, 0.8)
+			_spawn_vfx("collect-burst", player.position, 0.85)
 		player.position += dir * spd * delta
 		player.position.x = clampf(player.position.x, 120.0, 1160.0)
-		player.position.y = clampf(player.position.y, 130.0, 600.0)
-		walk_time += delta * 15.0
-		player_sprite.position.y = -absf(sin(walk_time)) * 6.0
-		if dir.x != 0.0:
-			facing_right = dir.x > 0.0
-			player_sprite.flip_h = not facing_right
-	else:
-		player_sprite.position.y = lerpf(player_sprite.position.y, 0.0, 12.0 * delta)
+		player.position.y = clampf(player.position.y, 140.0, 605.0)
+	player_anim.update_move(dir)
+
+	# Dave-the-Diver parallax background response to movement!
+	bg_sprite.position = Vector2(640, 360) + (player.position - Vector2(640, 360)) * -0.03
 
 	if (Input.is_action_just_pressed("attack") or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)) and attack_cd <= 0.0:
+		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			var mouse_dir := (get_global_mouse_position() - player.position)
+			if mouse_dir.length_squared() > 4.0:
+				aim_dir = mouse_dir.normalized()
 		_do_attack()
 		attack_cd = 0.34
 
@@ -163,16 +171,16 @@ func _process(delta: float) -> void:
 
 func _do_attack() -> void:
 	SfxManager.play_slash()
-	var slash_dir := 1.0 if facing_right else -1.0
-	var slash_pos := player.position + Vector2(62.0 * slash_dir, -8.0)
+	player_anim.play_attack(aim_dir)
+	var slash_pos := player.position + Vector2(0, -32) + aim_dir * 64.0
 	var vfx := _spawn_vfx("double-slash", slash_pos, 1.35)
-	vfx.flip_h = not facing_right
+	vfx.rotation = aim_dir.angle()
 
 	var hit_any := false
 	for e in enemies.duplicate():
 		if not is_instance_valid(e):
 			continue
-		if e.position.distance_to(slash_pos) <= (125.0 if e.is_boss else 105.0):
+		if e.position.distance_to(slash_pos) <= (130.0 if e.is_boss else 110.0):
 			var dmg := GameState.hero_atk + randi_range(-3, 6)
 			e.take_damage(dmg, player.position)
 			_spawn_floating_text("-%d" % dmg, e.position + Vector2(0, -35), Color(1.0, 0.85, 0.2))
@@ -186,7 +194,7 @@ func _try_capture() -> void:
 	for e in enemies.duplicate():
 		if not is_instance_valid(e):
 			continue
-		if e.can_capture() and e.position.distance_to(player.position) <= 130.0:
+		if e.can_capture() and e.position.distance_to(player.position) <= 135.0:
 			SfxManager.play_capture()
 			_spawn_vfx("magic-circle-cast", e.position, 1.4)
 			GameState.captured_monsters.append({
